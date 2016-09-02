@@ -1,22 +1,60 @@
 <map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node CREATED="1472708408515" ID="ID_662009073" MODIFIED="1472710258977" TEXT="teawater(Hui Zhu)&apos;s Homepage">
-<node CREATED="1472708752837" ID="ID_583425608" LINK="indexcn.html" MODIFIED="1472709263999" POSITION="right" TEXT="Chinese"/>
-<node CREATED="1472708596511" ID="ID_1638893491" MODIFIED="1472708601725" POSITION="left" TEXT="My Projects">
-<node CREATED="1472708440400" ID="ID_756456714" LINK="http://teawater.github.io/kgtp/" MODIFIED="1472708503827" TEXT="KGTP">
-<node CREATED="1472708553887" ID="ID_477053151" MODIFIED="1472708554707" TEXT="KGTP is a comprehensive dynamic tracer for analysing Linux kernel and application (including Android) problems on production systems in real time.]\"/>
+<node COLOR="#000000" CREATED="1472708408515" ID="ID_662009073" MODIFIED="1472804071740" TEXT="teawater(Hui Zhu)&apos;s Homepage">
+<font NAME="SansSerif" SIZE="20"/>
+<hook NAME="accessories/plugins/AutomaticLayout.properties"/>
+<node COLOR="#0033ff" CREATED="1472708752837" ID="ID_583425608" LINK="indexcn.html" MODIFIED="1472804071715" POSITION="right" TEXT="Chinese">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
 </node>
-<node CREATED="1472708619957" ID="ID_1905391322" LINK="http://teawater.github.io/cma/" MODIFIED="1472708652309" TEXT="CMA">
-<node CREATED="1472708659623" ID="ID_438199411" MODIFIED="1472708661619" TEXT="A GDB Python script that analyzes and records C/C++ application&apos;s dynamic memory status. "/>
+<node COLOR="#0033ff" CREATED="1472708596511" ID="ID_1638893491" MODIFIED="1472804071716" POSITION="left" TEXT="My Projects">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1472708440400" ID="ID_756456714" LINK="http://teawater.github.io/kgtp/" MODIFIED="1472804071717" TEXT="KGTP">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1472708553887" ID="ID_477053151" MODIFIED="1472804071722" TEXT="KGTP is a comprehensive dynamic tracer for analysing Linux kernel and application (including Android) problems on production systems in real time.]\">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
-<node CREATED="1472708672687" ID="ID_1029802733" LINK="http://teawater.github.io/get-gdb/" MODIFIED="1472708691196" TEXT="Get-GDB">
-<node CREATED="1472708696477" ID="ID_420345347" MODIFIED="1472708719629" TEXT="A Python script to auto check version, download, build and install specified version GDB to current system."/>
+</node>
+<node COLOR="#00b439" CREATED="1472708619957" ID="ID_1905391322" LINK="http://teawater.github.io/cma/" MODIFIED="1472804071729" TEXT="CMA">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1472708659623" ID="ID_438199411" MODIFIED="1472804071729" TEXT="A GDB Python script that analyzes and records C/C++ application&apos;s dynamic memory status. ">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
-<node CREATED="1472709297884" ID="ID_1226999614" MODIFIED="1472710258068" POSITION="right" TEXT="My mindmap">
-<node CREATED="1472709684271" ID="ID_1955654431" LINK="mindmap/Code_Simplicity.html" MODIFIED="1472710321940" TEXT="&#x7b80;&#x7ea6;&#x4e4b;&#x7f8e;&#xff1a;&#x8f6f;&#x4ef6;&#x8bbe;&#x8ba1;&#x4e4b;&#x9053; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;"/>
+<node COLOR="#00b439" CREATED="1472708672687" ID="ID_1029802733" LINK="http://teawater.github.io/get-gdb/" MODIFIED="1472804071730" TEXT="Get-GDB">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1472708696477" ID="ID_420345347" MODIFIED="1472804071731" TEXT="A Python script to auto check version, download, build and install specified version GDB to current system.">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
-<node CREATED="1472709817072" ID="ID_1649698738" LINK="https://github.com/teawater" MODIFIED="1472709828126" POSITION="left" TEXT="My github"/>
-<node CREATED="1472709833438" ID="ID_851068096" LINK="http://www.linkedin.com/in/teawater" MODIFIED="1472709852261" POSITION="right" TEXT="My Linkedin"/>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1472709297884" ID="ID_1226999614" MODIFIED="1472804071734" POSITION="right" TEXT="My mindmap">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1472709684271" ID="ID_1955654431" LINK="mindmap/Code_Simplicity.html" MODIFIED="1472804071735" TEXT="&#x7b80;&#x7ea6;&#x4e4b;&#x7f8e;&#xff1a;&#x8f6f;&#x4ef6;&#x8bbe;&#x8ba1;&#x4e4b;&#x9053; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1472803961041" ID="ID_784008993" MODIFIED="1472804134439" POSITION="left" TEXT="My documents">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1472803992865" ID="ID_1742802608" LINK="docs/p4a.html" MODIFIED="1472804071738" TEXT="&#x5728;&#x5b89;&#x5353;&#x5e73;&#x53f0;&#x4e0a;&#x4f7f;&#x7528;Python&#x7684;&#x65b9;&#x6cd5; ">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#0033ff" CREATED="1472709817072" ID="ID_1649698738" LINK="https://github.com/teawater" MODIFIED="1472804071736" POSITION="left" TEXT="My github">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+</node>
+<node COLOR="#0033ff" CREATED="1472709833438" ID="ID_851068096" LINK="http://www.linkedin.com/in/teawater" MODIFIED="1472804071739" POSITION="right" TEXT="My Linkedin">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+</node>
 </node>
 </map>
