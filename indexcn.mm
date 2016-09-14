@@ -38,8 +38,17 @@
 <node COLOR="#00b439" CREATED="1473754297417" ID="ID_823409592" MODIFIED="1473754298876" TEXT="Buddy&#x548c;CMA&#x7b80;&#x4ecb; &#x4ee5;&#x53ca;&#x5728;Android&#x4e2d;&#x5b9e;&#x9645;&#x4f7f;&#x7528; CMA&#x9047;&#x5230;&#x95ee;&#x9898;&#x7684;&#x6539;&#x8fdb;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1473754338481" ID="ID_730958682" LINK="presentation/2014clk_cma.pdf" MODIFIED="1473754376673" TEXT="slide">
+<node COLOR="#990000" CREATED="1473754338481" ID="ID_730958682" LINK="presentation/2014clk_cma.pdf" MODIFIED="1473831373561" TEXT="&#x5e7b;&#x706f;&#x7247;">
 <font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1473831379356" ID="ID_729585102" MODIFIED="1473831382744" TEXT="&#x89c6;&#x9891;">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1473755069350" ID="ID_260329777" LINK="https://youtu.be/jMhDBTdpfG0" MODIFIED="1473831388244" TEXT="youtube">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#111111" CREATED="1473831319792" ID="ID_225778867" LINK="http://v.youku.com/v_show/id_XMTcyMzk5Mzc4MA==.html" MODIFIED="1473831349844" TEXT="youku">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
 </node>
 </node>
 </node>

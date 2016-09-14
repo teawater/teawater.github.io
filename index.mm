@@ -41,6 +41,15 @@
 <node COLOR="#990000" CREATED="1473754338481" ID="ID_730958682" LINK="presentation/2014clk_cma.pdf" MODIFIED="1473754376673" TEXT="slide">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
+<node COLOR="#990000" CREATED="1473831335355" ID="ID_120183860" MODIFIED="1473831339091" TEXT="video">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1473755069350" ID="ID_260329777" LINK="https://youtu.be/jMhDBTdpfG0" MODIFIED="1473831349843" TEXT="youtube">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#111111" CREATED="1473831319792" ID="ID_225778867" LINK="http://v.youku.com/v_show/id_XMTcyMzk5Mzc4MA==.html" MODIFIED="1473831349844" TEXT="youku">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+</node>
 </node>
 </node>
 <node COLOR="#0033ff" CREATED="1472709297884" ID="ID_1226999614" MODIFIED="1472804071734" POSITION="right" TEXT="My mindmap">
