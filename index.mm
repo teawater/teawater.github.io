@@ -3,7 +3,7 @@
 <node COLOR="#000000" CREATED="1472708408515" ID="ID_662009073" MODIFIED="1473754198367" TEXT="teawater(Hui Zhu)&apos;s Homepage">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
-<node COLOR="#0033ff" CREATED="1472708752837" ID="ID_583425608" LINK="indexcn.html" MODIFIED="1472804071715" POSITION="right" TEXT="Chinese">
+<node COLOR="#0033ff" CREATED="1472708752837" ID="ID_583425608" LINK="indexcn.html" MODIFIED="1474173591077" POSITION="right" TEXT="&#x4e2d;&#x6587;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 </node>
@@ -35,7 +35,7 @@
 <node COLOR="#0033ff" CREATED="1473754199442" ID="ID_452624323" MODIFIED="1473754251968" POSITION="right" TEXT="My presentation">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
-<node COLOR="#00b439" CREATED="1473754297417" ID="ID_823409592" MODIFIED="1473754298876" TEXT="Buddy&#x548c;CMA&#x7b80;&#x4ecb; &#x4ee5;&#x53ca;&#x5728;Android&#x4e2d;&#x5b9e;&#x9645;&#x4f7f;&#x7528; CMA&#x9047;&#x5230;&#x95ee;&#x9898;&#x7684;&#x6539;&#x8fdb;">
+<node COLOR="#00b439" CREATED="1473754297417" ID="ID_823409592" MODIFIED="1474168607106" TEXT="2014: Buddy&#x548c;CMA&#x7b80;&#x4ecb; &#x4ee5;&#x53ca;&#x5728;Android&#x4e2d;&#x5b9e;&#x9645;&#x4f7f;&#x7528; CMA&#x9047;&#x5230;&#x95ee;&#x9898;&#x7684;&#x6539;&#x8fdb;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1473754338481" ID="ID_730958682" LINK="presentation/2014clk_cma.pdf" MODIFIED="1473754376673" TEXT="slide">
@@ -55,9 +55,16 @@
 <node COLOR="#0033ff" CREATED="1472709297884" ID="ID_1226999614" MODIFIED="1472804071734" POSITION="right" TEXT="My mindmap">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
-<node COLOR="#00b439" CREATED="1472709684271" ID="ID_1955654431" LINK="mindmap/Code_Simplicity.html" MODIFIED="1472804071735" TEXT="&#x7b80;&#x7ea6;&#x4e4b;&#x7f8e;&#xff1a;&#x8f6f;&#x4ef6;&#x8bbe;&#x8ba1;&#x4e4b;&#x9053; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
+<node COLOR="#00b439" CREATED="1474168934713" ID="ID_1441026216" MODIFIED="1474168940500" TEXT="&#x7b80;&#x7ea6;&#x4e4b;&#x7f8e;&#xff1a;&#x8f6f;&#x4ef6;&#x8bbe;&#x8ba1;&#x4e4b;&#x9053; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1472709684271" ID="ID_1955654431" LINK="mindmap/Code_Simplicity.html" MODIFIED="1474168961512" TEXT="html">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474168987710" ID="ID_317346601" LINK="mindmap/Code_Simplicity.mm" MODIFIED="1474173135819" TEXT="freemind">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 </node>
 <node COLOR="#0033ff" CREATED="1472803961041" ID="ID_784008993" MODIFIED="1472804134439" POSITION="left" TEXT="My documents">

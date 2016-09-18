@@ -3,7 +3,7 @@
 <node COLOR="#000000" CREATED="1472708408515" ID="ID_662009073" MODIFIED="1472804205577" TEXT="teawater(&#x6731;&#x8f89;)&#x7684;&#x4e3b;&#x9875;">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
-<node COLOR="#0033ff" CREATED="1472708752837" ID="ID_583425608" LINK="index.html" MODIFIED="1472804205566" POSITION="right" TEXT="&#x82f1;&#x6587;">
+<node COLOR="#0033ff" CREATED="1472708752837" ID="ID_583425608" LINK="index.html" MODIFIED="1474174026273" POSITION="right" TEXT="English">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 </node>
@@ -55,9 +55,16 @@
 <node COLOR="#0033ff" CREATED="1472709297884" ID="ID_1226999614" MODIFIED="1472804205574" POSITION="right" TEXT="&#x6211;&#x7684;&#x601d;&#x7ef4;&#x5bfc;&#x56fe;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
-<node COLOR="#00b439" CREATED="1472709684271" ID="ID_1955654431" LINK="mindmap/Code_Simplicity.html" MODIFIED="1472804205575" TEXT="&#x7b80;&#x7ea6;&#x4e4b;&#x7f8e;&#xff1a;&#x8f6f;&#x4ef6;&#x8bbe;&#x8ba1;&#x4e4b;&#x9053; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
+<node COLOR="#00b439" CREATED="1474168934713" ID="ID_1441026216" MODIFIED="1474168940500" TEXT="&#x7b80;&#x7ea6;&#x4e4b;&#x7f8e;&#xff1a;&#x8f6f;&#x4ef6;&#x8bbe;&#x8ba1;&#x4e4b;&#x9053; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1472709684271" ID="ID_1955654431" LINK="mindmap/Code_Simplicity.html" MODIFIED="1474168961512" TEXT="html">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474168987710" ID="ID_317346601" LINK="mindmap/Code_Simplicity.mm" MODIFIED="1474173135819" TEXT="freemind">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 </node>
 <node COLOR="#0033ff" CREATED="1472804212289" ID="ID_184369074" MODIFIED="1472804268077" POSITION="left" TEXT="&#x6211;&#x7684;&#x6587;&#x6863;">
