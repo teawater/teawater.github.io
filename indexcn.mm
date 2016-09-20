@@ -93,6 +93,17 @@
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
+<node COLOR="#00b439" CREATED="1474361006979" ID="ID_1114785013" MODIFIED="1474361057052" TEXT=" &#x4e0d;&#x61c2;&#x5e26;&#x4eba;&#xff0c;&#x4f60;&#x5c31;&#x81ea;&#x5df1;&#x5e72;&#x5230;&#x6b7b; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1472709684271" ID="ID_822489091" LINK="mindmap/tst.html" MODIFIED="1474361090903" TEXT="html">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474168987710" ID="ID_803063790" LINK="mindmap/tst.mm" MODIFIED="1474361099383" TEXT="freemind">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1472804212289" ID="ID_184369074" MODIFIED="1472804268077" POSITION="left" TEXT="&#x6211;&#x7684;&#x6587;&#x6863;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
