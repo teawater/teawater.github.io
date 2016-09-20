@@ -13,7 +13,7 @@
 <node COLOR="#00b439" CREATED="1472708440400" ID="ID_756456714" LINK="http://teawater.github.io/kgtp/" MODIFIED="1472804071717" TEXT="KGTP">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1472708553887" ID="ID_477053151" MODIFIED="1472804071722" TEXT="KGTP is a comprehensive dynamic tracer for analysing Linux kernel and application (including Android) problems on production systems in real time.]\">
+<node COLOR="#990000" CREATED="1472708553887" ID="ID_477053151" MODIFIED="1474336420983" TEXT="KGTP is a comprehensive dynamic tracer for analysing Linux kernel and application (including Android) problems on production systems in real time.">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
