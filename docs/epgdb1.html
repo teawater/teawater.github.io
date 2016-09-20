@@ -1,0 +1,1996 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title></title>
+	<meta name="generator" content="LibreOffice 4.2.8.2 (Linux)">
+	<meta name="author" content="teawater">
+	<meta name="created" content="20160920;134240412088469">
+	<meta name="changedby" content="teawater">
+	<meta name="changed" content="20160920;134401008091017">
+	<style type="text/css">
+	<!--
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 120% }
+	-->
+	</style>
+</head>
+<body lang="zh-CN" dir="ltr">
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Porting
+GDB (1) arch and frame v0.4</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">teawater
+&lt;teawater@gmail.com&gt;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Changelog:</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">V0.4</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-06-24,
+add the content that lost in before in 5.1.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-06-25,
+correct some error in 5.3.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-06-25,
+correct some error in 5.4.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-06-25,
+correct some error in 5.5.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-06-29,
+change something in 7.2.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-06-29,
+correct some error in 7.4.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-07-01,
+change something in 7.8.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-07-01,
+change something in 7.9.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-07-03,
+correct some error in 8.1.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-07-03,
+change something in 8.2.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-07-06,
+change something in 8.3.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-07-09,
+change something in 9.3.2.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-07-10,
+change something in 9.3.3.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">v0.3</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-04-01,
+add chapter 9 sigtramp frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-03-22,
+change the introduction of STEP_SKIPS_DELAY (pc) and
+STEP_SKIPS_DELAY_P.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-03-21,
+change the introduction of set_gdbarch_software_single_step.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-02-25,
+correct some errors in chapter 1.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">v0.2</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-02-20,
+add the introduction of set_gdbarch_regset_from_core_section.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-02-12,
+add the introduction of set_gdbarch_cannot_fetch_register and
+set_gdbarch_cannot_store_register.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">                   
+<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Sigtramp
+frame wasn't introduced.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">v0.1</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-01-23,
+add chapter 7 frame and chapter 8 dummy frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">v0.0</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2006-01-09,
+v0.0 version is complete. Dummy frame is not introduced.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">        <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2005-11-19,
+document is created.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Table
+of contents</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2.
+GDB/config.sub</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3.
+GDB/gdb/configure.tgt</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">4.
+GDB/gdb/config/ARCH/TARGET.mt</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.
+GDB/gdb/ARCH-tdep.c GDB/gdb/ARCH-TARGET-tdep.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.2.
+GDB/gdb/ARCH-tdep.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.3.
+GDB/gdb/ARCH-TARGET-tdep.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.4.
+Gdbarch_register_osabi_sniffer</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.5.
+Setup functions of gdbarch</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.
+GDB/gdb/config/ARCH/tm-ARCH.h GDB/gdb/config/ARCH/tm-TARGET.h</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.2.
+Macros</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.
+Frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.2.
+struct frame_info</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.3.
+struct frame_id</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.4.
+Get the frame_info of current function</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.5.
+Get the frame_id of a frame_info</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.6.
+Get the return address of a frame_info</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+function</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.7.
+Get the begin address of the function that higher than a frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.8.
+Gdbarch setup functions that is related with frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.9.
+struct frame_unwind</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">8.
+Dummy frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">8.1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">8.2.
+struct value *call_function_by_hand (struct value *function, int
+nargs, struct value **args)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">8.3.
+Gdbarch setup functions that is related with dummy frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.
+Sigtramp frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.2.
+Basic parses way</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.3.
+tramp_frame_prepend_unwinder way</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.3.1.
+void tramp_frame_prepend_unwinder (struct gdbarch *gdbarch, const
+struct tramp_frame *tramp_frame)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.3.2.
+Struct tramp_frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.3.3.
+static int tramp_frame_sniffer (const struct frame_unwind *self,
+struct frame_info *next_frame, void **this_cache)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.3.4.
+static struct trad_frame_cache *tramp_frame_cache (struct frame_info
+*next_frame, void **this_cache)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+document is written for GDB 6.3.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">LIBBFD
+is a library that allows applications to use the same routines to
+operate on object files whatever the object file format. GDB use it
+to parse the object files. To get more messages you can see
+http://www.gnu.org/software/binutils/manual/bfd-2.9.1/bfd.html.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+GDB, it uses the structure gdbarch to indicate architecture. This
+structure has a lot of variables and function pointers.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">When
+GDB is initialized or load a new executable file, it will call the
+code that initialized the variables and function pointers of a
+structure gdbarch. And it will set the address of gdbarch to the
+current_gdbarch. (I think write this code is main work of porting
+GDB.)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">When
+GDB debug a program, it will use the variables and the function
+pointers in the current_gdbarch. Then it will use the variables and
+the function pointers of a structure gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">There
+also have some options of architecture. They are some macros that
+defined in GDB/gdb/config/ARCH/tm-TARGET.h.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Most
+of variables and function pointers of current_gdbarch are defined to
+macros in GDB/gdb/gdbarch.h. When GDB use these macros, it will use
+the members of current_gdbarch. So you can set the macros through set
+the current_gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Frame
+is stack frame. I think the frame is the most important part of the
+structure gdbarch. But there is nothing to talk about it in GDB
+Internals. So I will introduce the stack frame. It will help with
+write code that will initialize the gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+following abbreviations will be used in this document:</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBINT
+                 The abbreviation of GDB Internals.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB
+                    The directory of GDB source code.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ARCH
+                   The name of the current architecture.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET
+                 A debug target of architecture. Most of times, it is
+an operating system, such as Linux.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">bfd_architecture
+       An enumerate that introduce the type of architecture is
+defined in LIBBFD.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdb_osabi
+              An enumerate introduce the ABI of current operating
+system. To get more messages you can see GDBINT 9.1.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2.
+GDB/config.sub</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is a shell. Configure will call it to convert the target and host
+that inputted by user to standard format string.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+shell can be directly executed with a string need to be converted and
+output the standard format string. So it can be test easily.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+file consists of the following components:</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+first part, divide the string that user input into $basic_machine and
+$os.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+second part, parse and process the $os that about the operation
+system.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+third part, it parse and process the $basic_machine. If you need add
+architecture in GDB, add some parse and process code in this part.
+Sometime you need add code to deal with $os too. Generally, if there
+is nothing to talk about object file type after architecture name in
+$basic_machine, add a &quot;-unknown&quot; in these place.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+fourth part, it parse and process the $os on further.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+fifth part, according to $basic_machine set $os.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+sixth part, if $basic_machine is ※*-unknown§ form, according to
+$os get $vendor that is the message of vendor. After that, replace
+the ※unknown§ to $vendor in $basic_machine.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+seventh part, it output $basic_machine$os.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3.
+GDB/gdb/configure.tgt</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+file is relevant to target that set by configure. The main function
+of this file is get the messages that need by compile according to
+the string that outputted by GDB/config.sub.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">It
+is called by GDB/gdb/configure. In GDB/gdb/configure, it set the
+string that get from GDB/config.sub into $target. Then divide it into
+$target_cpu, $target_vendor and $target_os. After that, use
+GDB/gdb/configure.tgt to parse them.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+first part, according to $target_cpu get $gdb_target_cpu. If your CPU
+doesn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+like MIPS that have a MIPSEL, you don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+need add some thing. $gdb_target_cpu will be the name of
+architecture.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+second part, it get $gdb_target_cpu according to $target. It is value
+of TARGET. Most of times, it is a name of an operating system.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+last part, it get $gdb_osabi according to $target. It is value of
+operating system ABI. This value will be set to GDB_OSABI_DEFAULT
+which is default value of operating system ABI.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">4.
+GDB/gdb/config/ARCH/TARGET.mt</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+file will include by Makefile. It set some files that have relation
+with the TATGET.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TDEPFILES=</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is designated to .o files that need compile. The .o files that behind
+.c files compile to need mention here. The .o files that have some
+functions that need by behind .c files need mention here too.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">DEPRECATED_TM_FILE=</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is designated to the header file of TARGET. Generally, the name of
+this file is written to tm-TARGET.h and is placed in
+GDB/gdb/config/ARCH/. The specific content will thereafter. Note that
+here is different with GDBINT. Here is right. If you write a
+TARGET.mt according to GDBINT, you will get an error in makefile.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.
+GDB/gdb/ARCH-tdep.c GDB/gdb/ARCH-TARGET-tdep.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+main function of these files is that initialize the gdbarch. The
+first is related with ARCH. The second is related with TARGET. The .o
+files that them compile is specified in TDEPFILES= of TARGET.mt.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">I
+think the benefit that two files separate is ARCH supports a lot of
+TARGET, one could say that a CPU supports a lot of operating systems.
+Some members of gdbarch are related with ARCH, others are related
+with TARGET that running on ARCH. Each TARGET of an ARCH can use the
+same ARCH-tdep.c.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Some
+TARGET that don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+need set member of gdbarch need not include
+GDB/gdb/ARCH-TARGET-tdep.c such as embed.mt of ARM and MIPS.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+GDB, a lot of ARCH-tdep.c and ARCH-TARGET-tdep.c include head files
+named GDB/gdb/ARCH-tdep.h and GDB/gdb/ARCH-TARGET-tdep.h. They keep
+some private data of .c files, so be flexible in its use.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.2.
+GDB/gdb/ARCH-tdep.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+initialization function of this file is void _initialize_ARCH_tdep
+(void). This function will be called when GDB is initialized. This
+function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+main work is call function gdbarch_register. Of course if your ARCH
+need, you can add some commands in this function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+gdbarch_register (enum bfd_architecture bfd_architecture,
+gdbarch_init_ftype *init, gdbarch_dump_tdep_ftype *dump_tdep)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+work of this function is register init and dump_tdep to global chain
+gdbarch_registry and markets them to bfd_architecture. When GDB load
+an executable file that LIBBFD type is bfd_architecture, init and
+dump_tdep will be called.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+work of init function pointer is initializes a structure gdbarch and
+return its address. To write this function you can consult other ARCH
+in GDB/gdb/. The following talk about how to write it.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Basically,
+the first step is call function gdbarch_alloc to allocate memory for
+a structure gdbarch. Function gdbarch_alloc</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+first parameter is the parameter info of the function pointer init.
+The second parameter is a structure pointer of gdbarch_tdep that
+store some private data of this ARCH. The structure gdbarch_tdep is
+defined and used in the files that are related with this ARCH. If
+your ARCH need, you can add some members to this structure. In
+function gdbarch_alloc, it allocates memory for gdbarch first. After
+that, set tdep and some default values to gdbarch and return its
+address.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+second step is that calls some functions to set some function
+pointers and variables to gdbarch. This function will be introduced
+in ※5.5. Setup functions of gdbarch§.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+last step is that calls ※gdbarch_init_osabi (info, gdbarch)§. This
+function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+work is that call the initialization function pointer that is related
+with TARGET and is registered by function gdbarch_register_osabi in
+GDB/gdb/ARCH-TARGET-tdep.c.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+work of dump_tdep is that output the private data of TARGET such as
+tdep. It will be called by function GDB/gdb/gdbarch.c:gdbarch_dump.
+This function will be called when user call GDB command ※maintenance
+print architecture§ to output the message of TARGET.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.3.
+GDB/gdb/ARCH-TARGET-tdep.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+initialization function of this file is void
+_initialize_ARCH_TARGET_tdep (void). This function will be called
+when GDB is initialized. This function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+main work is call function gdbarch_register_osabi. Of course if your
+ARCH need, you can add some commands in this function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+gdbarch_register_osabi (enum bfd_architecture arch, unsigned long
+machine, enum gdb_osabi osabi, void (*init_osabi)(struct
+gdbarch_info, struct gdbarch *))</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+work of this function is register init_osabi to global chain
+gdb_osabi_handler_list and markets them to arch and osabi. Init_osabi
+will be called by gdbarch_init_osabi that is introduced in 5.2.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+work of init_osabi is that setup the members of gdbarch that are
+related with TARGET.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.4.
+Gdbarch_register_osabi_sniffer</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+gdbarch_register_osabi_sniffer (enum bfd_architecture arch, enum
+bfd_flavour flavour, enum gdb_osabi (*sniffer)(bfd *abfd))</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Most
+of times, this function is called by _initialize_ARCH_tdep or
+_initialize_ARCH_TARGET_tdep. Sometimes you need call
+gdbarch_register_osabi_sniffer to register a function pointer to help
+GDB make clear the gdb_osabi of some object files because some object
+files</span></font></font>＊ <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">OS
+ABI type don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+correspond to gdb_osabi. The first parameter of function
+gdbarch_register_osabi_sniffer arch is ARCH. The second parameter
+flavour defines the object file</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+type. The last parameter sniffer is the function pointer.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+function that is registered parses the object file, get the gdb_osabi
+and return it.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.5.
+Setup functions of gdbarch</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Because
+the setup functions of gdbarch that is called by init that is
+registered in GDB/gdb/ARCH-tdep.c and the setup function of gdbarch
+this is called by init_osabi that is registered in
+GDB/gdb/ARCH-TARGET-tdep.c are same type, I will introduce them in
+this chapter. Most of them are defined in GDB/gdb/gdbarch.c. Some
+functions that are related with frame will be introduced in chapter
+about frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+GDBINT 9.10 introduce some macros that setup the TARGET. In
+GDB/gdb/gdbarch.h, you can find that members of gdbarch are defined
+to these macros. So the macro</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+introduction in GDBINT 9.10 can be the introduction of setup
+functions of gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_num_regs (struct gdbarch *gdbarch, int num_regs)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+num_regs that is the number of ARCH</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+registers to the gdbarch. The related macro is NUM_REGS.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_register_type (struct gdbarch *gdbarch,
+gdbarch_register_type_ftype *register_type)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_register_type_ftype type function to gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to return the type of register that number is
+reg_nr. These types are defined in GDB/gdb/gdbtypes.c.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_register_name (struct gdbarch *gdbarch,
+gdbarch_register_name_ftype *register_name)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_register_name_ftype type function to gdbarch. The related
+macro is REGISTER_NAME.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to return the name of register that number is
+regnr.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_pc_regnum (struct gdbarch *gdbarch, int pc_regnum)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+PC register number pc_regnum of ARCH to gdbarch. The related macro is
+PC_REGNUM.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_sp_regnum (struct gdbarch *gdbarch, int sp_regnum)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+SP register number sp_regnum of ARCH to gdbarch. The related macro is
+SP_REGNUM.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_cannot_fetch_register (struct gdbarch *gdbarch,
+gdbarch_cannot_fetch_register_ftype *cannot_fetch_register);</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_cannot_fetch_register_ftype type function to gdbarch. The
+related macro is CANNOT_FETCH_REGISTER.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to judge if the register that is specified by
+parameter of function can be set in native debug ptrace (to see
+porting GDB (2) native). If it can</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+be set, return true.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Sometimes,
+CANNOT_FETCH_REGISTER will be defined in native debug head file
+GDB/gdb/config/ARCH/nm-TARGET.h because it is close to native debug.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_fp0_regnum (struct gdbarch *gdbarch, int fp0_regnum)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+FP0 register number fp0_regnum of ARCH to gdbarch. The related macro
+is FP0_REGNUM.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_read_pc (struct gdbarch *gdbarch, gdbarch_read_pc_ftype
+*read_pc)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_read_pc_ftype type function to gdbarch. The related macros
+are TARGET_READ_PC and TARGET_READ_PC_P.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to get the value of PC register. If you have
+already set number of PC register through set_gdbarch_pc_regnum, and
+the value of PC register can be get through general way, you need not
+set this function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_write_pc (struct gdbarch *gdbarch, gdbarch_write_pc_ftype
+*write_pc)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_write_pc_ftype type function to gdbarch. The related macro is
+TARGET_WRITE_PC.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to set the value of PC register. If you have
+already set number of PC register through set_gdbarch_pc_regnum, and
+the value of PC register can be set through general way, you need not
+set this function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_read_sp (struct gdbarch *gdbarch, gdbarch_read_sp_ftype
+*read_sp)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_read_sp_ftype type function to gdbarch. The related macro is
+TARGET_READ_SP and TARGET_READ_SP_P.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to get the value of SP register. If you have
+already set number of SP register through set_gdbarch_sp_regnum, and
+the value of SP register can be get through general way, you need not
+set this function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_breakpoint_from_pc (struct gdbarch *gdbarch,
+gdbarch_breakpoint_from_pc_ftype *breakpoint_from_pc)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_breakpoint_from_pc_ftype type function to gdbarch. The
+related macro is BREAKPOINT_FROM_PC.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">According
+to the pcptr that is the address of breakpoint, the set function uses
+to choose the right breakpoint instruction, set the length of
+instruction to lenptr, and maybe need to set the address of
+breakpoint. For example, GDB need choose insert ARM breakpoint
+instruction or THUMB breakpoint instruction if TARGET is ARM.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_inner_than (struct gdbarch *gdbarch,
+gdbarch_inner_than_ftype *inner_than)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_inner_than_ftype type function to gdbarch. The related macro
+is INNER_THAN.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to compare the address of stack. If stack of ARCH
+is increase to low address of memory, you need to set
+core_addr_lessthan (return true if lhs smaller than rhs). If stack of
+ARCH is increase to high address of memory, you need to set
+core_addr_greaterthan (return true if lhs bigger than rhs).</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_skip_prologue (struct gdbarch *gdbarch,
+gdbarch_skip_prologue_ftype *skip_prologue)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_skip_prologue_ftype type function to gdbarch. The related
+macro is SKIP_PROLOGUE.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+parameter of set function pc is the begin address of a function. The
+set function uses to return this function of pc</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+end address of prologue. The prologue is the code that allocates the
+stack and save the value of some registers in a function. In set
+function, it gets the end address of prologue from the symbol table.
+If it cannot get the end address from the symbol table, it will
+disassemble the function code to get the end address. (I think
+disassemble function code to get the end address is dispensable.) To
+get more messages you can see the ARCH-tedp.c type files in GDB/gdb.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_print_insn (struct gdbarch *gdbarch,
+gdbarch_print_insn_ftype *print_insn)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_print_insn_ftype type function to gdbarch. The related macro
+is TARGET_PRINT_INSN.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to disassemble the specified address. It will be
+called in GDB command ※disassemble§. This function is same with
+the function in Binutils. So you can copy this code to here.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_return_value (struct gdbarch *gdbarch,
+gdbarch_return_value_ftype *return_value)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_extract_return_value (struct gdbarch *gdbarch,
+gdbarch_extract_return_value_ftype *extract_return_value)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_store_return_value (struct gdbarch *gdbarch,
+gdbarch_store_return_value_ftype *store_return_value)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_return_value_ftype, gdbarch_extract_return_value_ftype and
+gdbarch_store_return_value_ftype type functions to gdbarch. The
+related macros are EXTRACT_RETURN_VALUE and STORE_RETURN_VALUE.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+first set function uses to get a function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+return value and its transfer way.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">To
+get the transfer way, the gdbarch_return_value_ftype type function
+use macro TYPE_CODE and parameter valtype to get target function
+return value type. These types are defined to enumerate type_code in
+GDB/gdb/gdbtypes.h such as TYPE_CODE_INT means return type is int.
+According to this type, the function can get the transfer way of
+return value. The transfer way is defined to enumerate
+return_value_convention in GDB/defs.h. They are:</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">RETURN_VALUE_REGISTER_CONVENTION,
+the return value has been squeezed into one or more registers.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">RETURN_VALUE_STRUCT_CONVENTION,
+The caller passes an additional hidden first parameter to the caller.
+ That parameter contains the address at which the value being
+returned should be stored.  While typically, and historically, used
+for large structures, this is convention is applied to values of many
+different types.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">RETURN_VALUE_ABI_RETURNS_ADDRESS,
+like the above, but where the ABI guarantees that the called function
+stores the address at which the value being returned is stored in a
+well-defined location, such as a register or memory slot in the stack
+frame.  Don't use this if the ABI doesn't explicitly guarantee this.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">RETURN_VALUE_ABI_PRESERVES_ADDRESS,
+like the above, but where the ABI guarantees that the address at
+which the value being returned is stored will be available in a
+well-defined location, such as a register or memory slot in the stack
+frame.  Don't use this if the ABI doesn't explicitly guarantee this.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Generally,
+TYPE_CODE_STRUCT, TYPE_CODE_UNION and TYPE_CODE_ARRAY will use the
+RETURN_VALUE_STRUCT_CONVENTION. The others will use
+RETURN_VALUE_REGISTER_CONVENTION. Of course, it will be decide by
+ABI.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+the parameter readbuf of gdbarch_return_value_ftype type function is
+not NULL, it need to get the return value of function. Then it needs
+to put the value in regcache to readbuf. If the parameter writebuf of
+gdbarch_return_value_ftype type function is not NULL, it need to set
+the return value of function. Then it needs to put the value in
+writebuf to regcache.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+you write a gdbarch_return_value_ftype type function completes all
+the work, you don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+need to set gdbarch_extract_return_value_ftype type function and
+gdbarch_store_return_value_ftype type function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+default value of the gdbarch_return_value_ftype type function is
+legacy_return_value. Legacy_return_value calls the macro
+EXTRACT_RETURN_VALUE and macro STORE_RETURN_VALUE. Then it will call
+the functions that are set by set_gdbarch_extract_return_value and
+set_gdbarch_store_return_value. If the gdbarch_return_value_ftype
+type function uses the default value, you need to set
+gdbarch_extract_return_value_ftype type function and
+gdbarch_store_return_value_ftype type function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">To
+write these functions, you can consult
+GDB/gdb/arch-utils.c:legacy_return_value and the same function in
+GDB/gdb/ ARCH-tdep.c.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+following functions are related with TARGET. So they will be set in
+GDB/gdb/ARCH-TARGET-tdep.c generally.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_software_single_step (struct gdbarch *gdbarch,
+gdbarch_software_single_step_ftype *software_single_step)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_software_single_step_ftype type function to gdbarch. The
+related macro is SOFTWARE_SINGLE_STEP and SOFTWARE_SINGLE_STEP_P.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+you set this function to gdbarch, it means that the TARGET doesn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+support single step with itself. This TARGET needs help of software
+single step that is supported by this function to support single
+step.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to insert (if parameter insert_breakpoints_p is not
+0) or remove (if parameter insert_breakpoints_p is 0) the breakpoint
+instruction to the address of next instruction.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Note
+that if the current instruction is the jump or branch instruction,
+the function needs to disassemble this instruction to get the target
+address first. If this instruction is a condition jump or branch
+instruction, the function disassemble this instruction to judge the
+condition and get target address first. All of these works is to get
+the address of next instruction.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_get_longjmp_target (struct gdbarch *gdbarch,
+gdbarch_get_longjmp_target_ftype *get_longjmp_target)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_get_longjmp_target_ftype type function to gdbarch. The
+related macros are GET_LONGJMP_TARGET and GET_LONGJMP_TARGET_P.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to get the target address of longjump and set this
+address to parameter pc. Return 0 If success, return no 0 if false.
+Generally, this function will parse the buffer of longjump and get
+the target address. To get more messages, you can see ARCH-tedp.c
+type files in GDB/gdb.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_skip_solib_resolver (struct gdbarch *gdbarch,
+gdbarch_skip_solib_resolver_ftype *skip_solib_resolver)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_skip_solib_resolver_ftype type function to gdbarch. The
+related macro is SKIP_SOLIB_RESOLVER. But this macro is removed from
+GDB. The function that called the set function is
+gdbarch_skip_solib_resolver.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to jump over the dynamic linker's symbol resolution
+function that after the parameter pc. If the parameter pc is in the
+dynamic linker's symbol resolution function, return the address after
+the function. If the pc is not the dynamic linker's symbol
+resolution, return 0. Generally, this work need parse the symbol
+table.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+the TARGET uses the GLIBC, you can set glibc_skip_solib_resolver
+directly. If you set this function, the .c file need include head
+file glibc-tdep.h. And you need include glibc-tdep.o in
+GDB/gdb/config/ARCH/TARGET.mt: TDEPFILES=.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_skip_trampoline_code (struct gdbarch *gdbarch,
+gdbarch_skip_trampoline_code_ftype *skip_trampoline_code)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_skip_trampoline_code_ftype type function to gdbarch. The
+related macro is SKIP_TRAMPOLINE_CODE.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+there is some trampolines code (see
+http://www.science.uva.nl/~mes/jargon/t/trampoline.html) between
+caller functions and called functions in TATGET, you can set a
+function to jump over the trampolines code. The parameter pc is the
+value of current PC register. If the return value is no 0, then it</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+the address after the trampolines code. If the return value is 0,
+then get error.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+the trampolines code is related with DLL, you can set
+GDB/gdb/minsyms.c:find_solib_trampoline_target.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_in_solib_return_trampoline (struct gdbarch *gdbarch,
+gdbarch_in_solib_return_trampoline_ftype *in_solib_return_trampoline)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_in_solib_return_trampoline_ftype type function to gdbarch.
+The related macro is IN_SOLIB_RETURN_TRAMPOLINE.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to make sure the parameter pc is in trampolines
+code. Return no 0 if yes, return 0 if not. The parameter name is the
+name of current function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">There
+is another macro called IN_SOLIB_CALL_TRAMPOLINE (setup function is
+set_gdbarch_in_solib_call_trampoline). But this macro is not called
+in GDB. So don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+set and use it.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_solib_svr4_fetch_link_map_offsets (struct gdbarch *gdbarch,
+struct link_map_offsets *(*func) (void))</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+struct link_map_offsets *(*func) (void) type function to gdbarch. The
+related macro is SVR4_FETCH_LINK_MAP_OFFSETS. To use the function
+set_solib_svr4_fetch_link_map_offsets, you need to include head file
+solib-svr4.h, and include solib-svr4.o in
+GDB/gdb/config/ARCH/TARGET.mt: TDEPFILES=.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+TARGET supports SVR4 share library, you need set this function to
+initialize the link_map_offsets structure of SVR4 share library. If
+your TARGET is ILP32 system (integer/long/pointer is 32 bits), you
+can set GDB/gdb/solib-svr4.c:svr4_ilp32_fetch_link_map_offsets. If
+your TARGET is LP64 system (long/pointer is 64 bits), you can set
+GDB/gdb/solib-svr4.c:svr4_lp64_fetch_link_map_offsets.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_regset_from_core_section (struct gdbarch *gdbarch,
+gdbarch_regset_from_core_section_ftype regset_from_core_section)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_regset_from_core_section_ftype type function to gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to return the structure regset pointer according to
+the sect_name and the sect_size of a core file</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+section. If cannot get the right structure regset, return NULL. This
+regset can allocate by GDB/gdb/regset.c:regset_alloc or use the
+global variable.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">According
+to the sect_name and sect_size, the set function will choose to
+return the simple register structure regset, the float point register
+structure regset, the extended float point register (SSE, i386
+special) structure regset or NULL. Generally, return the simple
+register structure regset if sect_name is ※.reg§, return the float
+point register structure regset if sect_name is ※.reg2§, return
+the extended float point register structure regset if sect_name is
+※.reg-xfp§ and ARCH is i386, another return NULL.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Structure
+regset is defined in GDB/gdb/regset.h. It stores the function
+pointers that are to parse the data in core file. They are
+supply_regset_ftype type function pointer supply_regset and
+collect_regset_ftype type function pointer collect_regset.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Supply_regset
+uses to get the value of register that number is parameter regnum (-1
+means all registers) from core file register messages in parameter
+gregs. Convert and put this value to parameter regcache (generally
+use function regcache_raw_supply). </span></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Collect_regset
+uses to get the value of register that number is parameter regnum (-1
+means all registers) from parameter regcache (generally use function
+regcache_raw_collect). Convert and put this value to core file
+register messages in parameter gregs.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Because
+this function is close to core file parse, ※porting GDB (2)§ will
+give more messages.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.
+GDB/gdb/config/ARCH/tm-ARCH.h GDB/gdb/config/ARCH/tm-TARGET.h</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/config/ARCH/tm-TARGET.h
+is about TARGET. Generally, it will be defined in TARGET.mt:
+DEPRECATED_TM_FILE=. The file in DEPRECATED_TM_FILE= will soft link
+to GDB/gdb/tm.h after configure. Tm.h is included by GDB/gdb/defs.h.
+Defs.h is included by most of files. So the macros that are defined
+in tm-TARGET.h will be defined to most of files.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/config/ARCH/tm-ARCH.h
+is about ARCH. Generally, this file is included by all TARGET</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+tm-TARGET.h of ARCH. But if a TARGET doesn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+need the macros except the ARCH</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s,
+tm-ARCH.h can be set to TARGET.mt: DEPRECATED_TM_FILE= directly.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.2.
+Macros</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">It
+introduces the macros that are defined with the member of gdbarch in
+chapter 5.5. The following macros are same with those macros can be
+set in tm-ARCH.h and tm-TARGET.h.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Note
+that a lot of macros are used with the macros that named
+※marcrname_P§ format. This macro is set to 1 to point out macro
+that correspond to it is set. So if you define a macro, maybe you
+need define the ※marcrname_P§ format macro to 1.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">You
+can see GDBINT 9.10 to get more messages.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">STEP_SKIPS_DELAY
+(pc) and STEP_SKIPS_DELAY_P</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+macro is to make sure if the instruction in pc address is a delay
+slot instruction. Return true if yes.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB
+use this to make sure if the instruction in pc address is a delay
+slot instruction. After that, it make sure if the instruction in
+delay slot is a breakpoint instruction. The instruction in pc address
+is breakpoint if yes. Because if the CPU get break in delay slot, the
+return address of it will be the address of delay slot instruction.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+macro is called by function GDB/gdb/infrun.c:proceed. This function
+will set oneproc to 1 if this is a breakpoint. The oneproc uses to
+point out the debugged program will only run one step. If oneproc is
+set to 1, GDB will not insert breakpoint before debugged program
+running.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">We
+get a question that the breakpoint instruction in delay slot must be
+running? If the delay slot instruction is the condition instruction
+and it is not correspond to condition, the breakpoint in delay slot
+will not be running. Then the CPU will not only running one step.
+Does it make GDB get error? We can see that the oneproc will be the
+parameter step of the running function GDB/gdb/infrun.c:resume. Then
+the breakpoint in delay slot is running or is not running, the
+debugged program will always step. So it will not make GDB get error.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+the old version of this document, I asked that: ※In GDB source,
+only MIPS use this macro, other ARCH don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+have delay slot instruction? Delay slot is the patent of MIPS?§ The
+GDB source that I said is GDB-6.3. In these days, I read the GDB-6.4.
+The two macros were replaced with gdbarch_single_step_through_delay
+and gdbarch_single_step_through_delay_p. And there are MIPS and CRIS
+support delay slot in it. I will talk about the difference between
+GDB-6.3 and GDB-6.4 in the future version of this document.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">IN_SOLIB_DYNSYM_RESOLVE_CODE
+(pc)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+macro uses to make sure if the pc address is in the dynamic linker.
+Return true if yes.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+the DLL of TATGET was already supported by GDB
+(GDB/gdb/solib-DLLname.c), you don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+need to set these macros. You include solib.h in tm-TARGET.h and add
+solib.o and solib-DLLname.o to TARGET.mt: TDEPFILES= to support the
+DLL.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.
+Frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Frame
+is stack frame. I think the main function of the frame is to make
+sure an instruction in which function. The structure frames of a
+function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+instructions are same. (If the level of the structure frames is </span></font></font>每<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1,
+they will not be same. I will introduce it in below.)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">For
+example, when GDB uses command next or nexti, it will get the
+structure frame of the current function. After debugged program run
+one step, GDB will get the structure frame of the current function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+caller function. If this frame is same with the first frame, it means
+that debugged program running into a function. Then GDB will insert
+breakpoint to the return address of this function to make it pass
+this function fast. The compare code and deal code is begin in
+GDB/gdb/infrun.c:handle_inferior_event:2285.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+GDB command finish uses frame message to get the return address of
+current function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Frame
+is divided to 4 types: they are NORMAL_FRAME that is simple frame,
+DUMMY_FRAME that GDB use it to call function of debugged program with
+itself, SIGTRAMP_FRAME that GDB signal handler use it and
+SENTINEL_FRAME that store the information of current instruction
+(NORMAL_FRAME is message of current function). They will be
+introduced in below.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.2.
+struct frame_info</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+structure is stored most data of a frame. It is defined in
+GDB/gdb/frame.c because the other files only use the pointer of this
+structure.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+main member of frame_info:</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+level</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is the level of the frame. The level of current function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+frame is 0. The level of current function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+caller function is 1. The rest may be deduced by analogy. I will call
+them high level and low level.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">There
+is a special level is </span></font></font>每<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1.
+Generally, the frame that level is </span></font></font>每<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1
+is SENTINEL_FRAME. The data of this frame is get from an instruction.
+Each instruction will have a special SENTINEL_FRAME. GDB always need
+a frame, so it uses the SENTINEL_FRAME to be the frame that lowers
+than the frame of current function 1 level.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">const
+struct frame_unwind *unwind;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+structure is main member of frame_info to control. TARGET can set
+functions and variables to it to control the frame. It will be
+expanded in below.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Note
+that the const makes it can be set only once.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+*prologue_cache;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+pointer uses to transfer data between functions of unwind. It will be
+expanded in below.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">struct
+{</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">  <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+p;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">  <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CORE_ADDR
+value;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">}
+prev_pc;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+value of this structure saves the return address of the frame</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+function. So this address is part of function which frame is higher
+than the current function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+frame 1 level. Then the structure named prev_pc. The p uses to make
+sure if the value is valid or not.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">struct</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">{</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">  <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CORE_ADDR
+addr;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">  <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+p;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">}
+prev_func;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+addr of this structure save the begin address of function which frame
+is higher than the current function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+frame 1 level. The p uses to make sure if the value is valid or not.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">struct</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">{</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">  <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+p;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">  <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">struct
+frame_id value;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">}
+this_id;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+structure is the ID of the frame. It uses to compare the frame. When
+GDB compare 2 frames, it will compare this structure of the frames.
+The p uses to make sure if the value is valid or not. This structure
+will be extended in below.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">struct
+frame_info *next;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+pointer points to the frame that lowers than the current frame 1
+level.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">struct
+frame_info *prev;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+pointer points to the frame that higher than the current frame 1
+level.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+prev_p;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+variable uses to make sure if the member prev is valid or not. Before
+GDB use the prev, it needs to check the prev_p. If prev_p is 1, GDB
+can use the prev directly. If prev_p is 0, GDB need to get the value
+of prev first. To get more messages, you can read the comments.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.3.
+struct frame_id</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+structure is ID of frame. It was defined in GDB/gdb/frame.h.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+main member of frame_id:</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CORE_ADDR
+stack_addr;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is the stack address of frame</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+function. Generally, this is the stack address when the frame</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+function was called and before it allocates the stack.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">unsigned
+int stack_addr_p : 1;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+variable uses to make sure if the stack_addr is valid or not</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CORE_ADDR
+code_addr;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is the begin address of the frame</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">unsigned
+int code_addr_p : 1;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+variable uses to make sure if the code_addr is valid or not</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CORE_ADDR
+special_addr;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is the frame's special address.  This shall be constant through out
+the lifetime of the frame.  This is used for architectures that may
+have frames that do not change the stack but are still distinct and
+have some form of distinct identifier (e.g. the ia64 which uses a 2nd
+stack for registers).  This field is treated as unordered - i.e. will
+not be used in frame ordering comparisons such as frame_id_inner().</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">unsigned
+int special_addr_p : 1;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+variable uses to make sure if the special_addr is valid or not</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.4.
+Get the frame_info of current function</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Use
+GDB/gdb/frame.c:get_current_frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+following is running process of the function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">First,
+check the register, stack and memory of current target (This is not
+TATGET. This is debug target. See GDBINT 10.). If any of them is
+NULL, throw error.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Second,
+Call function GDB/gdb/frame.c:create_sentinel_frame to get
+sentinel_frame. The sentinel_frame is SENTINEL_FRAME that introduced
+in chapter 7.1 and chapter 7.2.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+function create_sentinel_frame, it allocates memory for structure
+frame_info first. Set the level of frame_info to </span></font></font>每<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1.
+After that, initialize the prologue_cache and unwind. The
+prologue_cache is save the value of registers. Unwind is set to
+GDB/gdb/sentinel-frame.c:sentinel_frame_unwind. Set the next point to
+the frame itself. Then access the frame that is lower than this frame
+1 level will access to this frame. Set frame_id to
+GDB/gdb/frame.c:null_frame_id. Then all the comparisons with it
+should fail. Return the frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Third,
+Use function GDB/gdb/top.c:catch_exceptions call function
+GDB/gdb/frame.c:unwind_to_current_frame. This function will call
+function GDB/gdb/frame.c:get_prev_frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+function get_prev_frame, it will do some check first. After that,
+call function GDB/gdb/frame.c:get_prev_frame_1 to do the real work.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+get_prev_frame_1, check if this_frame-&gt;prev_p is true first. If
+this_frame-&gt;prev is true, this_frame-&gt;prev is valid, return the
+this_frame-&gt;prev directly. Set this_frame-&gt;prev_p to 1 because
+GDB will begin set this_frame-&gt;prev. Check this_frame. If it</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+ok, allocate memory for prev_frame. GDB set prev_frame-&gt;level to
+this_frame-&gt;level + 1. It means that prev_frame is higher than
+this_frame 1 level. Set the prev and next. Return the prev_frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Then
+GDB got a frame that is higher than sentinel_frame 1 level. This is
+the frame of current function. Set this frame to current_frame. You
+will find that a lot of member of current_frame is not valid. When
+GDB want to access to a member of current_frame, it will check if
+this member is valid. If it isn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+valid, it will get it first.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Fourth,
+Return current_frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.5.
+Get the frame_id of a frame_info</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Use
+GDB/gdb/frame.c:get_frame_id.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+following is running process of the function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">First,
+check the this_id.p of frame_info. Return this_id.value if this_id.p
+is true.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Second,
+Check if the unwind of frame_info is NULL. If it</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+NULL, call GDB/gdb/frame-unwind.c:frame_unwind_find_by_frame to get
+unwind.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+function frame_unwind_find_by_frame, get structure frame_unwind table
+from gdbarch. After that, call entry-&gt;sniffer function pointer and
+entry-&gt;unwinder-&gt;sniffer of all the member of frame_unwind
+table. If any of these functions return true, return this structure
+frame_unwind. About how to register a structure frame_unwind to
+gdbarch will be introduced in chapter 7.8.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Third,
+Call function pointer this_id of frame_unwind structure, get
+this_id.value and set this_id.p to 1. Return this_id.value.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+structure of function GDB/gdb/frame.c:frame_register_unwind that uses
+to get register</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+value of a frame_info likes the function get_frame_id</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+structure. The only difference of them is this_id of
+frame_register_unwind and prev_register of frame_register_unwind. So
+it will not be introduced.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.6.
+Get the return address of a frame_info</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+function</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Use
+function GDB/gdb/frame.c:frame_pc_unwind. This address of is the key
+that to get the higher frame_info because this address is a part of
+higher function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+following is running process of the function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">First,
+check the prev_pc.p of frame_info. Return prev_pc.value if prev_pc.p
+is true.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Second,
+Check if the gdbarch is set the function unwind_pc (About howto set
+unwind_pc to gdbarch will be introduced in chapter 7.8.). If function
+is set, call it to get the pc. Set pc to the prev_pc.value and set 1
+to the prev_pc.p. Return prev_pc.value.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Third,
+Check if the level of frame is lowers than 0. If yes, the frame is
+the sentinel_frame. Then GDB call read_pc to get current pc. Set pc
+to the prev_pc.value and set 1 to the prev_pc.p. Return
+prev_pc.value.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Fourth,
+if all the comparison is fail, throw error.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">I
+think the function names of frame_pc_unwind and unwind_pc in gdbarch
+is not very good. They all use to get the pc of the frame that higher
+than the current frame. But This function named frame_pc_unwind. It
+mislead the people think that the function uses to get the begin
+address of current function. So I think the good function names are
+frame_prev_pc_unwind and unwind_prev_pc.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.7.
+Get the begin address of the function that higher than a frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Use
+GDB/gdb/frame.c:frame_func_unwind.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+following is running process of the function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">First,
+check the prev_func.p of frame_info. Return prev_func.addr if
+prev_func.p is true.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Second,
+Call function GDB/gdb/frame.c:frame_unwind_address_in_block. The main
+work of this function is call function frame_pc_unwind. This fnction
+Get the return address of a frame_info</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+function. Then GDB get an address of the function that higher than
+this frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Third,
+Call function GDB/gdb/blockframe.c:get_pc_function_start. This
+function will parse the symbol table and use the address get the
+begin address of the function. Set this address to prev_func.addr and
+return.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">I
+think this function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+name has the same problem with the function frame_pc_unwind</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+name.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.8.
+Gdbarch setup functions that is related with frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+frame_unwind_append_sniffer (struct gdbarch *gdbarch,
+frame_unwind_sniffer_ftype *sniffer)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+frame_unwind_sniffer_ftype type function to gdbarch. Note that you
+can set more than one frame_unwind_sniffer_ftype type functions to
+gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Each
+frame_unwind_sniffer_ftype type function that is set to gdbarch is
+related with a structure frame_unwind pointer. The main function of
+it is called in function frame_unwind_find_by_frame that has already
+been introduced in 7.5.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Generally,
+frame_unwind_sniffer_ftype type function will call function
+GDB/gdb/frame.c:frame_pc_unwind to get the address of current frame</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+function. If the structure frame_unwind pointer that is related with
+the function accords with this address, return the structure
+frame_unwind pointer. Return NULL if not.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+the object file of TARGET supports DWARF2 debug format, you can set
+GDB/gdb/dwarf2-frame.c:dwarf2_frame_sniffer directly. Then will use
+the GDB/gdb/dwarf2-frame.c:dwarf2_frame_unwind to parse the frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+function frame_unwind_find_by_frame, if the last sniffer function
+returns fail, function frame_unwind_find_by_frame will throw error
+and GDB will exit. So I think the function that
+frame_unwind_append_sniffer set last one will return structure
+frame_unwind pointer directly. This frame_unwind pointer is saved the
+base frame parse functions such as disassemble to get the frame
+message. This will be extended in 7.9.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_unwind_pc (struct gdbarch *gdbarch,
+gdbarch_unwind_pc_ftype *unwind_pc)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_unwind_pc_ftype type function to gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Gdbarch_unwind_pc_ftype
+type function will be called function GDB/gdb/frame.c:frame_pc_unwind
+that be introduced in 7.6. </span></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Generally,
+the set function will call function
+GDB/gdb/frame.c:frame_unwind_register_unsigned or function
+get_frame_register_signed (These functions will call function
+GDB/gdb/frame.c:frame_register_unwind that introduced in 7.5) to get
+a register</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+value from stack. This value is the return address of the function.
+To choice the register is according to the frame_unwind structure</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+function that is called by frame_register_unwind. Such as some ARCHs
+return the value of PC because place of PC in stack saves the return
+address of the function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">7.9.
+struct frame_unwind</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+structure is defined in GDB/gdb/frame-unwind.h. The function pointer
+of this structure is the main frame parse function. They will be
+extended in below.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">enum
+frame_type type;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is the type of frame. Generally, the type of a frame_unwind that will
+return by frame_unwind_sniffer_ftype type function is set to
+NORMAL_FRAME.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+following two functions of frame_unwind will all get the value of
+register from stack. So in most TARGETs, they have a function to
+parse the stack and set the result to the parameter pointer
+this_cache.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+pointer this_cache point the prologue_cache of current frame. So
+memory that it point to saves the frame message of the frame. Each
+ARCH is so different with the others. So each ARCH will use a
+structure point to this memory such as MIPS use struct
+mips_frame_cache (defined in GDB/gdb/mips-tdep.c). Generally, this
+structure include a CORE_ADDR type variable that uses to save the
+stack address of frame</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+function and a GDB/gdb/trad-frame.h:trad_frame_saved_reg type
+structure that saves the values of the registers.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+following is running process of the stack parse function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">First,
+Check if *this_cache is NULL. If *this_cache is not NULL, frame was
+parsed and *this_cache was set the value of stack message. This value
+can be use directly. Then the function can return.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Second,
+Call function GDB/gdb/frame.h:FRAME_OBSTACK_ZALLOC to allocate memory
+for structure that save the frame message. The parameter is the
+length of this structure.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Third,
+if the structure has the trad_frame_saved_reg type pointer, you
+should call function GDB/gdb/trad-frame.c:trad_frame_alloc_saved_regs
+and use next_frame to be the parameter to allocate memory for
+trad_frame_saved_reg type pointer and initialize it.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Fourth,
+the main work of parse the frame is that get the stack address of
+frame function. This address is the stack address before function
+allocates memory from stack.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+the ARCH has the BP register, you can get the stack address from BP
+register of next frame because BP saves the stack address. When this
+function call another function, called function that is related with
+next_frame will save the BP to stack.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+the ARCH doesn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+have BP register, you need get the stack address of next_frame first.
+After that, get the length of memory that this function allocate from
+stack (This is the main work of parse the stack. Maybe you can use
+the debug message to get this length. Or you can disassemble the code
+to get this length.). Then if stack of ARCH is increase to low
+address of memory, add the stack address of next_frame to length,
+this is stack address of frame function. If stack of ARCH is increase
+to high address of memory, subtract length from next_frame</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+stack address.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Fifth,
+saves stack address and register values to *this_cache. If the
+structure has the trad_frame_saved_reg type pointer, you can call
+function GDB/gdb/trad-frame.c:trad_frame_set_value to set a register
+value to the structure.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Note
+that function unwind_pc that introduced in before will get the value
+of a register to be the return address of the function. So this
+register need set the return address of the function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">frame_this_id_ftype
+*this_id;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+function pointer uses to get the frame_id of the frame that higher
+than the parameter next_frame 1 level.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+function will call stack parse function to the stack message first.
+After that, if your stack frame is general, you can call function
+GDB/gdb/frame.c:frame_id_build to get the frame_id. The first
+parameter of this function is the stack address. The second is the
+begin address of the function of the frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">frame_prev_register_ftype
+*prev_register;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Unwind
+the register value from the frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+function will call stack parse function to the stack message first.
+If use trad_frame_saved_reg type saves the register value, you can
+call GDB/gdb/trad-frame.c:trad_frame_get_prev_register to set this
+value to return memory.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">8.
+Dummy frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">8.1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+GDB, you can use command call or command print to call a function of
+debugged program. It needs to create a dummy frame that type is
+DUMMY_FRAME. After that, GDB use this dummy frame to call the
+function of debugged program (because GDB always need a frame). The
+following is the introduction of dummy frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">8.2.
+struct value *call_function_by_hand (struct value *function, int
+nargs, struct value **args)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+function is defined in GDB/gdb/infcall.c. When user uses GDB command
+call a function of debugged program, GDB will call the function in
+GDB/gdb/printcmd.c first. Then the function in GDB/gdb/eval.c will be
+called. In last, GDB will call function call_function_by_hand to
+complete the work that create the dummy frame and call the function
+of debugged program. So make clear call_function_by_hand is helpful
+to make clear the dummy frame. I will introduce it in below.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+first parameter of this function is the structure that introduces the
+called function. The second is the number of called function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+parameter. The third is the values of the called function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+parameter.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+following is running process of the function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">First,
+Call target_has_execution to check if current_target is in executing
+status. Throw error if not. GDB can call function of debugged program
+only if debugged program is in executing status.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Second,
+Save the message of debugged program</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+status such as values of registers and allocate memory for some
+pointers.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Third,
+Call function GDB/gdb/regcache.c:read_sp to get current stack pointer
+(generally, this is the value of SP register.).</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Call
+function gdbarch_frame_align_p make sure if gdbarch is set the
+function frame_align (it will be introduced in 8.3).</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+gdbarch did not set it, jump over the code that uses to align the SP
+because current ARCH doesn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+need to align the SP in this place.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Call
+INNER_THAN (introduced in 5.5) make sure if the stack of ARCH is
+increase to low address of memory or increase to high address of
+memory. According to it, GDB allocate gdbarch_frame_red_zone_size
+(introduced in 8.3) length memory from stack. Some ARCH</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+ABI make the code can use the memory out of the stack. This place of
+memory called red zone. Its feature is if the function that uses red
+zone calls another function, red zone will be allocated to another
+function, so the data in it will be destroy. So before call another
+function, this function need allocate red zone memory to itself. Now,
+GDB call debugged function with itself, so it need allocate red zone
+with itself. If the ARCH</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+ABI doesn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+support red zone, the gdbarch_frame_red_zone_size will be set to 0.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB
+checks align of SP accord to gdbarch_frame_align. Throw error if not
+align.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Check
+if the new SP is equal with the old SP. If they are equal, GDB will
+allocate 1 byte from SP and call gdbarch_frame_align to make it
+align. The comment in this place expand why GDB do that. My
+understanding about it: In RISC ARCH, a function that doesn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+have parameter and return value is not structure will not change the
+SP because the RISC ARCH</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+API likes to put the return address of this function to a special
+register. (CISC ARCH don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+have this problem because their API (such as X86) like to put the
+return address to the stack.) In above, I introduced that SP is the
+important value that uses to generate the frame_id that uses to
+compare the frame. Same SP will generate the same frame_id possibly.
+So when frame_unwind_find_by_frame search the list frame_unwind_data,
+it will call GDB/gdb/dummy-frame.c:dummy_frame_sniffer first (See 8.3
+to make clear why it call dummy_frame_sniffer first.). Function
+dummy_frame_sniffer search the list dummy_frame_stack. If there are a
+lot of dummy frames in list dummy_frame_stack and some frame_id of
+them is same, this function dummy_frame_sniffer will always the first
+frame_id. It is wrong. So we do it to make each frame_id of frame is
+not same with the others.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+gdbarch is set frame_align, GDB will use SP directly. There is some
+comment said that don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+set frame_align to gdbarch is not very good. But I think ARCH can
+deal with SP in push_dummy_call of gdbarch. Of course, deal with SP
+in frame_align is clearer than do it in push_dummy_call.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Fourth,
+parse the first parameter of call_function_by_hand to get the
+debugged function address. Make sure if the return type of debugged
+function is struct and set it to struct_return.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Fifth,
+GDB do different work according to CALL_DUMMY_LOCATION. Generally, it
+is defined with variable call_dummy_location of gdbarch. It</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+the location of dummy call function return. GDB will set breakpoint
+to this place. There are 3 locations ON_STACK, AT_ENTRY_POINT and
+AT_SYMBOL.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ON_STACK,
+GDB set return address to stack. It needs call function
+GDB/gdb/infcall.c:push_dummy_code to allocate memory for the
+breakpoint.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">AT_ENTRY_POINT,
+it is the most use way in GDB. GDB set return address to the value of
+symfile_objfile-&gt;ei.entry_point.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">AT_SYMBOL,
+it only uses in MIPS. GDB set return address to the address of symbol
+__CALL_DUMMY_ADDRESS.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Sixth,
+deal with parameter and return address of debugged function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Seventh,
+if gdbarch wasn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+set push_dummy_call, throw error. Call function
+gdbarch_push_dummy_call push current SP value and register value to
+the stack.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Eighth,
+Call frame_id_build to get dummy_id that is the frame_id of the frame
+that higher than the debugged function</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+frame. Set breakpoint in the place that selected in the fifth step.
+Then debugged program can be break after called function return. In
+that time, GDB can return to normal status. Call
+GDB/gdb/dummy-frame.c:dummy_frame_push to add dummy_id to list
+dummy_frame_stack (introduce in below).</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Ninth,
+function does some initialization work. Call function
+GDB/gdb/infrun.c:proceed to running the debugged function. The
+parameter real_pc is the address of executer. When function
+GDB/gdb/infrun.c:proceed return, the debugged function will return.
+GDB do some work to return the normal status.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Function
+call_function_by_hand return.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">8.3.
+Gdbarch setup functions that is related with dummy frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_unwind_dummy_id (struct gdbarch *gdbarch,
+gdbarch_unwind_dummy_id_ftype *unwind_dummy_id)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_unwind_dummy_id_ftype type function to gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Generally,
+the set function calls function frame_id_build to get the frame_id of
+the current frame. The first parameter of frame_id_build is the
+current SP that is gotten from next_frame. The second parameter of
+frame_id_build is the current PC that is gotten from next_frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+function dummy_frame_sniffer that is introduced in above, it will
+call the function that is set by set_gdbarch_unwind_dummy_id. The
+following is called process of the function dummy_frame_sniffer: the
+frame_unwind structure dummy_frame_unwinder that include the function
+dummy_frame_sniffer is registered to list frame_unwind_data by
+function frame_unwind_init. Function frame_unwind_init is called by
+_initialize_frame_unwind. So when GDB call function
+frame_unwind_find_by_frame to get the frame_unwind structure of a
+frame, the dummy_frame_unwinder will be check first, then the
+function dummy_frame_sniffer will be called first.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+function dummy_frame_sniffer uses to make sure if the current frame
+is dummy frame. In this function, it will call set function pointer
+unwind_dummy_id to get the current frame_id. After that, it will
+compare this frame_id with each frame_id which frame is set to list
+dummy_frame_stack by function dummy_frame_push. If a frame</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+frame_id is equal with current frame_id, Function
+frame_unwind_find_by_frame will return the dummy_frame_unwinder. The
+reason is only dummy_frame_unwinder can unwind the dummy frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">According
+to the introduction in above, you can see that even if you don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+want to support dummy frame in your TARGET, you need to call
+set_gdbarch_unwind_dummy_id to set an unwind_dummy_id function. If
+not, GDB will not be use.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_frame_align (struct gdbarch *gdbarch,
+gdbarch_frame_align_ftype *frame_align)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_frame_align_ftype type function to gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function has already been introduced in 8.2. It uses to align the
+address.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+your TARGET doesn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+want to support dummy frame, you don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+need to set this function.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_frame_red_zone_size (struct gdbarch *gdbarch, int
+frame_red_zone_size)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+frame_red_zone_size that is the size of red zone to the gdbarch. The
+related macro is FRAME_RED_ZONE_SIZE.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+your TARGET</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+ABI doesn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+support red zone, you don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+need to set frame_red_zone_size.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_call_dummy_location (struct gdbarch *gdbarch, int
+call_dummy_location)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+call_dummy_location that point out the return place of dummy call
+function to the gdbarch. The related macro is CALL_DUMMY_LOCATION.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+your TARGET supports dummy call, you need to set it. It has already
+been introduced in 8.2. Most of time, it is set to AT_SYMBOL.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_push_dummy_code (struct gdbarch *gdbarch,
+gdbarch_push_dummy_code_ftype *push_dummy_code)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_push_dummy_code_ftypetype function to gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+call_dummy_location is set to ON_STACK, GDB will call function
+push_dummy_code to allocate memory for breakpoint. If your TARGET set
+gdbarch_push_dummy_code_ftype function, function push_dummy_code will
+call this function. If not set, function push_dummy_code will call
+GDB/gdb/infcall.c:generic_push_dummy_code.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function will only be call if call_dummy_location set to
+ON_STACK. If your operation is sample, you don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+need to set this function. Then GDB will call generic_push_dummy_code
+directly.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+set_gdbarch_push_dummy_call (struct gdbarch *gdbarch,
+gdbarch_push_dummy_call_ftype *push_dummy_call)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Set
+gdbarch_push_dummy_call_ftype type function to gdbarch.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+set function uses to set the current stack and register to the status
+that after call function instruction is executed. Then after call
+this function GDB can execute the called function begin with its
+first instruction.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Parameter
+function of set function is the structure that introduces the called
+function. Parameter regcache is the current registers. You can use
+regcache_cooked_write_unsigned function and others set this structure
+to set current registers. Parameter bp_addr is the return address of
+the called function. Parameter nargs and args are the parameter
+number and values of called function. If parameter struct_return is
+true, the return value of called function is structure. Then the
+parameter struct_addr is the address that uses to set the return
+value.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Generally,
+bp_addr will be set to RA register (RISC ARCH) or be pushed to stack
+(CISC ARCH). After that, if parameter is true, set the parameter
+struct_addr to called function, sometime it will be the first
+parameter of called function. Last, function set nargs and args to
+the stack or the register. The set function is related with ABI of
+TARGET.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">If
+you don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+set gdbarch_push_dummy_call_ftype type function, your TARGET will not
+supports dummy frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.
+Sigtramp frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.1.
+Overview</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+some OS, the signal handler function will return to some code called
+signal trampoline. When GDB debug the signal handler function, it
+will unwind the frame of signal trampoline code. And this code</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+structure is special. So it need use sigtramp frame that type is
+SIGTRAMP_FRAME.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">There
+are two ways to make sure if current PC is in signal trampoline. They
+will be introduced in below.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.2.
+Basic parses way</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">In
+some TARGETs, they have clear way to make sure if a pc in signal
+trampoline. For example, area of signal trampoline is clear, you can
+make sure if PC is in signal trampoline through it. Or you can parse
+out the function name of PC, and make sure if PC is in signal
+trampoline according to this name. If your TARGET has clear way, you
+can use simple frame unwind way to unwind the Sigtramp frame. A lot
+of TARGETs use this way to unwind the sigtramp frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+following will talk about how to write it. In initialization
+function, you can call function frame_unwind_append_sniffer to
+register the sniffer function like register simple frame sniffer
+function. In this function, it uses a way to make sure if the PC is
+in signal trampoline. If yes, return a structure frame_unwind. If
+not, return NULL. The difference between this structure frame_unwind
+and simple frame structure frame_unwind is that the type of first is
+set to SIGTRAMP_FRAME. The other members of this structure are same
+with the structure of the simple frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.3.
+tramp_frame_prepend_unwinder way</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Another
+TARGETs don</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+have clear way to make sure if a pc in signal trampoline. It does it
+through parse the code. Because this way use function
+tramp-frame.c:tramp_frame_prepend_unwinder to register the parse
+structure tramp_frame, it called tramp_frame_prepend_unwinder way.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.3.1.
+void tramp_frame_prepend_unwinder (struct gdbarch *gdbarch, const
+struct tramp_frame *tramp_frame)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+first work of this function is that allocate memory for structure
+frame_unwind. After that, set tramp_frame, some variables and some
+functions to it. Call function
+frame-unwind.c:frame_unwind_prepend_unwinder set this frame_unwind
+structure to list frame_unwind.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+function frame_unwind_prepend_unwinder likes the function
+frame_unwind_append_sniffer that is introduced in above. But function
+frame_unwind_prepend_unwinder is that set the structure frame_unwind
+to the beginning of the list. Function frame_unwind_append_sniffer is
+allocate a frame_unwind structure, set sniffer to this structure and
+add this structure to the end of the list. </span></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+function frame_unwind_prepend_unwinder is only called by the function
+tramp_frame_prepend_unwinder.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.3.2.
+Struct tramp_frame</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+structure is defined in tramp-frame.h. The following is the
+introduction of its members.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">enum
+frame_type frame_type;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is the type of the frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+insn_size;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is the size of the ARCH</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">s
+instruction.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">struct</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">{</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">  <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ULONGEST
+bytes;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">  <font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ULONGEST
+mask;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">}
+insn[8];</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+array is use in function tramp-frame.c:tramp_frame_sniffe (introduced
+in 9.3.3). It saves the instruction list that uses to compare with
+the instructions in the debugged program. The last member of it
+always set to TRAMP_SENTINEL_INSN. It doesn</span></font></font>＊<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">t
+use to compare. It is the sign of list end. The usage of this array
+will be introduced in 9.3.3.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+(*init) (const struct tramp_frame *self, struct frame_info
+*next_frame, struct trad_frame_cache *this_cache, CORE_ADDR func);</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+function pointer is called in function
+tramp-frame.c:tramp_frame_cache (introduced in 9.3.4). It uses to get
+the values of registers that save in the memory. The usage of this
+function pointer will be introduced in 9.3.4.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.3.3.
+static int tramp_frame_sniffer (const struct frame_unwind *self,
+struct frame_info *next_frame, void **this_cache)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+is one of the functions that are set to structure frame_unwind by
+tramp_frame_prepend_unwinder. It will be called by
+frame_unwind_find_by_frame to make sure if the current frame is
+sigtramp frame. The process of this function is that gets current PC
+from next_frame and does some basic check. Last, this function calls
+function tramp_frame_start.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Function
+tramp_frame_start compare the code with the instruction list that
+saved in insn of the structure tramp_frame in a lot of times. The
+begin address of this code is from current PC to current PC
+subtraction the size of instruction list (not include
+TRAMP_SENTINEL_INSN). Each comparison is from the first member of
+instruction list to the before of TRAMP_SENTINEL_INSN. The way of
+comparison is that do and operation with real instruction in code and
+the mask in insn and compares the result with byte in insn (In this
+way, each member of insn can compare a set of instructions). If they
+are equal, continue the next. If all of them are equal, This PC is in
+signal trampoline and the begin address of this comparison is the
+begin address of the signal trampoline. Return this address.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">9.3.4.
+static struct trad_frame_cache *tramp_frame_cache (struct frame_info
+*next_frame, void **this_cache)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+function is called by function tramp-frame.c:tramp_frame_this_id and
+function tramp-frame.c:tramp_frame_prev_register. They are all
+registered to the structure frame_unwind by
+tramp_frame_prepend_unwinder. The work of function tramp_frame_cache
+is same with the stack parse function that is introduced in 7.9.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+parameter this_cache of this function is use the structure
+tramp-frame.c:tramp_frame_cache. The func of this structure is the
+begin address of signal trampoline that is gotten in above.
+Tramp_frame is registered in tramp_frame_prepend_unwinder. Structure
+trad_cache uses to save the result of stack parse.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">This
+function allocates memory for the structure trad_cache first. After
+that, call function pointer init of structure tramp_frame.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Generally,
+the function that init point to get the begin address of memory that
+saves the values of registers according to the func (according to the
+TARGET) first. After that, call function
+trad-frame.c:trad_frame_set_reg_addr save the address of each
+register to the structure trad_frame_cache. Last, call
+trad-frame.c:trad_frame_set_id set frame_id to structure
+trad_frame_cache. This frame_id is get from function frame_id_build.
+Generally, the first parameter of function frame_id_build is the
+begin address of memory that saves the values of registers, the
+second is the func. </span></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">The
+values that are saved in structure trad_frame_cache will be use in
+function tramp_frame_this_id and function tramp_frame_prev_register.</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+</body>
+</html>

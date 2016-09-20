@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title></title>
+	<meta name="generator" content="LibreOffice 4.2.8.2 (Linux)">
+	<meta name="author" content="teawater">
+	<meta name="created" content="20160920;135531110237106">
+	<meta name="changedby" content="teawater">
+	<meta name="changed" content="20160920;135603971829612">
+	<style type="text/css">
+	<!--
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 120% }
+	-->
+	</style>
+</head>
+<body lang="zh-CN" dir="ltr">
+<p style="margin-bottom: 0cm; line-height: 100%">移植<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB(3)
+init.c</span></font></font>和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops
+v0.0</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">teawater&lt;teawater@gmail.com&gt;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">修改记录：</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">v0.0</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">	2006-02-27</span></font></font>，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">v0.0</span></font></font>版本编写完成。没有对<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构的每个元素进行详细介绍。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">	2006-02-07</span></font></font>，文档创建。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">目录</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1.</span></font></font>写在前面</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2.GDB/gdb/init.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2.struct
+target_ops</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3.struct
+target_ops current_target</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3.1.</span></font></font>概述</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3.2.</span></font></font>本地调试接口的装载</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1.</span></font></font>写在前面</p>
+<p style="margin-bottom: 0cm; line-height: 100%">本文针对<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB-6.3</span></font></font>进行编写。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">下面是本文将使用的缩写：</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBINT
+       GDB Internals Manual</span></font></font>的缩写。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB
+          </span></font></font>指<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>源文件目录。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ARCH
+         </span></font></font>体系结构名称。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET
+       </span></font></font>体系结构下的调试目标，一般是一种操作系统，比如<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Linux</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2.GDB/gdb/init.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个文件是在编译的时候动态生成的，具体生成的位置在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">/GDB/gdb/Makefile.in</span></font></font>的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1075</span></font></font>行开始的代码，这个文件会在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">configure</span></font></font>的时候作为模板生成<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">/GDB/gdb/Makefile</span></font></font>，那段生成<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">init.c</span></font></font>的代码就会在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">make</span></font></font>的时候被调用。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">这段生成<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">init.c</span></font></font>的代码主要的过程就是扫描所有编译中指定的库文件，比如指定在“移植<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB(1)”TARGET.mt</span></font></font>文件和“移植<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB(2)”TARGET.mh</span></font></font>文件的库文件，然后找出其中<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">_initialize_NAME(</span></font></font>后面的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">NAME</span></font></font>可以是任意名称<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">)</span></font></font>为名称的函数，在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">init.c</span></font></font>文件中生成一个函数<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">initialize_all_files</span></font></font>，对每个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">_initialize_NAME</span></font></font>进行调用。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">initialize_all_files</span></font></font>函数将被<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>初始化函数<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/top.c:gdb_init</span></font></font>调用，也就是每次<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>初始化的时候都会对其进行调用。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">所以库文件就可以通过包含一个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">_initialize_NAME</span></font></font>名字的文件来进行一些初始化的操作，比如在“移植<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB(1)5.2”</span></font></font>就介绍了在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">_initialize_ARCH_tdep</span></font></font>函数中调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbarch_register</span></font></font>函数注册<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbarch</span></font></font>，下面将介绍的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>大部分也都是通过<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">_initialize_NAME</span></font></font>函数进行初始化和注册的。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2.struct
+target_ops</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">struct
+target_ops</span></font></font>定义在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/target.h</span></font></font>文件中，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>中所有被调试的目标的控制和访问函数都被封装成这个结构，然后根据需要将结构装载到<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">current_target</span></font></font>上<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">(</span></font></font>后面会详细介绍<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">)</span></font></font>，当<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>调试的时候直接对<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">current_target</span></font></font>结构中的函数指针进行调用就可以。比如<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>的模拟功能<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">sim</span></font></font>、远程调试功能<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">remote</span></font></font>以及本地调试接口<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ptrace</span></font></font>、<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">procfs</span></font></font>等都以<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构封装的。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">大部分的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构都是先在前面介绍过的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">_initialize_NAME</span></font></font>函数中进行初始化，然后调用函数<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/target.c:add_target</span></font></font>注册到列表<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/target.c:target_structs</span></font></font>上。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3.struct
+target_ops current_target</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3.1.</span></font></font>概述</p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个结构就是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>用来控制当前被调试目标的结构，当系统初始化<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">(</span></font></font>设置为<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">dummy_target)</span></font></font>、读入可执行文件<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">(</span></font></font>设置为<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">exec_ops)</span></font></font>或者执行<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target</span></font></font>命令以后，就会调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/target.c:push_target</span></font></font>函数将需要的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构初始化到<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">current_target</span></font></font>上。当调用一些<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>命令的时候，则会调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">current_target</span></font></font>中的函数指针，也就对被调试目标进行了调试。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3.2.</span></font></font>本地调试接口的装载</p>
+<p style="margin-bottom: 0cm; line-height: 100%">因为这个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">.</span></font></font>本地调试接口的装载过程不是很直接，所以在这里对其进行一些介绍。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">第一步，在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>读入可执行文件的时候，会自动将<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/exec.c:exec_ops</span></font></font>装载到<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">current_target</span></font></font>上。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">第一步，当运行运行<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">run</span></font></font>的时候会调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/infcmd.c:run_command</span></font></font>函数，在这个函数进行了一系列的分析处理后，最后会调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/target.h:target_create_inferior</span></font></font>宏，这个宏调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">current_target.to_create_inferior</span></font></font>，这里将调用注册在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">exec_ops</span></font></font>上的函数<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/target.c:find_default_create_inferior</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">第二步，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">find_default_create_inferior</span></font></font>函数首先调用函数<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/target.c:find_default_run_target</span></font></font>，在这个函数将通过前面介绍过的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_structs</span></font></font>列表，扫描每个用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">add_target</span></font></font>注册的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构。先检查这个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构有没有注册<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">to_can_run</span></font></font>函数指针，如果有对这个函数指针进行调用，一般来说本地调试结接口的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构都会注册这个函数指针，而且函数都会返回<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1</span></font></font>，而非本地调试接口的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构则不会，所以都返回真的时候就记录这个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构在指针<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">runable</span></font></font>上，同时给<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">count</span></font></font>加<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">最后在扫描结束的时候检查<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">count</span></font></font>是否为<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1</span></font></font>，不为<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1</span></font></font>则报错，所以建议一个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>中只包含一个本地调试接口，最后返回<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">runable</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">第三步，然后调用这个返回的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">to_create_inferior</span></font></font>，这里会将这个调试接口的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构初始化到<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">current_target</span></font></font>上。比如在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/inftarg.c:child_create_inferior</span></font></font>就调用了<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/inftarg.c:ptrace_him</span></font></font>，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ptrace_him</span></font></font>第一步工作就是调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">push_target</span></font></font>将<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">deprecated_child_ops</span></font></font>装载到<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">current_target</span></font></font>上。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+</body>
+</html>

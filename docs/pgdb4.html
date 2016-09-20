@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title></title>
+	<meta name="generator" content="LibreOffice 4.2.8.2 (Linux)">
+	<meta name="author" content="teawater">
+	<meta name="created" content="20160920;135613832556054">
+	<meta name="changedby" content="teawater">
+	<meta name="changed" content="20160920;135640163754236">
+	<style type="text/css">
+	<!--
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 120% }
+	-->
+	</style>
+</head>
+<body lang="zh-CN" dir="ltr">
+<p style="margin-bottom: 0cm; line-height: 100%">移植<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB(4)
+gdbserver v0.0</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">teawater&lt;teawater@gmail.com&gt;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">修改记录：</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">v0.0</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">	2006-03-03</span></font></font>，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">v0.0</span></font></font>版本编写完成。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">	
+           struct target_ops</span></font></font>没作详细介绍。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">		
+   struct linux_target_ops</span></font></font>的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">breakpoint_reinsert_addr</span></font></font>介绍不是很清楚。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">	2006-03-01</span></font></font>，文档创建。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">目录</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1.</span></font></font>写在前面</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2.</span></font></font>整体结构描述</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3.GDBSERVER/configure.srv</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">4.GDBSERVER/Makefile.in</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.GDB/gdb/regformats/reg-ARCH.dat</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.GDBSERVER/linux-ARCH-low.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.1.struct
+linux_target_ops the_low_target</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.2.struct
+regset_info target_regsets[]</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1.</span></font></font>写在前面</p>
+<p style="margin-bottom: 0cm; line-height: 100%">本文针对<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB-6.3</span></font></font>进行编写。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>的移植是以完成<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbarch</span></font></font>的移植为基础的，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbarch</span></font></font>的移植可以参见“移植<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB(1)”</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">下面是本文将使用的缩写：</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBINT
+                 GDB Internals Manual</span></font></font>的缩写。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB
+                    </span></font></font>指<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>源文件目录。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER		</span></font></font>指<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER</span></font></font>源文件目录<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB/gdb/gdbserver</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ARCH
+                   </span></font></font>体系结构名称。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET
+                 </span></font></font>体系结构下的调试目标，一般是一种操作系统，比如<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Linux</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2.</span></font></font>整体结构描述</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>从程序结构的角度讲是独立于<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>本身的，在编译的时候也是需要单独编译的，但是因为其利用到了<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>目录中的一些文件，所以不能单独发布。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/server.c:main</span></font></font>函数是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>的核心部分，这个函数调用函数初始化<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>，跟远程的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>建立连接，对接到的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBRSP</span></font></font>控制包进行分析并调用相应的调试函数或者调试宏进行各种调试操作，然后把调试信息返回。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">每个调试函数和调试宏会根据需要调用注册在全局<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>结构<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">(</span></font></font>这个结构跟<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>中的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_ops</span></font></font>名称一样，功能类似，定义在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/target.h</span></font></font>中<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">)GDBSERVER/target.c:the_target</span></font></font>中的函数，这个全局变量<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">the_target</span></font></font>是向下层不同的被调试目标提供的调试接口，其的初始化一般是在前面介绍的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">main</span></font></font>函数调用的函数<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">initialize_low</span></font></font>完成。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">initialize_low</span></font></font>就定义在下层接口文件中，在编译的时候选择合适的下层接口文件就可以实现相应的支持。现有的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>代码中只有一个用来支持<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Linux</span></font></font>下<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ptrace</span></font></font>方式调试的下层调试接口<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/linux-low.c</span></font></font>。当然如果按照其结构编写，应该可以象<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>一样支持多种下层调试接口。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">在函数<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/linux-low.c:initialize_low</span></font></font>中，比较主要的操作有：</p>
+<p style="margin-bottom: 0cm; line-height: 100%">调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/target.c:set_target_ops</span></font></font>将<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/linux-low.c:linux_target_ops</span></font></font>注册到<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">the_target</span></font></font>上。<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux_target_ops</span></font></font>中的函数都会根据情况访问<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">the_low_target</span></font></font>结构中的函数和变量，这个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">the_low_target</span></font></font>是向每个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ARCH</span></font></font>提供的扩展接口，具体在下面介绍。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/mem-break.c:set_breakpoint_data</span></font></font>将<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">the_low_target</span></font></font>中声明的断点和断点长度设置到全局变量中去，其将在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>本身需要设置断点的时候使用。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">init_registers</span></font></font>函数初始化寄存器信息，这个函数是在编译的时候生成的，将在后面介绍其的生成过程。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">the_low_target</span></font></font>是在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-low.c</span></font></font>中为了方便其支持多个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ARCH</span></font></font>而定义的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux_target_ops</span></font></font>结构的接口，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux_target_ops</span></font></font>声明在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/linux-low.h</span></font></font>文件中。在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER</span></font></font>目录中，有几个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-ARCH-low.c</span></font></font>文件，每个文件中都有一个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">the_low_target</span></font></font>结构。在编译的时候只要选择合适的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-ARCH-low.c</span></font></font>文件一起编译，就可以支持相应的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ARCH</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3.GDBSERVER/configure.srv</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个文件将被<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/configure</span></font></font>调用，其的作用是根据前面程序分析得到的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">${target}</span></font></font>也就是当前的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>，设置一些编译的选项。文件的结构很简单，就不作详细介绍了，就介绍一下需要设置的选项：</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">srv_regobj=</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这是一个必须设置的选项，其标明了当前需要连接到<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>中的寄存器库文件也就是包含<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">init_registers</span></font></font>函数的库文件，后面将介绍这个库文件如何生成。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">srv_tgtobj=</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这是一个必须设置的选项，其标明了当前需要连接到<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>中的跟要编译<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>相关的库文件，一般来说是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-low.o(</span></font></font>由前面介绍过的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-low.c</span></font></font>生成<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">)</span></font></font>和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-ARCH-low.o(</span></font></font>由前面介绍过的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-ARCH-low.c</span></font></font>生成<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">)</span></font></font>，注意多个文件用分号包起来。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">srv_linux_usrregs=yes</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这是一个选择设置的选项，当设置了这个选项的时候，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">configure</span></font></font>将检查当前<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ptrace</span></font></font>系统调用是否支持<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PTRACE_POKEUSER</span></font></font>和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PTRACE_PEEKUSER</span></font></font>，如果支持编译的时候将设置宏<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">HAVE_LINUX_USRREGS</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">srv_linux_regsets=yes</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这是一个选择设置的选项，当设置了这个选项的时候，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">configure</span></font></font>将检查当前<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ptrace</span></font></font>系统调用是否支持<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">regset</span></font></font>相关的几个参数，如果支持编译的时候将设置宏<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">HAVE_LINUX_REGSETS</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">注意<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">srv_linux_usrregs</span></font></font>选项和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">srv_linux_regsets</span></font></font>选项至少要设置一个，否则<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-low.c</span></font></font>中的读取被调试程序目标的函数将无法正常编译。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">srv_linux_thread_db=yes</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这是一个选择设置的选项，当设置了这个选项的时候，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">configure</span></font></font>将检查当前<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>是否支持<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">libthread_db</span></font></font>这个用来调试多线程程序的库，如果支持编译的时候将设置宏<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">HAVE_THREAD_DB_H</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">4.GDBSERVER/Makefile.in</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">configure</span></font></font>的时候用来生成<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Makefile</span></font></font>的模板，如果需要加入新的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>也需要对这个文件进行修改。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">SFILES=</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">在这个项目最后加入新的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>增加的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">.c</span></font></font>文件，不过这个项目更编译<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>并没什么关系，是给<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">etags</span></font></font>使用的。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-ARCH-low.o:
+linux-ARCH-low.c $(linux_low_h) $(server_h)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这里是生成前面<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">srv_tgtobj=</span></font></font>标出的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">.o</span></font></font>文件的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Makefile</span></font></font>语句，后面会介绍这个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">.c</span></font></font>文件如何编写。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">reg-ARCH.o
+: reg-ARCH.c $(regdef_h)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">reg-ARCH.c
+: $(srcdir)/../regformats/reg-ARCH.dat $(regdat_sh)</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">	sh
+$(regdat_sh) $(srcdir)/../regformats/reg-ARCH.dat reg-ARCH.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这里是生成前面<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">srv_regobj=</span></font></font>标出的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">.o</span></font></font>文件的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Makefile</span></font></font>语句，用户要编写的文件是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">reg-ARCH.dat</span></font></font>，后面会介绍。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">5.GDB/gdb/regformats/reg-ARCH.dat</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个文件是用来标明某个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ARCH</span></font></font>的寄存器信息。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">name:ARCH</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">第一行写<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ARCH</span></font></font>的名称。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">expedite:name1,name2,name3</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这里表明的几个寄存器名称<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">name1,name2,name3</span></font></font>是在其后面声明的，在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>向<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">T</span></font></font>停止包<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">(</span></font></font>具体信息见<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Debugging
+with GDB: Remote Protocol D.3 Stop Reply
+Packets)</span></font></font>返回信息的时候，包中将包括这里指出的几个寄存器。当<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gdbserver</span></font></font>向<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>发送停止包的时候，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>通常需要取得当前<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">pc</span></font></font>，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">sp</span></font></font>等几个寄存器的值来确定被调试程序所在位置等信息，如果返回包没包含这些信息其就需要再发包请求，所以通常在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">T</span></font></font>停止包中会包含几个寄存器的值，这里就是用来指出哪些寄存器将出现在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">T</span></font></font>停止包中的，一般来说是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">pc</span></font></font>，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">sp</span></font></font>，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">bp</span></font></font>等几个寄存器。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">bit_num:name</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这里指出每个寄存器的位数和名称，前面的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">bit_num</span></font></font>是寄存器的位数，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">32</span></font></font>位就是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">32</span></font></font>，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">64</span></font></font>位就是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">64</span></font></font>。后面的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">name</span></font></font>写成寄存器的名称。有多少寄存器就写多少行。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.GDBSERVER/linux-ARCH-low.c</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.1.struct
+linux_target_ops the_low_target</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个文件最主要的部分就是声明<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">struct
+linux_target_ops
+the_low_target</span></font></font>，并初始化其中内容，这个变量在前面介绍过，其中的函数和变量会被<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-low.c</span></font></font>中的函数调用，现在来介绍一下这个结构中每个元素：</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+num_regs;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个变量用来标明寄存器的数量。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+*regmap;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">一般会让这个指针指向一个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int</span></font></font>类型的数组，这个数组的第<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">n</span></font></font>个元素的值是第<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">n</span></font></font>个寄存器的值在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">user</span></font></font>结构<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">(</span></font></font>这个结构的介绍见“移植<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB(2)”)</span></font></font>中的偏移，如果值设置为<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">-1</span></font></font>则表示这个寄存器的值在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">user</span></font></font>结构中不存在。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+(*cannot_fetch_register) (int);</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">注册在这个指针上的函数会判断参数指定序号的寄存器是否可以读取，如果不可以则返回真。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+(*cannot_store_register) (int);</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">注册在这个指针上的函数会判断参数指定序号的寄存器是否可以设置，如果可设置但是如果设置失败就报错返回<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">0</span></font></font>，如果不可设置返回<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">1</span></font></font>，如果可设置且设置失败不用报错返回<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CORE_ADDR
+(*get_pc) (void);</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">注册在这个指针上的函数用来取得被调试程序的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PC</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">void
+(*set_pc) (CORE_ADDR newpc);</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">注册在这个指针上的函数用来设置被调试程序的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PC</span></font></font>为<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">newpc</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">const
+char *breakpoint;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个指针指向当前<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>支持的断点内容。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+breakpoint_len;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个变量用来标明断点的长度。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CORE_ADDR
+(*breakpoint_reinsert_addr) (void);</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">如果当前的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ptrace</span></font></font>支持<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PTRACE_SINGLESTEP</span></font></font>也就是硬单步，则将这个函数指针设置为<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">NULL</span></font></font>就可以；如果不支持，设置在这个指针上的函数将当前被调试程序所在的函数的返回值返回，在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">RISC
+CPU</span></font></font>中通常都有一个返回地址寄存器，直接取出这个寄存器的值返回就可以了。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+decr_pc_after_break;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">因为某些<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ARCH</span></font></font>被断点中断后取得的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PC</span></font></font>值并不是被中断的值，所以需要减去这个值取得实际的被中断时候的地址。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+(*breakpoint_at) (CORE_ADDR pc);</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">注册在这个指针上的函数先取得指定地址<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">pc</span></font></font>上的内存，然后判断是否是从<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB</span></font></font>设置过来的断点，如果是则返回真。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">6.2.struct
+regset_info target_regsets[]</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">如果在前面介绍过的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/configure.srv</span></font></font>中设置了<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">srv_linux_regsets=yes</span></font></font>选项，也就是说有可能设置了<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">HAVE_LINUX_REGSETS</span></font></font>的时候，需要在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">linux-ARCH-low.c</span></font></font>中包含<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_regsets</span></font></font>结构数组。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个数组中的变量和函数指针将被<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/linux-low.c</span></font></font>文件中的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">regsets_fetch_inferior_registers</span></font></font>函数和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">regsets_store_inferior_registers</span></font></font>函数使用，这两个函数将使用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ptrace</span></font></font>系统调用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">regset</span></font></font>直接取得寄存器的信息。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">这个数组一般来说是有几个类型的寄存器就需要设置几个元素，一般的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">TARGET</span></font></font>都是定义<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">2</span></font></font>个元素普通寄存器和浮点寄存器，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">i386</span></font></font>在有扩展浮点寄存器的时候会定义<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">3</span></font></font>个比上面多一个扩展浮点寄存器。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">struct
+regset_info</span></font></font>定义在<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/linux-low.h</span></font></font>中，现在来介绍一下<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">regset_info</span></font></font>结构中的每个元素：</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+get_request, set_request;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">这两个参数是给<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ptrace</span></font></font>用的读寄存器信息和写寄存器信息用的参数，一般来说普通寄存器就是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PTRACE_GETREGS</span></font></font>和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PTRACE_SETREGS</span></font></font>，浮点寄存器就是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PTRACE_GETFPREGS</span></font></font>和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PTRACE_SETFPREGS</span></font></font>，扩展浮点寄存器<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">(i386</span></font></font>常见<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">)</span></font></font>就是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PTRACE_GETFPXREGS</span></font></font>和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PTRACE_SETFPXREGS</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">int
+size;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">取得和设置寄存器信息的长度，一般来说普通寄存器是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">sizeof
+(elf_gregset_t)</span></font></font>，浮点寄存器是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">sizeof
+(elf_fpregset_t)</span></font></font>，扩展浮点寄存器<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">(i386</span></font></font>常见<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">)</span></font></font>就是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">sizeof
+(elf_fpxregset_t)</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">enum
+regset_type type;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">分为三种类型：<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GENERAL_REGS</span></font></font>，普通寄存器；<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">FP_REGS</span></font></font>，浮点寄存器；<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">EXTENDED_REGS</span></font></font>，扩展浮点寄存器。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">regset_fill_func
+fill_function;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">注册在这个指针上的函数的作用是依次用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/regcache.c:collect_register</span></font></font>函数读出每个当前对应类型寄存器的值转化为相应的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">regset</span></font></font>结构并将其存到参数<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">BUF</span></font></font>相应位置中。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">regset_store_func
+store_function;</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%">注册在这个指针上的函数的作用是依次用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDBSERVER/regcache.c:supply_register</span></font></font>函数将参数<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">BUF</span></font></font>中的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">regset</span></font></font>结构的寄存器信息读出并存到相应的寄存器缓冲中。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">注意在使用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">target_regsets</span></font></font>的同时文件要包含<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB_GREGSET_T</span></font></font>和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GDB_FPREGSET_T</span></font></font>的定义，一般编写为：</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">#define
+GDB_GREGSET_T elf_gregset_t</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">#define
+GDB_FPREGSET_T elf_fpregset_t</span></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+</body>
+</html>

@@ -10,20 +10,33 @@
 <node COLOR="#0033ff" CREATED="1472708596511" ID="ID_1638893491" MODIFIED="1472804071716" POSITION="left" TEXT="My Projects">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
-<node COLOR="#00b439" CREATED="1474338938608" ID="ID_575319148" MODIFIED="1474338985847" TEXT="2006: Skyeye DBCT">
+<node COLOR="#00b439" CREATED="1472708440400" ID="ID_756456714" LINK="http://teawater.github.io/kgtp/" MODIFIED="1474351435507" TEXT="KGTP">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1472708553887" ID="ID_477053151" MODIFIED="1474351425093" TEXT="KGTP is a comprehensive dynamic tracer for analysing Linux kernel and application (including Android) problems on production systems in real time.">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1474346942731" ID="ID_207662382" MODIFIED="1474347490133" TEXT="GDB Reverse Debug and Process Record">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1474347420888" ID="ID_905890041" LINK="https://www.gnu.org/software/gdb/news/reversible.html" MODIFIED="1474347453132" TEXT="GDB and Reverse Debugging">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474347428520" ID="ID_1354850590" LINK="https://sourceware.org/gdb/wiki/ProcessRecord" MODIFIED="1474347465059" TEXT="Process Record and Replay">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474347438184" ID="ID_1211499164" LINK="prec/prec.pdf" MODIFIED="1474347479591" TEXT="slide">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1474338938608" ID="ID_575319148" MODIFIED="1474351440905" TEXT="2006: Skyeye DBCT">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1474339609600" ID="ID_949165" LINK="dbct/skyeye_dbct_doc.html" MODIFIED="1474340772023" TEXT="SKYEYE&#x6307;&#x4ee4;&#x52a8;&#x6001;&#x7ffb;&#x8bd1;&#x6a21;&#x62df;(DBCT)&#x5b9e;&#x73b0;&#x4ecb;&#x7ecd;">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 <node COLOR="#990000" CREATED="1474339616296" ID="ID_1870873388" LINK="dbct/skyeye_dbct_presentation.html" MODIFIED="1474340925791" TEXT="SKYEYE&#x6307;&#x4ee4;&#x52a8;&#x6001;&#x7ffb;&#x8bd1;&#x6a21;&#x62df;&#x8bb2;&#x5ea7;&#x63d0;&#x7eb2;">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#00b439" CREATED="1472708440400" ID="ID_756456714" LINK="http://teawater.github.io/kgtp/" MODIFIED="1472804071717" TEXT="KGTP">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1472708553887" ID="ID_477053151" MODIFIED="1474336420983" TEXT="KGTP is a comprehensive dynamic tracer for analysing Linux kernel and application (including Android) problems on production systems in real time.">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
@@ -80,6 +93,22 @@
 <node COLOR="#0033ff" CREATED="1472803961041" ID="ID_784008993" MODIFIED="1472804134439" POSITION="left" TEXT="My documents">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1474349523443" ID="ID_1281547563" MODIFIED="1474349533374" TEXT="Porting GDB">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1474349646051" ID="ID_725554885" LINK="docs/epgdb1.html" MODIFIED="1474351424205" TEXT="Porting GDB (1) arch and frame">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474349669043" ID="ID_221221096" LINK="docs/pgdb2.html" MODIFIED="1474351424384" TEXT="&#x79fb;&#x690d;GDB(2) native">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474349687275" ID="ID_709259693" LINK="docs/pgdb3.html" MODIFIED="1474351424552" TEXT="&#x79fb;&#x690d;GDB(3) init.c&#x548c;target_ops">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474349698563" ID="ID_1321333802" LINK="docs/pgdb4.html" MODIFIED="1474351424728" TEXT="&#x79fb;&#x690d;GDB(4) gdbserver">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
 <node COLOR="#00b439" CREATED="1472803992865" ID="ID_1742802608" LINK="docs/p4a.html" MODIFIED="1472804071738" TEXT="&#x5728;&#x5b89;&#x5353;&#x5e73;&#x53f0;&#x4e0a;&#x4f7f;&#x7528;Python&#x7684;&#x65b9;&#x6cd5; ">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>

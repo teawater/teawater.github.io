@@ -10,20 +10,33 @@
 <node COLOR="#0033ff" CREATED="1472708596511" ID="ID_1638893491" MODIFIED="1472804205566" POSITION="left" TEXT="&#x6211;&#x7684;&#x9879;&#x76ee;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
-<node COLOR="#00b439" CREATED="1474338938608" ID="ID_575319148" MODIFIED="1474340991222" TEXT="2006: Skyeye DBCT">
+<node COLOR="#00b439" CREATED="1472708440400" ID="ID_756456714" LINK="http://teawater.github.io/kgtp/" MODIFIED="1474351453379" TEXT="KGTP">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1472708553887" ID="ID_477053151" MODIFIED="1472804205567" TEXT="KGTP &#x662f;&#x4e00;&#x4e2a;&#x80fd;&#x5728;&#x4ea7;&#x54c1;&#x7cfb;&#x7edf;&#x4e0a;&#x5b9e;&#x65f6;&#x5206;&#x6790;Linux&#x5185;&#x6838;&#x548c;&#x5e94;&#x7528;&#x7a0b;&#x5e8f;(&#x5305;&#x62ec;Android)&#x95ee;&#x9898;&#x7684;&#x5168;&#x9762;&#x52a8;&#x6001;&#x8ddf;&#x8e2a;&#x5668;&#x3002;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1474346942731" ID="ID_207662382" MODIFIED="1474351457721" TEXT="GDB&#x53cd;&#x5411;&#x8c03;&#x8bd5;&#x548c;&#x8bb0;&#x5f55;&#x8c03;&#x8bd5;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1474347420888" ID="ID_905890041" LINK="https://www.gnu.org/software/gdb/news/reversible.html" MODIFIED="1474347776469" TEXT="GDB&#x53cd;&#x5411;&#x8c03;&#x8bd5;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474347428520" ID="ID_1354850590" LINK="https://sourceware.org/gdb/wiki/ProcessRecord" MODIFIED="1474347788621" TEXT="GDB&#x8bb0;&#x5f55;&#x8c03;&#x8bd5;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474347438184" ID="ID_1211499164" LINK="prec/prec.pdf" MODIFIED="1474347796477" TEXT="&#x5e7b;&#x706f;&#x7247;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1474338938608" ID="ID_575319148" MODIFIED="1474347723509" TEXT="2006: Skyeye&#x6307;&#x4ee4;&#x52a8;&#x6001;&#x7ffb;&#x8bd1;&#x6a21;&#x62df;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1474339609600" ID="ID_949165" LINK="dbct/skyeye_dbct_doc.html" MODIFIED="1474340772023" TEXT="SKYEYE&#x6307;&#x4ee4;&#x52a8;&#x6001;&#x7ffb;&#x8bd1;&#x6a21;&#x62df;(DBCT)&#x5b9e;&#x73b0;&#x4ecb;&#x7ecd;">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 <node COLOR="#990000" CREATED="1474339616296" ID="ID_1870873388" LINK="dbct/skyeye_dbct_presentation.html" MODIFIED="1474340925791" TEXT="SKYEYE&#x6307;&#x4ee4;&#x52a8;&#x6001;&#x7ffb;&#x8bd1;&#x6a21;&#x62df;&#x8bb2;&#x5ea7;&#x63d0;&#x7eb2;">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#00b439" CREATED="1472708440400" ID="ID_756456714" LINK="http://teawater.github.io/kgtp/" MODIFIED="1472804205567" TEXT="KGTP">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1472708553887" ID="ID_477053151" MODIFIED="1472804205567" TEXT="KGTP &#x662f;&#x4e00;&#x4e2a;&#x80fd;&#x5728;&#x4ea7;&#x54c1;&#x7cfb;&#x7edf;&#x4e0a;&#x5b9e;&#x65f6;&#x5206;&#x6790;Linux&#x5185;&#x6838;&#x548c;&#x5e94;&#x7528;&#x7a0b;&#x5e8f;(&#x5305;&#x62ec;Android)&#x95ee;&#x9898;&#x7684;&#x5168;&#x9762;&#x52a8;&#x6001;&#x8ddf;&#x8e2a;&#x5668;&#x3002;">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
@@ -80,6 +93,22 @@
 <node COLOR="#0033ff" CREATED="1472804212289" ID="ID_184369074" MODIFIED="1472804268077" POSITION="left" TEXT="&#x6211;&#x7684;&#x6587;&#x6863;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1474349523443" ID="ID_1281547563" MODIFIED="1474351336298" TEXT="Porting GDB">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1474349646051" ID="ID_725554885" LINK="docs/pgdb1.html" MODIFIED="1474351374977" TEXT="&#x79fb;&#x690d;GDB(1) arch&#x548c;frame v0.4">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474349669043" ID="ID_221221096" LINK="docs/pgdb2.html" MODIFIED="1474351083315" TEXT="&#x79fb;&#x690d;GDB(2) native">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474349687275" ID="ID_709259693" LINK="docs/pgdb3.html" MODIFIED="1474351296867" TEXT="&#x79fb;&#x690d;GDB(3) init.c&#x548c;target_ops">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1474349698563" ID="ID_1321333802" LINK="docs/pgdb4.html" MODIFIED="1474351307763" TEXT="&#x79fb;&#x690d;GDB(4) gdbserver">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
 <node COLOR="#00b439" CREATED="1472803992865" ID="ID_1742802608" LINK="docs/p4a.html" MODIFIED="1472804071738" TEXT="&#x5728;&#x5b89;&#x5353;&#x5e73;&#x53f0;&#x4e0a;&#x4f7f;&#x7528;Python&#x7684;&#x65b9;&#x6cd5; ">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
