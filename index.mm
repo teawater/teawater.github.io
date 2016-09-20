@@ -27,17 +27,17 @@
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
-<node COLOR="#00b439" CREATED="1472708619957" ID="ID_1905391322" LINK="http://teawater.github.io/cma/" MODIFIED="1472804071729" TEXT="CMA">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1472708659623" ID="ID_438199411" MODIFIED="1472804071729" TEXT="A GDB Python script that analyzes and records C/C++ application&apos;s dynamic memory status. ">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-</node>
 <node COLOR="#00b439" CREATED="1472708672687" ID="ID_1029802733" LINK="http://teawater.github.io/get-gdb/" MODIFIED="1472804071730" TEXT="Get-GDB">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1472708696477" ID="ID_420345347" MODIFIED="1472804071731" TEXT="A Python script to auto check version, download, build and install specified version GDB to current system.">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1472708619957" ID="ID_1905391322" LINK="http://teawater.github.io/cma/" MODIFIED="1474341750911" TEXT="CMA">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1472708659623" ID="ID_438199411" MODIFIED="1472804071729" TEXT="A GDB Python script that analyzes and records C/C++ application&apos;s dynamic memory status. ">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
@@ -90,6 +90,10 @@
 <font NAME="SansSerif" SIZE="18"/>
 </node>
 <node COLOR="#0033ff" CREATED="1472709833438" ID="ID_851068096" LINK="http://www.linkedin.com/in/teawater" MODIFIED="1472804071739" POSITION="right" TEXT="My Linkedin">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+</node>
+<node COLOR="#0033ff" CREATED="1474342066323" ID="ID_1594024145" LINK="https://500px.com/teawater" MODIFIED="1474344978930" POSITION="left" TEXT="My photo">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 </node>

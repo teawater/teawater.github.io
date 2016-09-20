@@ -27,17 +27,17 @@
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
-<node COLOR="#00b439" CREATED="1472708619957" ID="ID_1905391322" LINK="http://teawater.github.io/cma/" MODIFIED="1472804205571" TEXT="CMA">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1472708659623" ID="ID_438199411" MODIFIED="1472804205572" TEXT="&#x5206;&#x6790;&#x548c;&#x8bb0;&#x5f55;C/C++&#x7a0b;&#x5e8f;&#x52a8;&#x6001;&#x5185;&#x5b58;&#x72b6;&#x6001;&#x7684;GDB Python&#x811a;&#x672c;&#x3002;">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-</node>
 <node COLOR="#00b439" CREATED="1472708672687" ID="ID_1029802733" LINK="http://teawater.github.io/get-gdb/" MODIFIED="1472804205573" TEXT="Get-GDB">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 <node COLOR="#990000" CREATED="1472708696477" ID="ID_420345347" MODIFIED="1472804205573" TEXT="&#x53ef;&#x4ee5;&#x81ea;&#x52a8;&#x68c0;&#x67e5;&#x7248;&#x672c;&#xff0c;&#x4e0b;&#x8f7d;&#xff0c;&#x7f16;&#x8bd1;&#xff0c;&#x5b89;&#x88c5;&#x6307;&#x5b9a;&#x7248;&#x672c;GDB&#x5230;&#x5f53;&#x524d;&#x7cfb;&#x7edf;&#x7684;Python&#x811a;&#x672c;&#x3002;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1472708619957" ID="ID_1905391322" LINK="http://teawater.github.io/cma/" MODIFIED="1474341759431" TEXT="CMA">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1472708659623" ID="ID_438199411" MODIFIED="1472804205572" TEXT="&#x5206;&#x6790;&#x548c;&#x8bb0;&#x5f55;C/C++&#x7a0b;&#x5e8f;&#x52a8;&#x6001;&#x5185;&#x5b58;&#x72b6;&#x6001;&#x7684;GDB Python&#x811a;&#x672c;&#x3002;">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
@@ -90,6 +90,10 @@
 <font NAME="SansSerif" SIZE="18"/>
 </node>
 <node COLOR="#0033ff" CREATED="1472709833438" ID="ID_851068096" LINK="http://www.linkedin.com/in/teawater" MODIFIED="1472804205577" POSITION="right" TEXT="&#x6211;&#x7684;Linkedin">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+</node>
+<node COLOR="#0033ff" CREATED="1474342066323" ID="ID_1594024145" LINK="https://500px.com/teawater" MODIFIED="1474342081128" POSITION="left" TEXT="&#x6211;&#x7684;&#x7167;&#x7247;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 </node>
