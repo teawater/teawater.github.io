@@ -10,6 +10,10 @@
 <node COLOR="#0033ff" CREATED="1472708596511" ID="ID_1638893491" MODIFIED="1472804071716" POSITION="left" TEXT="My Projects">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1474351738446" ID="ID_487449301" LINK="https://lkml.org/lkml/2016/8/22/151" MODIFIED="1474351845114" TEXT="Make ZRAM just store the high compression rate page">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 <node COLOR="#00b439" CREATED="1472708440400" ID="ID_756456714" LINK="http://teawater.github.io/kgtp/" MODIFIED="1474351435507" TEXT="KGTP">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
