@@ -78,6 +78,18 @@
 </node>
 </node>
 </node>
+<node COLOR="#00b439" CREATED="1482714290397" ID="ID_905868622" MODIFIED="1482714321898" TEXT="ZRAM&#x90a3;&#x70b9;&#x4e8b;&#x2014;&#x2014;ZRAM&#x548c;ZSMALLOC&#x7b80;&#x4ecb;&#x53ca;3&#x4e2a;&#x95ee;&#x9898;&#x7684;&#x6539;&#x8fdb;&#x548c;1&#x4e2a;&#x63d0;&#x9ad8;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1482715093440" ID="ID_1449776539" LINK="presentation/zram_zsmalloc.pdf" MODIFIED="1482715178184" TEXT="&#x5e7b;&#x706f;&#x7247;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1482715100618" ID="ID_1647178410" MODIFIED="1482715119735" TEXT="&#x89c6;&#x9891;">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1482715183058" ID="ID_1042411367" LINK="https://www.youtube.com/playlist?list=PLf4a7-fwy8aWNp7AZWpegpUQ3AS5EnRAp" MODIFIED="1482718867521" TEXT="youtube"/>
+<node COLOR="#111111" CREATED="1482715191026" ID="ID_945034222" LINK="http://list.youku.com/albumlist/show?id=29028441" MODIFIED="1482718941015" TEXT="youku"/>
+</node>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1472709297884" ID="ID_1226999614" MODIFIED="1472804071734" POSITION="right" TEXT="My mindmap">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
