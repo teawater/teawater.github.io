@@ -90,6 +90,18 @@
 <node COLOR="#111111" CREATED="1482715191026" ID="ID_945034222" LINK="http://list.youku.com/albumlist/show?id=29028441" MODIFIED="1482718941015" TEXT="youku"/>
 </node>
 </node>
+<node COLOR="#00b439" CREATED="1483363549178" ID="ID_2232745" MODIFIED="1483364721116" TEXT="&#x652f;&#x6301;&#x4efb;&#x610f;&#x6570;&#x91cf;watchpoint&#x7684;&#x5efa;&#x8bae;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1483363562210" ID="ID_1076644864" LINK="presentation/watchpoint.pdf" MODIFIED="1483363727478" TEXT="&#x5e7b;&#x706f;&#x7247;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" CREATED="1483363573133" ID="ID_233526597" MODIFIED="1483363577508" TEXT="&#x89c6;&#x9891;">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1483363581301" ID="ID_909481001" LINK="https://youtu.be/VQzqMq49nO8" MODIFIED="1483364038156" TEXT="youtube"/>
+<node COLOR="#111111" CREATED="1483363589396" ID="ID_1036294534" LINK="http://v.youku.com/v_show/id_XMTg5NTk4MTMwMA==.html" MODIFIED="1483364054882" TEXT="youku"/>
+</node>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1472709297884" ID="ID_1226999614" MODIFIED="1472804205574" POSITION="right" TEXT="&#x6211;&#x7684;&#x601d;&#x7ef4;&#x5bfc;&#x56fe;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
