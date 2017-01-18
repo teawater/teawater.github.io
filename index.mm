@@ -3,11 +3,7 @@
 <node COLOR="#000000" CREATED="1472708408515" ID="ID_662009073" MODIFIED="1472804205577" TEXT="teawater(&#x6731;&#x8f89;)&#x7684;&#x4e3b;&#x9875;">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
-<node COLOR="#0033ff" CREATED="1472708752837" ID="ID_583425608" LINK="indexen.html" MODIFIED="1474361625671" POSITION="right" TEXT="English">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="SansSerif" SIZE="18"/>
-</node>
-<node COLOR="#0033ff" CREATED="1472708596511" ID="ID_1638893491" MODIFIED="1472804205566" POSITION="left" TEXT="&#x6211;&#x7684;&#x9879;&#x76ee;">
+<node COLOR="#0033ff" CREATED="1472708596511" FOLDED="true" ID="ID_1638893491" MODIFIED="1484718550834" POSITION="left" TEXT="&#x6211;&#x7684;&#x9879;&#x76ee;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1474351738446" ID="ID_487449301" LINK="https://lkml.org/lkml/2016/8/22/151" MODIFIED="1474351854418" TEXT="&#x8ba9;ZRAM&#x53ea;&#x50a8;&#x5b58;&#x9ad8;&#x538b;&#x7f29;&#x7387;&#x7684;&#x9875;&#x9762;">
@@ -59,7 +55,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1473754199442" ID="ID_452624323" MODIFIED="1473754456134" POSITION="right" TEXT="&#x6211;&#x7684;&#x6f14;&#x8bb2;">
+<node COLOR="#0033ff" CREATED="1473754199442" FOLDED="true" ID="ID_452624323" MODIFIED="1484718553587" POSITION="right" TEXT="&#x6211;&#x7684;&#x6f14;&#x8bb2;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1473754297417" ID="ID_823409592" MODIFIED="1473754298876" TEXT="Buddy&#x548c;CMA&#x7b80;&#x4ecb; &#x4ee5;&#x53ca;&#x5728;Android&#x4e2d;&#x5b9e;&#x9645;&#x4f7f;&#x7528; CMA&#x9047;&#x5230;&#x95ee;&#x9898;&#x7684;&#x6539;&#x8fdb;">
@@ -91,7 +87,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1472709297884" ID="ID_1226999614" MODIFIED="1472804205574" POSITION="right" TEXT="&#x6211;&#x7684;&#x601d;&#x7ef4;&#x5bfc;&#x56fe;">
+<node COLOR="#0033ff" CREATED="1472709297884" FOLDED="true" ID="ID_1226999614" MODIFIED="1484718554515" POSITION="right" TEXT="&#x6211;&#x7684;&#x601d;&#x7ef4;&#x5bfc;&#x56fe;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1474168934713" ID="ID_1441026216" MODIFIED="1474168940500" TEXT="&#x7b80;&#x7ea6;&#x4e4b;&#x7f8e;&#xff1a;&#x8f6f;&#x4ef6;&#x8bbe;&#x8ba1;&#x4e4b;&#x9053; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
@@ -117,7 +113,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1472804212289" ID="ID_184369074" MODIFIED="1472804268077" POSITION="left" TEXT="&#x6211;&#x7684;&#x6587;&#x6863;">
+<node COLOR="#0033ff" CREATED="1472804212289" FOLDED="true" ID="ID_184369074" MODIFIED="1484718552083" POSITION="left" TEXT="&#x6211;&#x7684;&#x6587;&#x6863;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1474349523443" ID="ID_1281547563" MODIFIED="1474351336298" TEXT="Porting GDB">
@@ -152,6 +148,23 @@
 <node COLOR="#0033ff" CREATED="1474342066323" ID="ID_1594024145" LINK="https://500px.com/teawater" MODIFIED="1474342081128" POSITION="left" TEXT="&#x6211;&#x7684;&#x7167;&#x7247;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+</node>
+<node COLOR="#0033ff" CREATED="1484713720821" ID="ID_1124835772" MODIFIED="1484718573522" POSITION="right" TEXT="&#x5173;&#x6ce8;&#x6216;&#x8054;&#x7cfb;&#x6211;&#xff0c;&#x626b;&#x4e8c;&#x7ef4;&#x7801;&#x6216;&#x8005;&#x641c;&#x7d22;&#x5fae;&#x4fe1;&#x516c;&#x4f17;&#x53f7;&#xff1a;cschatcs ">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1484713819527" ID="ID_499481287" MODIFIED="1484713833163">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <img src="qrcode.jpg" />
+  </body>
+</html>
+</richcontent>
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 </node>
 </node>
 </map>
