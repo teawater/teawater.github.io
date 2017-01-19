@@ -99,32 +99,6 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1472709297884" FOLDED="true" ID="ID_1226999614" MODIFIED="1484718928951" POSITION="right" TEXT="&#x6211;&#x7684;&#x601d;&#x7ef4;&#x5bfc;&#x56fe;">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="SansSerif" SIZE="18"/>
-<node COLOR="#00b439" CREATED="1474168934713" ID="ID_1441026216" MODIFIED="1474168940500" TEXT="&#x7b80;&#x7ea6;&#x4e4b;&#x7f8e;&#xff1a;&#x8f6f;&#x4ef6;&#x8bbe;&#x8ba1;&#x4e4b;&#x9053; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1472709684271" ID="ID_1955654431" LINK="mindmap/Code_Simplicity.html" MODIFIED="1474168961512" TEXT="html">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-<node COLOR="#990000" CREATED="1474168987710" ID="ID_317346601" LINK="mindmap/Code_Simplicity.mm" MODIFIED="1474173135819" TEXT="freemind">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#00b439" CREATED="1474361006979" ID="ID_1114785013" MODIFIED="1474361057052" TEXT=" &#x4e0d;&#x61c2;&#x5e26;&#x4eba;&#xff0c;&#x4f60;&#x5c31;&#x81ea;&#x5df1;&#x5e72;&#x5230;&#x6b7b; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" CREATED="1472709684271" ID="ID_822489091" LINK="mindmap/tst.html" MODIFIED="1474361090903" TEXT="html">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-<node COLOR="#990000" CREATED="1474168987710" ID="ID_803063790" LINK="mindmap/tst.mm" MODIFIED="1474361099383" TEXT="freemind">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-</node>
-</node>
 <node COLOR="#0033ff" CREATED="1472804212289" FOLDED="true" ID="ID_184369074" MODIFIED="1484718552083" POSITION="left" TEXT="&#x6211;&#x7684;&#x6587;&#x6863;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
@@ -157,9 +131,43 @@
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 </node>
-<node COLOR="#0033ff" CREATED="1474342066323" ID="ID_1594024145" LINK="https://500px.com/teawater" MODIFIED="1474342081128" POSITION="left" TEXT="&#x6211;&#x7684;&#x7167;&#x7247;">
+<node COLOR="#0033ff" CREATED="1484840244051" FOLDED="true" ID="ID_576405016" MODIFIED="1484840488558" POSITION="right" TEXT="&#x5176;&#x4ed6;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1474342066323" ID="ID_1594024145" LINK="https://500px.com/teawater" MODIFIED="1484840258611" TEXT="&#x6211;&#x7684;&#x7167;&#x7247;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1472709297884" FOLDED="true" ID="ID_1226999614" MODIFIED="1484840265761" TEXT="&#x6211;&#x7684;&#x601d;&#x7ef4;&#x5bfc;&#x56fe;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1474168934713" ID="ID_1441026216" MODIFIED="1484840265761" TEXT="&#x7b80;&#x7ea6;&#x4e4b;&#x7f8e;&#xff1a;&#x8f6f;&#x4ef6;&#x8bbe;&#x8ba1;&#x4e4b;&#x9053; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1472709684271" ID="ID_1955654431" LINK="mindmap/Code_Simplicity.html" MODIFIED="1484840265761" TEXT="html">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#111111" CREATED="1474168987710" ID="ID_317346601" LINK="mindmap/Code_Simplicity.mm" MODIFIED="1484840265761" TEXT="freemind">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" CREATED="1474361006979" ID="ID_1114785013" MODIFIED="1484840265761" TEXT=" &#x4e0d;&#x61c2;&#x5e26;&#x4eba;&#xff0c;&#x4f60;&#x5c31;&#x81ea;&#x5df1;&#x5e72;&#x5230;&#x6b7b; &#x8bfb;&#x4e66;&#x7b14;&#x8bb0;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" CREATED="1472709684271" ID="ID_822489091" LINK="mindmap/tst.html" MODIFIED="1484840265761" TEXT="html">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#111111" CREATED="1474168987710" ID="ID_803063790" LINK="mindmap/tst.mm" MODIFIED="1484840265761" TEXT="freemind">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#00b439" CREATED="1484840344949" ID="ID_658821227" LINK="others/3m7502.html" MODIFIED="1484840385165" TEXT="&#x9632;PM2.5&#x4e13;&#x4e1a;&#x5229;&#x5668;3M 7502&#x7845;&#x8d28;&#x534a;&#x9762;&#x5177;&#x53ca;&#x5176;&#x5e38;&#x7528;&#x914d;&#x4ef6;&#x7b80;&#x4ecb;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 </node>
 <node COLOR="#0033ff" CREATED="1484713720821" ID="ID_1124835772" MODIFIED="1484718573522" POSITION="right" TEXT="&#x5173;&#x6ce8;&#x6216;&#x8054;&#x7cfb;&#x6211;&#xff0c;&#x626b;&#x4e8c;&#x7ef4;&#x7801;&#x6216;&#x8005;&#x641c;&#x7d22;&#x5fae;&#x4fe1;&#x516c;&#x4f17;&#x53f7;&#xff1a;cschatcs ">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
