@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="treestyles.css" type="text/css"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!--This file has been created with toxhtml.xsl--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><title>go</title><link rel="stylesheet" href="go.html_files/treestyles.css" type="text/css"/><script type="text/javascript" src="go.html_files/marktree.js"> 
+	</script></head><body><div class="basetop"><a href="#" onclick="expandAll(document.getElementById('base'))">Expand</a> -
+<a href="#" onclick="collapseAll(document.getElementById('base'))">Collapse</a></div><div id="base" class="basetext"><ul>
+	<li class="col" id="FMID_1806772350FM"><div class="nodecontent" style="color:#000000;font-size:167%;">go</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_979226623FM"><div class="nodecontent" style="color:#0033ff;font-size:150%;">命名</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_207942442FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">駝峯式 命名， 當名字有幾個單詞組成的時優先使用大小寫分隔， 而不是優先用下劃線分隔。</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_37320820FM"><div class="nodecontent" style="color:#990000;font-size:117%;">QuoteRuneToASCII</div></li>
+	<li class="basic" id="FMID_29444625FM"><div class="nodecontent" style="color:#990000;font-size:117%;">parseRequestLine</div></li></ul></li>
+	<li class="col" id="FMID_974924829FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">像ASCII和HTML這樣的縮略詞則避免使用大小寫混合的寫法</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1407866378FM"><div class="nodecontent" style="color:#990000;font-size:117%;">htmlEscape、 HTMLEscape或escapeHTML</div></li>
+	<li class="basic" id="FMID_440178418FM"><div class="nodecontent" style="color:#990000;font-size:117%;">不要escapeHtml。</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_1411089296FM"><div class="nodecontent" style="color:#0033ff;font-size:150%;">var</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_293407301FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">var 變量名字 類型 = 表達式</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_108218161FM"><div class="nodecontent" style="color:#990000;font-size:117%;">其中“類型”或“= 表達式”兩個部分可以省略其中的一個</div></li>
+	<li class="col" id="FMID_1945864071FM"><div class="nodecontent" style="color:#990000;font-size:117%;">如果初始化表達式被省略， 那麽將用零值初始化該變 量</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1112973090FM"><div class="nodecontent" style="color:#111111;">數值類型變量對應的零值是0</div></li>
+	<li class="basic" id="FMID_257333254FM"><div class="nodecontent" style="color:#111111;">布爾類型變量對應的零值是false</div></li>
+	<li class="basic" id="FMID_144865071FM"><div class="nodecontent" style="color:#111111;">字符串類型對應的零 值是空字符串</div></li>
+	<li class="basic" id="FMID_389775141FM"><div class="nodecontent" style="color:#111111;">接口或引用類型（ 包括slice、 map、 chan和函數） 變量對應的零值是nil</div></li>
+	<li class="basic" id="FMID_1402627050FM"><div class="nodecontent" style="color:#111111;">數 組或結構體等聚合類型對應的零值是每個元素或字段都是對應該類型的零值</div></li></ul></li>
+	<li class="basic" id="FMID_1356107472FM"><div class="nodecontent" style="color:#990000;font-size:117%;">在Go語言中不存在 未初始化的變量</div></li>
+	<li class="col" id="FMID_1037136886FM"><div class="nodecontent" style="color:#990000;font-size:117%;">多个初始化</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1963995078FM"><div class="nodecontent" style="color:#111111;">var i, j, k int // int, int, int</div></li>
+	<li class="basic" id="FMID_1069992268FM"><div class="nodecontent" style="color:#111111;">var b, f, s = true, 2.3, "four" // bool, float64, string</div></li>
+	<li class="basic" id="FMID_1181260834FM"><div class="nodecontent" style="color:#111111;">var f, err = os.Open(name)</div></li></ul></li>
+	<li class="col" id="FMID_1309703711FM"><div class="nodecontent" style="color:#990000;font-size:117%;">名字 := 表達式</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_942553303FM"><div class="nodecontent" style="color:#111111;">多个初始化</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_665252119FM"><div class="nodecontent" style="color:#111111;">i, j := 0, 1</div></li>
+	<li class="basic" id="FMID_468312536FM"><div class="nodecontent" style="color:#111111;">in, err := os.Open(infile)</div></li></ul></li>
+	<li class="basic" id="FMID_890999454FM"><div class="nodecontent" style="color:#111111;">簡短變量聲明語句中必鬚至少要聲明一個新的變量</div></li></ul></li>
+	<li class="basic" id="FMID_731202245FM"><div class="nodecontent" style="color:#990000;font-size:117%;">medals := []string{"gold", "silver", "bronze"}</div></li></ul></li>
+	<li class="col" id="FMID_1435866909FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">元組賦值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_514153831FM"><div class="nodecontent" style="color:#990000;font-size:117%;">i, j = j, i // 交換 i 和 j 的值</div></li>
+	<li class="basic" id="FMID_1046763153FM"><div class="nodecontent" style="color:#990000;font-size:117%;">a[i], a[j] = a[j], a[i]</div></li>
+	<li class="basic" id="FMID_852333515FM"><div class="nodecontent" style="color:#990000;font-size:117%;">x, y = y, x%y</div></li>
+	<li class="basic" id="FMID_318639655FM"><div class="nodecontent" style="color:#990000;font-size:117%;">_, ok = m[key] // map返迴2個值</div></li></ul></li>
+	<li class="col" id="FMID_296808963FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">指針</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1639091365FM"><div class="nodecontent" style="color:#990000;font-size:117%;">&amp;x</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_301531477FM"><div class="nodecontent" style="color:#111111;">*int</div></li>
+	<li class="basic" id="FMID_944197534FM"><div class="nodecontent" style="color:#111111;">x := 1<br/>p := &amp;x // p, of type *int, points to x<br/>fmt.Println(*p) // "1"<br/>*p = 2 // equivalent to x = 2<br/>fmt.Println(x) // "2"</div></li>
+	<li class="basic" id="FMID_1613119355FM"><div class="nodecontent" style="color:#111111;">*p++</div></li></ul></li>
+	<li class="basic" id="FMID_1757666848FM"><div class="nodecontent" style="color:#990000;font-size:117%;">指针不能操作+-</div></li>
+	<li class="col" id="FMID_1912664577FM"><div class="nodecontent" style="color:#990000;font-size:117%;">任何類型的指針的零值都是nil</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1523851999FM"><div class="nodecontent" style="color:#111111;">如果 p != nil 測試爲眞， 那麽p是指向某個有效變量</div></li></ul></li>
+	<li class="basic" id="FMID_46237017FM"><div class="nodecontent" style="color:#990000;font-size:117%;">指針 之間也是可以進行相等測試的， 隻有當它們指向同一個變量或全部是nil時才相等</div></li>
+	<li class="col" id="FMID_1446983118FM"><div class="nodecontent" style="color:#990000;font-size:117%;">返迴函數中局部變量的地址也是安全的</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_369415872FM"><div class="nodecontent" style="color:#111111;">var p = f()<br/>func f() *int {<br/>	v := 1<br/>	return &amp;v<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1218801644FM"><div class="nodecontent" style="color:#111111;">這個v局部變量從函數f中逃逸了</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_184263860FM"><div class="nodecontent" style="color:#990000;font-size:117%;">new函數</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1436839135FM"><div class="nodecontent" style="color:#111111;">p := new(int) // p, *int 類型, 指向匿名的 int 變量<br/>fmt.Println(*p) // "0"<br/>*p = 2 // 設置 int 匿名變量的值爲 2<br/>fmt.Println(*p) // "2"</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_236282911FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">整型</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1649593520FM"><div class="nodecontent" style="color:#990000;font-size:117%;">int8、 int16、 int32和int64</div></li>
+	<li class="basic" id="FMID_85967984FM"><div class="nodecontent" style="color:#990000;font-size:117%;">uint8、 uint16、 uint32和uint64</div></li>
+	<li class="basic" id="FMID_930341461FM"><div class="nodecontent" style="color:#990000;font-size:117%;">對應特定CPU平台機器字大小的有符號和無符號整數int和uint</div></li>
+	<li class="basic" id="FMID_1761281573FM"><div class="nodecontent" style="color:#990000;font-size:117%;">Unicode字符rune類型是和int32等價的類型， 通常用於表示一個Unicode碼點</div></li>
+	<li class="basic" id="FMID_186009474FM"><div class="nodecontent" style="color:#990000;font-size:117%;">byte也是uint8類型的等價類型</div></li>
+	<li class="basic" id="FMID_604988415FM"><div class="nodecontent" style="color:#990000;font-size:117%;">uintptr， 沒有指定具體的bit大小但是足以容納指針</div></li></ul></li>
+	<li class="col" id="FMID_597573447FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">浮点数</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_211470404FM"><div class="nodecontent" style="color:#990000;font-size:117%;">float32和float64。</div></li></ul></li>
+	<li class="col" id="FMID_1906349719FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">复数</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_616141447FM"><div class="nodecontent" style="color:#990000;font-size:117%;">complex64和complex128</div></li></ul></li>
+	<li class="col" id="FMID_1989414116FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">布爾型</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_6222421FM"><div class="nodecontent" style="color:#990000;font-size:117%;">true和false</div></li>
+	<li class="basic" id="FMID_40812917FM"><div class="nodecontent" style="color:#990000;font-size:117%;">布爾值併不會隱式轉換爲數字值0或1， 反之亦然。 必鬚使用一個顯式的if語句輔助轉換</div></li></ul></li>
+	<li class="col" id="FMID_1227227142FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">字符串</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1980925658FM"><div class="nodecontent" style="color:#990000;font-size:117%;">基础</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1944953109FM"><div class="nodecontent" style="color:#111111;">文本字符串通常被解釋爲采用UTF8編碼的Unicode碼點 （ rune） 序列 rune是int32等價類 型）</div></li>
+	<li class="basic" id="FMID_427605972FM"><div class="nodecontent" style="color:#111111;">內置的len函數可以返迴一個字符串中的字節數目（ 不是rune字符數目）</div></li>
+	<li class="basic" id="FMID_419024486FM"><div class="nodecontent" style="color:#111111;">索引操作s[i]返迴第i 個字節的字節值</div></li>
+	<li class="basic" id="FMID_441723164FM"><div class="nodecontent" style="color:#111111;">試圖訪問超出字符串索引范圍的字節將會導致panic異常</div></li>
+	<li class="col" id="FMID_609912201FM"><div class="nodecontent" style="color:#111111;">s[0:5]</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_515795467FM"><div class="nodecontent" style="color:#111111;">子字符串操作s[i:j]基於原始的s字符串的第i個字節開始到第j個字節（ 併不包含j本身） 生成一 個新字符串。</div></li></ul></li>
+	<li class="basic" id="FMID_292500546FM"><div class="nodecontent" style="color:#111111;">字符串可以用==和&lt;進行比較</div></li>
+	<li class="col" id="FMID_1271192324FM"><div class="nodecontent" style="color:#111111;">双引号转意</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_207126680FM"><div class="nodecontent" style="color:#111111;">\a 響鈴<br/>\b 退格<br/>\f 換頁<br/>\n 換行<br/>\r 迴車<br/>\t 製表符<br/>\v 垂直製表符<br/>\' 單引號 (隻用在 '\'' 形式的rune符號面值中)<br/>\" 雙引號 (隻用在 "..." 形式的字符串面值中)<br/>\\ 反斜槓</div></li>
+	<li class="basic" id="FMID_1040837699FM"><div class="nodecontent" style="color:#111111;">一個十六進製的轉義形式是 \xhh， 其中兩個h表示十六進製數字（ 大寫或小寫都可以） 。 </div></li>
+	<li class="basic" id="FMID_1310772131FM"><div class="nodecontent" style="color:#111111;">一個八進製轉義形式是\ooo， 包 含三個八進製的o數字（ 0到7） ， 但是不能超過 \377 （ 譯註：對應一個字節的范圍， 十進製 爲255） </div></li></ul></li>
+	<li class="basic" id="FMID_833449330FM"><div class="nodecontent" style="color:#111111;">反引号` 不转意</div></li></ul></li>
+	<li class="col" id="FMID_1420815529FM"><div class="nodecontent" style="color:#990000;font-size:117%;">byte</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1758781263FM"><div class="nodecontent" style="color:#111111;">切片slice</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_23034850FM"><div class="nodecontent" style="color:#111111;">s := "abc"<br/>b := []byte(s)<br/>s2 := string(b)<br/>fmt.Printf("%s\n\n", b)</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1187206216FM"><div class="nodecontent" style="color:#111111;">s b s2 三个是独立的</div></li></ul></li></ul></li>
+	<li class="basic" id="FMID_1048164140FM"><div class="nodecontent" style="color:#111111;">func Contains(b, subslice []byte) bool<br/>func Count(s, sep []byte) int<br/>func Fields(s []byte) [][]byte<br/>func HasPrefix(s, prefix []byte) bool<br/>func Index(s, sep []byte) int<br/>func Join(s [][]byte, sep []byte) []byte</div></li></ul></li>
+	<li class="col" id="FMID_1499940751FM"><div class="nodecontent" style="color:#990000;font-size:117%;">標準庫</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_791034907FM"><div class="nodecontent" style="color:#111111;">strings包 提供了許多如字符串的査詢、 替換、 比較、 截斷、 拆分和合併等功能。</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_5831451FM"><div class="nodecontent" style="color:#111111;">func Contains(s, substr string) bool<br/>func Count(s, sep string) int<br/>func Fields(s string) []string<br/>func HasPrefix(s, prefix string) bool<br/>func Index(s, sep string) int<br/>func Join(a []string, sep string) string</div></li></ul></li>
+	<li class="col" id="FMID_1228745430FM"><div class="nodecontent" style="color:#111111;">bytes包</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_31127899FM"><div class="nodecontent" style="color:#111111;">bytes.Buffer</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1383938983FM"><div class="nodecontent" style="color:#111111;">bytes包還提供了Buffer類型用於字節slice的緩存</div></li>
+	<li class="col" id="FMID_1518761695FM"><div class="nodecontent" style="color:#111111;">一個Buffer開始是空的， 但是隨着string、 byte或[]byte等類型數據的寫入可以動態增長， 一個bytes.Buffer變量併不需要處理化， 因爲零 值也是有效的</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1042235374FM"><div class="nodecontent" style="color:#111111;">r添加任意字符的UTF8編碼時， 最好使用bytes.Buffer的WriteRune方法</div></li>
+	<li class="basic" id="FMID_1256946710FM"><div class="nodecontent" style="color:#111111;">WriteByte方法對於寫入類似'['和']'等ASCII字符則會更加有效</div></li>
+	<li class="basic" id="FMID_1484978546FM"><div class="nodecontent" style="color:#111111;">package main<br/><br/>import (<br/>	"fmt"<br/>	"bytes"<br/>)<br/><br/>func main() {<br/>	var buf bytes.Buffer<br/>	buf.WriteByte('[')<br/>	buf.WriteRune('中')<br/>	buf.WriteString(", ")<br/>	fmt.Fprintf(&amp;buf, "%d", 1)<br/><br/>	fmt.Println(buf.String())<br/>}
+</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_1879967048FM"><div class="nodecontent" style="color:#111111;">strconv包 转换库</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1398077504FM"><div class="nodecontent" style="color:#111111;">数到字符串</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_174595247FM"><div class="nodecontent" style="color:#111111;">strconv.Itoa(“整數到ASCII”)</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1262778052FM"><div class="nodecontent" style="color:#111111;">y := 123<br/>var s3 string = strconv.Itoa(y)</div></li></ul></li>
+	<li class="col" id="FMID_305435269FM"><div class="nodecontent" style="color:#111111;">FormatInt和FormatUint函數可以用不同的進製來格式化數字</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1874718256FM"><div class="nodecontent" style="color:#111111;">fmt.Println(strconv.FormatInt(int64(x), 2)) // "1111011"</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_1096336625FM"><div class="nodecontent" style="color:#111111;">字符串到数</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_989095798FM"><div class="nodecontent" style="color:#111111;">x, err := strconv.Atoi("123") // x is an int</div></li>
+	<li class="col" id="FMID_1015605038FM"><div class="nodecontent" style="color:#111111;">y, err := strconv.ParseInt("123", 10, 64) // base 10, up to 64 bit</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1150883600FM"><div class="nodecontent" style="color:#111111;">ParseInt函數的第三個參數是用於指定整型數的大小；例如16表示int16， 0則表示int。 在任何 情況下， 返迴的結果y總是int64類型， 你可以通過強製類型轉換將它轉爲更小的整數類型。</div></li></ul></li></ul></li></ul></li>
+	<li class="basic" id="FMID_1274777287FM"><div class="nodecontent" style="color:#111111;">unicode包提供了IsDigit、 IsLetter、 IsUpper和IsLower等類似功能， 它們用於給字符分類</div></li></ul></li>
+	<li class="col" id="FMID_1844713817FM"><div class="nodecontent" style="color:#990000;font-size:117%;">fmt.Sprintf</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_933268228FM"><div class="nodecontent" style="color:#111111;">一個格式化的字符串</div></li>
+	<li class="basic" id="FMID_953452381FM"><div class="nodecontent" style="color:#111111;">news := fmt.Sprintf("%s", b)</div></li></ul></li>
+	<li class="basic" id="FMID_1631015868FM"><div class="nodecontent" style="color:#990000;font-size:117%;">fmt.Scanf</div></li></ul></li>
+	<li class="col" id="FMID_1465598810FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">数组</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_489195577FM"><div class="nodecontent" style="color:#990000;font-size:117%;">數組的長 度必鬚是常量表達式， 因爲數組的長度需要在編譯階段確定。</div></li>
+	<li class="basic" id="FMID_681468280FM"><div class="nodecontent" style="color:#990000;font-size:117%;">內置的len函數將返迴數組中元素的個數</div></li>
+	<li class="col" id="FMID_472090172FM"><div class="nodecontent" style="color:#990000;font-size:117%;">声明</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_582511030FM"><div class="nodecontent" style="color:#111111;font-size:100%;">var a [3]int</div></li>
+	<li class="col" id="FMID_1616392609FM"><div class="nodecontent" style="color:#111111;font-size:100%;">q := [...]int{1, 2, 3}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_754627512FM"><div class="nodecontent" style="color:#111111;">在數組的長度位置出現的是“...”省略號， 則表示數組的長度是根據初始 化值的個數來計算。</div></li></ul></li>
+	<li class="basic" id="FMID_463056FM"><div class="nodecontent" style="color:#111111;font-size:100%;">var q [3]int = [3]int{1, 2, 3}</div></li>
+	<li class="basic" id="FMID_1316538935FM"><div class="nodecontent" style="color:#111111;">type Currency int<br/>const (<br/>USD Currency = iota // 美元<br/>EUR // 歐元<br/>GBP // 英鎊<br/>RMB // 人民幣<br/>) s<br/>ymbol := [...]string{USD: "$", EUR: "€", GBP: "£", RMB: "¥"}</div></li>
+	<li class="col" id="FMID_1271529443FM"><div class="nodecontent" style="color:#111111;">r := [...]int{99: -1}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1620130530FM"><div class="nodecontent" style="color:#111111;">定義了一個含有100個元素的數組r， 最後一個元素被初始化爲-1</div></li></ul></li>
+	<li class="col" id="FMID_460725085FM"><div class="nodecontent" style="color:#111111;">func zero(ptr *[32]byte) {<br/>	*ptr = [32]byte{}<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_575196061FM"><div class="nodecontent" style="color:#111111;">把数组指针传输给函数</div></li>
+	<li class="basic" id="FMID_1131816341FM"><div class="nodecontent" style="color:#111111;">通过一个新初始化的数组 清空另一个数组</div></li></ul></li></ul></li>
+	<li class="basic" id="FMID_643446507FM"><div class="nodecontent" style="color:#990000;font-size:117%;">直接通过==比较两个数组，不同数量的</div></li>
+	<li class="basic" id="FMID_628120949FM"><div class="nodecontent" style="color:#990000;font-size:117%;">for i, v := range a {</div></li></ul></li>
+	<li class="col" id="FMID_1354313110FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">Slice（ 切片）</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1994108864FM"><div class="nodecontent" style="color:#990000;font-size:117%;">对数组的上层封装，相当于指针</div></li>
+	<li class="col" id="FMID_1329289643FM"><div class="nodecontent" style="color:#990000;font-size:117%;">初始化</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_883585577FM"><div class="nodecontent" style="color:#111111;">var s []int // len(s) == 0, s == nil<br/>s = nil // len(s) == 0, s == nil<br/>s = []int(nil) // len(s) == 0, s == nil<br/>s = []int{} // len(s) == 0, s != nil</div></li>
+	<li class="basic" id="FMID_1842443997FM"><div class="nodecontent" style="color:#111111;">make([]T, len)<br/>make([]T, len, cap) // same as make([]T, cap)[:len]</div></li>
+	<li class="basic" id="FMID_1304464558FM"><div class="nodecontent" style="color:#111111;">b := [...]int{1, 2, 3}<br/>var c []int<br/>c = b[:]<br/>c[0] = 3<br/>fmt.Println(b, c)<br/>//[3 2 3] [3 2 3]</div></li></ul></li>
+	<li class="col" id="FMID_1608607134FM"><div class="nodecontent" style="color:#990000;font-size:117%;">len</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1052388303FM"><div class="nodecontent" style="color:#111111;">返回长度</div></li></ul></li>
+	<li class="col" id="FMID_1667320808FM"><div class="nodecontent" style="color:#990000;font-size:117%;">cap</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_448649872FM"><div class="nodecontent" style="color:#111111;">底层容量</div></li></ul></li>
+	<li class="col" id="FMID_1153361516FM"><div class="nodecontent" style="color:#990000;font-size:117%;">runes = append(runes, r)</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1068486341FM"><div class="nodecontent" style="color:#111111;">检查是否原切片是否增长 检查len是否要底层数据</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_696742880FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">map</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1060060630FM"><div class="nodecontent" style="color:#990000;font-size:117%;">类型定义 map[key]value</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_694012527FM"><div class="nodecontent" style="color:#111111;">key必鬚是支持==比較運算符的數據類 型</div></li></ul></li>
+	<li class="col" id="FMID_1830725233FM"><div class="nodecontent" style="color:#990000;font-size:117%;">初始化</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_744144631FM"><div class="nodecontent" style="color:#111111;">ages := make(map[string]int) // mapping from strings to ints</div></li>
+	<li class="col" id="FMID_657035566FM"><div class="nodecontent" style="color:#111111;">names := make([]string, 0, len(ages))</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_456722086FM"><div class="nodecontent" style="color:#111111;">大小是0 容量是ages的长度</div></li></ul></li>
+	<li class="basic" id="FMID_1264317020FM"><div class="nodecontent" style="color:#111111;">ages := map[string]int{<br/>"alice": 31,<br/>"charlie": 34,<br/>}</div></li>
+	<li class="basic" id="FMID_1097095675FM"><div class="nodecontent" style="color:#111111;">map[string]int{}</div></li>
+	<li class="basic" id="FMID_276123505FM"><div class="nodecontent" style="color:#111111;">没有使用过的key的value是0</div></li>
+	<li class="col" id="FMID_1570304406FM"><div class="nodecontent" style="color:#111111;">map類型的零值是nil， 也就是沒有引用任何哈希表</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1150779711FM"><div class="nodecontent" style="color:#111111;">var ages map[string]int<br/>fmt.Println(ages == nil) // "true"<br/>fmt.Println(len(ages) == 0) // "true"</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_240906744FM"><div class="nodecontent" style="color:#111111;">这样的MAP在make之前不能存入元素</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1459551942FM"><div class="nodecontent" style="color:#111111;">ages["carol"] = 21 // panic: assignment to entry in nil map</div></li></ul></li></ul></li></ul></li></ul></li>
+	<li class="basic" id="FMID_725611298FM"><div class="nodecontent" style="color:#990000;font-size:117%;">delete(ages, "alice") // remove element ages["alice"]</div></li>
+	<li class="col" id="FMID_683270782FM"><div class="nodecontent" style="color:#990000;font-size:117%;">不能對map的元素進行取址操作</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_332569982FM"><div class="nodecontent" style="color:#111111;">_ = &amp;ages["bob"] // compile error: cannot take address of map element</div></li></ul></li>
+	<li class="col" id="FMID_594583936FM"><div class="nodecontent" style="color:#990000;font-size:117%;">for name, age := range ages {</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1507915161FM"><div class="nodecontent" style="color:#111111;">Map的迭代順序是不確定的， 併且不同的哈希函數實現可能導致不同的遍歷順序</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_466943562FM"><div class="nodecontent" style="color:#111111;">import "sort"<br/>var names []string<br/>for name := range ages {<br/>names = append(names, name)<br/>} s<br/>ort.Strings(names)<br/>for _, name := range names {<br/>fmt.Printf("%s\t%d\n", name, ages[name])<br/>}</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_380219109FM"><div class="nodecontent" style="color:#990000;font-size:117%;">判断是否有某KEY，第二个值是false</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1408305803FM"><div class="nodecontent" style="color:#111111;">age, ok := ages["bob"]<br/>if !ok { /* "bob" is not a key in this map; age == 0. */ }</div></li>
+	<li class="basic" id="FMID_1935151801FM"><div class="nodecontent" style="color:#111111;">if age, ok := ages["bob"]; !ok { /* ... */ } </div></li></ul></li>
+	<li class="basic" id="FMID_1708169348FM"><div class="nodecontent" style="color:#990000;font-size:117%;">map之間也不能進行相等比較；唯一的例外是和nil進行比較。</div></li></ul></li>
+	<li class="col" id="FMID_1944666593FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">结构体</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1420487534FM"><div class="nodecontent" style="color:#990000;font-size:117%;">初始化</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1521625258FM"><div class="nodecontent" style="color:#111111;">type Employee struct {<br/>ID int<br/>Name string<br/>Address string<br/>DoB time.Time<br/>Position string<br/>Salary int<br/>ManagerID int<br/>}<br/>var dilbert Employee</div></li>
+	<li class="col" id="FMID_1566463862FM"><div class="nodecontent" style="color:#111111;">相鄰的成員類型如果相 同的話可以被合併到一行</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1438235215FM"><div class="nodecontent" style="color:#111111;">type Employee struct {<br/>ID int<br/>Name, Address string<br/>DoB time.Time<br/>Position string<br/>Salary int<br/>ManagerID int<br/>}</div></li></ul></li>
+	<li class="basic" id="FMID_1271655112FM"><div class="nodecontent" style="color:#111111;">一個命名爲S的結構體類型將不能再包含S類型的成員，但是可以包含*S</div></li>
+	<li class="basic" id="FMID_1130551875FM"><div class="nodecontent" style="color:#111111;">結構體類型的零值是每個成員都對是零值</div></li>
+	<li class="col" id="FMID_1239754595FM"><div class="nodecontent" style="color:#111111;">struct{}。 它的大小爲0</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_282446823FM"><div class="nodecontent" style="color:#111111;">空結構體</div></li></ul></li>
+	<li class="basic" id="FMID_97119398FM"><div class="nodecontent" style="color:#111111;font-size:100%;">如果結構體成員名字是以大寫字母開頭的， 那麽該成員就是導出的</div></li>
+	<li class="col" id="FMID_1654309641FM"><div class="nodecontent" style="color:#111111;">結構體面值</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_538466900FM"><div class="nodecontent" style="color:#111111;">結構體面值可以指定每個成員的值</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1885475629FM"><div class="nodecontent" style="color:#111111;">顺序赋值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1294731475FM"><div class="nodecontent" style="color:#111111;">type Point struct{ X, Y int }<br/>p := Point{1, 2}</div></li>
+	<li class="basic" id="FMID_37958561FM"><div class="nodecontent" style="color:#111111;">外部包不能通过顺序对没有导出的值赋值</div></li></ul></li>
+	<li class="col" id="FMID_1018806469FM"><div class="nodecontent" style="color:#111111;">指定赋值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_464176172FM"><div class="nodecontent" style="color:#111111;">anim := gif.GIF{LoopCount: nframes}</div></li></ul></li>
+	<li class="basic" id="FMID_352844403FM"><div class="nodecontent" style="color:#111111;">兩種不同形式的寫法不能混合使用</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_563913599FM"><div class="nodecontent" style="color:#111111;">創建併初始化一個結構體變量， 併返迴 結構體的地址</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_120225113FM"><div class="nodecontent" style="color:#111111;">pp := &amp;Point{1, 2}</div></li>
+	<li class="basic" id="FMID_188376853FM"><div class="nodecontent" style="color:#111111;">pp := new(Point)<br/>*pp = Point{1, 2}</div></li></ul></li>
+	<li class="basic" id="FMID_1080174946FM"><div class="nodecontent" style="color:#111111;">var cache = struct {<br/>	sync.Mutex<br/>	mapping map[string]string<br/>}{<br/>	mapping: make(map[string]string),<br/>}</div></li></ul></li>
+	<li class="col" id="FMID_1269112579FM"><div class="nodecontent" style="color:#990000;font-size:117%;">访问</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_954330101FM"><div class="nodecontent" style="color:#111111;">dilbert.Salary -= 5000 // demoted, for writing too few lines of code</div></li>
+	<li class="basic" id="FMID_1117598437FM"><div class="nodecontent" style="color:#111111;">position := &amp;dilbert.Position<br/>*position = "Senior " + *position // promoted, for outsourcing to Elbonia</div></li>
+	<li class="col" id="FMID_1951528088FM"><div class="nodecontent" style="color:#111111;">點操作符也可以和指向結構體的指針一起工作：<br/>var employeeOfTheMonth *Employee = &amp;dilbert<br/>employeeOfTheMonth.Position += " (proactive team player)"<br/>相當於下面語句<br/>(*employeeOfTheMonth).Position += " (proactive team player)"</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1445782258FM"><div class="nodecontent" style="color:#111111;">指针变量可以自动转换</div></li></ul></li></ul></li>
+	<li class="basic" id="FMID_1750886021FM"><div class="nodecontent" style="color:#990000;font-size:117%;">如果結構體的全部成員都是可以比較的， 那麽結構體也是可以比較的</div></li>
+	<li class="col" id="FMID_1920831030FM"><div class="nodecontent" style="color:#990000;font-size:117%;">結構體嵌入和匿名成員</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_200702194FM"><div class="nodecontent" style="color:#111111;">type Point struct {<br/>X, Y int<br/>}<br/>type Circle struct {<br/>Point<br/>Radius int<br/>} <br/>type Wheel struct {<br/>Circle<br/>Spokes int<br/>}</div></li>
+	<li class="basic" id="FMID_1213780277FM"><div class="nodecontent" style="color:#111111;">var w Wheel<br/>w.X = 8 // equivalent to w.Circle.Point.X = 8<br/>w.Y = 8 // equivalent to w.Circle.Point.Y = 8<br/>w.Radius = 5 // equivalent to w.Circle.Radius = 5<br/>w.Spokes = 20</div></li>
+	<li class="col" id="FMID_1431820150FM"><div class="nodecontent" style="color:#111111;">面值</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_575714149FM"><div class="nodecontent" style="color:#111111;">面值普通方法不能使用</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1451718894FM"><div class="nodecontent" style="color:#111111;">w = Wheel{8, 8, 5, 20} // compile error: unknown fields</div></li>
+	<li class="basic" id="FMID_743885348FM"><div class="nodecontent" style="color:#111111;">w = Wheel{X: 8, Y: 8, Radius: 5, Spokes: 20} // compile error: unknown fields</div></li></ul></li>
+	<li class="col" id="FMID_1352550201FM"><div class="nodecontent" style="color:#111111;">可用方法</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1593054281FM"><div class="nodecontent" style="color:#111111;">w = Wheel{Circle{Point{8, 8}, 5}, 20}</div></li>
+	<li class="basic" id="FMID_394150958FM"><div class="nodecontent" style="color:#111111;">w = Wheel{<br/>	Circle: Circle{<br/>		Point: Point{X: 8, Y: 8},<br/>		Radius: 5,<br/>	},<br/>	Spokes: 20, // NOTE: trailing comma necessary here (and at Radius)<br/>}</div></li></ul></li></ul></li>
+	<li class="basic" id="FMID_48081025FM"><div class="nodecontent" style="color:#111111;">不能同時包含兩個類型相同的匿名成員</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_1839436210FM"><div class="nodecontent" style="color:#0033ff;font-size:150%;">const</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1802506599FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">const boilingF = 212.0</div></li>
+	<li class="basic" id="FMID_1397577729FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">const (<br/>e = 2.71828182845904523536028747135266249775724709369995957496696763<br/>pi = 3.14159265358979323846264338327950288419716939937510582097494459<br/>)</div></li>
+	<li class="basic" id="FMID_1169120542FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">	const (<br/>		a = 1<br/>		b<br/>		c = 2<br/>		d<br/>	)<br/>	fmt.Println(a, b, c, d) // "1 1 2 2"</div></li>
+	<li class="col" id="FMID_1498392569FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">iota</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1561590574FM"><div class="nodecontent" style="color:#990000;font-size:117%;">在一個const聲明語句中， 在第一個聲明的常量所在的行， iota將會被置爲0， 然後在每一個有常量聲明的行加一。</div></li>
+	<li class="basic" id="FMID_779365169FM"><div class="nodecontent" style="color:#990000;font-size:117%;">	type Weekday int<br/>	const (<br/>		Sunday Weekday = iota<br/>		Monday<br/>		Tuesday<br/>		Wednesday<br/>		Thursday<br/>		Friday<br/>		Saturday<br/>	)</div></li>
+	<li class="basic" id="FMID_1635323852FM"><div class="nodecontent" style="color:#990000;font-size:117%;">	const (<br/>		_ = 1 &lt;&lt; (10 * iota)<br/>		KiB // 1024<br/>		MiB // 1048576<br/>		GiB // 1073741824<br/>		TiB // 1099511627776 (exceeds 1 &lt;&lt; 32)<br/>		PiB // 1125899906842624<br/>		EiB // 1152921504606846976<br/>		ZiB // 1180591620717411303424 (exceeds 1 &lt;&lt; 64)<br/>		YiB // 1208925819614629174706176<br/>	)</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_709477667FM"><div class="nodecontent" style="color:#0033ff;font-size:150%;">type</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_735752269FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">type 類型名字 底層類型</div></li>
+	<li class="basic" id="FMID_947856255FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">類型聲明語句一般出現在包一級， 因此如果新創建的類型名字的首字符大寫， 則在外部包也 可以使用。</div></li>
+	<li class="col" id="FMID_1956887647FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">對於每一個類型T， 都有一個對應的類型轉換操作T(x)</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_428779265FM"><div class="nodecontent" style="color:#990000;font-size:117%;">當兩個類型的底層基礎類型 相同時， 才允許這種轉型操作， 或者是兩者都是指向相同底層結構的指針類型， 這些轉換隻 改變類型而不會影響值本身。</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_1088155365FM"><div class="nodecontent" style="color:#0033ff;font-size:150%;">func</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1664639111FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">func main() {</div></li>
+	<li class="col" id="FMID_205401906FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">func name(parameter-list) (result-list) {<br/>	body<br/>}</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1378292922FM"><div class="nodecontent" style="color:#990000;font-size:117%;">返回值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1867998309FM"><div class="nodecontent" style="color:#111111;font-size:100%;">返迴值也可以 像形式參數一樣被命名。</div></li>
+	<li class="basic" id="FMID_387423883FM"><div class="nodecontent" style="color:#111111;font-size:100%;">在這種情況下， 每個返迴值被聲明成一個局部變量， 併根據該返迴 值的類型， 將其初始化爲0</div></li>
+	<li class="basic" id="FMID_1274806015FM"><div class="nodecontent" style="color:#111111;font-size:100%;">如果一個函數在聲明時， 包含返迴值列表， 該函數必鬚以 return 語句結尾， 除非函數明顯無法運行到結尾處</div></li>
+	<li class="col" id="FMID_417127384FM"><div class="nodecontent" style="color:#111111;">多返回值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_354454646FM"><div class="nodecontent" style="color:#111111;">return visit(nil, doc), nil</div></li>
+	<li class="basic" id="FMID_1937907349FM"><div class="nodecontent" style="color:#111111;">links, err := findLinks(url)</div></li>
+	<li class="basic" id="FMID_1061712583FM"><div class="nodecontent" style="color:#111111;">links, _ := findLinks(url) // errors ignored</div></li>
+	<li class="basic" id="FMID_304341889FM"><div class="nodecontent" style="color:#111111;">func findLinksLog(url string) ([]string, error) {<br/>	log.Printf("findLinks %s", url)<br/>	return findLinks(url)<br/>}</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_1123075467FM"><div class="nodecontent" style="color:#990000;font-size:117%;">参数</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_834741854FM"><div class="nodecontent" style="color:#111111;font-size:100%;">如果类型一样，可以简写</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_105668246FM"><div class="nodecontent" style="color:#111111;">func f(i, j, k int, s, t string) { /* ... */ }<br/>func f(i int, j int, k int, s string, t string) { /* ... */ }</div></li></ul></li>
+	<li class="basic" id="FMID_1286832411FM"><div class="nodecontent" style="color:#111111;">實參包括引用類型， 如指針， slice(切片)、 map、 function、 channel等類型， 實參可 能會由於函數的簡介引用被脩改。</div></li></ul></li>
+	<li class="col" id="FMID_341354477FM"><div class="nodecontent" style="color:#990000;font-size:117%;">几个函数相同</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_338660130FM"><div class="nodecontent" style="color:#111111;">func add(x int, y int) int {return x + y}<br/>func sub(x, y int) (z int) { z = x - y; return}<br/>func first(x int, _ int) int { return x }<br/>func zero(int, int) int { return 0 }</div></li></ul></li></ul></li>
+	<li class="basic" id="FMID_1006245120FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">沒有函數體的函數聲明， 這表示該函數不是以Go實現的</div></li>
+	<li class="col" id="FMID_749909264FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">函数值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1013813233FM"><div class="nodecontent" style="color:#990000;font-size:117%;">func square(n int) int { return n * n }<br/>func negative(n int) int { return -n }<br/>func product(m, n int) int { return m * n }<br/>f := square<br/>fmt.Println(f(3)) // "9"<br/>f = product // compile error: can't assign func(int, int) int to func(int) int</div></li>
+	<li class="basic" id="FMID_1136955049FM"><div class="nodecontent" style="color:#990000;font-size:117%;">函數類型的零值是nil。 調用值爲nil的函數值會引起panic錯誤：</div></li>
+	<li class="basic" id="FMID_1291570536FM"><div class="nodecontent" style="color:#990000;font-size:117%;">函數值可以與nil比較：</div></li>
+	<li class="basic" id="FMID_581636632FM"><div class="nodecontent" style="color:#990000;font-size:117%;">函數值之間是不可比較的， 也不能用函數值作爲map的key。</div></li></ul></li>
+	<li class="col" id="FMID_388985700FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">匿名函数</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1650976630FM"><div class="nodecontent" style="color:#990000;font-size:117%;">strings.Map(func(r rune) rune { return r + 1 }, "HAL-9000")</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_975778175FM"><div class="nodecontent" style="color:#111111;">func add1(r rune) rune { return r + 1 }<br/>fmt.Println(strings.Map(add1, "HAL-9000")) // "IBM.:111"</div></li></ul></li>
+	<li class="col" id="FMID_3535126FM"><div class="nodecontent" style="color:#990000;font-size:117%;">通過這種方式定義的函數可以訪問完整的詞法環境（ lexical environment） ， 這意味着在函數中定義的內部函數可以引用該函數的變量</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_993867748FM"><div class="nodecontent" style="color:#111111;">// squares返迴一個匿名函數。<br/>// 該匿名函數每次被調用時都會返迴下一個數的平方。<br/>// 注意x逃逸了<br/>func squares() func() int {<br/>	var x int<br/>	return func() int {<br/>		x++<br/>		return x * x<br/>	}<br/>}<br/>func main() {<br/>	f := squares()<br/>	fmt.Println(f()) // "1"<br/>	fmt.Println(f()) // "4"<br/>	fmt.Println(f()) // "9"<br/>	fmt.Println(f()) // "16"<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1571086906FM"><div class="nodecontent" style="color:#111111;">x逃逸了，squares返迴後， 變量x仍然 隱式的存在於f中。</div></li></ul></li>
+	<li class="col" id="FMID_791353363FM"><div class="nodecontent" style="color:#111111;">var rmdirs []func()<br/>for _, d := range tempDirs() {<br/>dir := d // NOTE: necessary!<br/>os.MkdirAll(dir, 0755) // creates parent directories too<br/>rmdirs = append(rmdirs, func() {<br/>	os.RemoveAll(dir)<br/>})<br/>}<br/>// ...do some work…<br/>for _, rmdir := range rmdirs {<br/>	rmdir() // clean up<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_297469325FM"><div class="nodecontent" style="color:#111111;">循環中生成的所有函數值都共享相同的循環變量 注意为了防止d作用域只在for内部 外部使用的时候赋值给dir</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_1048705713FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">可变参数</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1873741480FM"><div class="nodecontent" style="color:#990000;font-size:117%;">需要在參數列表的最後一個參數類型之前加上省略符號“...”</div></li>
+	<li class="col" id="FMID_1152416846FM"><div class="nodecontent" style="color:#990000;font-size:117%;">func sum(vals...int) int {<br/>	total := 0<br/>	for _, val := range vals {<br/>		total += val<br/>	}<br/>	return total<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_574903489FM"><div class="nodecontent" style="color:#111111;">vals被看作是類型爲[] int的切片。 sum可以接 收任意數量的int型參數</div></li>
+	<li class="basic" id="FMID_1865654457FM"><div class="nodecontent" style="color:#111111;">調用者隱式的創建一個數組， 併將原始參數複製到數組中， 再把數組的一 個切片作爲參數傳給被調函數</div></li>
+	<li class="col" id="FMID_1305509248FM"><div class="nodecontent" style="color:#111111;">只是类似切片 类型还是不同</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_673711547FM"><div class="nodecontent" style="color:#111111;">fmt.Printf("%T\n", f) // "func(...int)"<br/>fmt.Printf("%T\n", g) // "func([]int)"</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_1766455884FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">error</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1228373372FM"><div class="nodecontent" style="color:#990000;font-size:117%;">對於non-nil的error類型,我們可以通過調用error的Error函數或者輸出函數獲得字符串類型 的錯誤信息。</div></li>
+	<li class="basic" id="FMID_1598188666FM"><div class="nodecontent" style="color:#990000;font-size:117%;">nil意味着函數運行成功， non-nil表示失 敗。</div></li></ul></li>
+	<li class="col" id="FMID_1540963223FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">io.EOF</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_724994563FM"><div class="nodecontent" style="color:#990000;font-size:117%;">io包保證任何由文件結束引起的讀取失敗 都返迴同一個錯誤——io.EOF</div></li>
+	<li class="basic" id="FMID_353714557FM"><div class="nodecontent" style="color:#990000;font-size:117%;">r, _, err := in.ReadRune()<br/>if err == io.EOF {<br/>break // finished reading</div></li></ul></li>
+	<li class="col" id="FMID_919563895FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">defer</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1793426776FM"><div class="nodecontent" style="color:#990000;font-size:117%;">概述</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1147620130FM"><div class="nodecontent" style="color:#111111;font-size:100%;">当defer语句被执行时，跟在defer后面的函数会被延迟执行。直到包含该defer语句的函数执行完毕时，defer后的函数才会被执行，不论包含defer语句的函数是通过return正常结束，还是由于panic导致的异常结束。</div></li>
+	<li class="basic" id="FMID_1879883235FM"><div class="nodecontent" style="color:#111111;font-size:100%;">可以在一个函数中执行多条defer语句，它们的执行顺序与声明顺序相反。</div></li>
+	<li class="basic" id="FMID_1976493348FM"><div class="nodecontent" style="color:#111111;">defer语句中的函数会在return语句更新返回值变量后再执行</div></li></ul></li>
+	<li class="col" id="FMID_1427157617FM"><div class="nodecontent" style="color:#990000;font-size:117%;">例子</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_320928858FM"><div class="nodecontent" style="color:#111111;font-size:100%;">defer resp.Body.Close()</div></li>
+	<li class="basic" id="FMID_759809670FM"><div class="nodecontent" style="color:#111111;font-size:100%;">defer func() { result += x }()</div></li></ul></li>
+	<li class="col" id="FMID_1245614748FM"><div class="nodecontent" style="color:#990000;font-size:117%;">其他用法</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_173020144FM"><div class="nodecontent" style="color:#111111;">defer机制也常被用于记录何时进入和退出函数。</div></li>
+	<li class="basic" id="FMID_1572226076FM"><div class="nodecontent" style="color:#111111;">对匿名函数采用defer机制，可以使其观察函数的返回值。</div></li>
+	<li class="col" id="FMID_1253560229FM"><div class="nodecontent" style="color:#111111;">可用来观察函数返回值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1612189743FM"><div class="nodecontent" style="color:#111111;">func double(x int) (result int) {<br/>	defer func() {<br/>		fmt.Printf("double(%d) = %d\n", x,result)<br/>	}()<br/>	return x + x<br/>}<br/>_ = double(4)
+</div></li></ul></li>
+	<li class="col" id="FMID_1677529755FM"><div class="nodecontent" style="color:#111111;">被延迟执行的匿名函数甚至可以修改函数返回给调用者的返回值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1091676062FM"><div class="nodecontent" style="color:#111111;">func triple(x int) (result int) {<br/>	defer func() {<br/>		result += x<br/>	}()<br/>	return double(x)<br/>}<br/>fmt.Println(triple(4)) // "12"</div></li></ul></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_1406053448FM"><div class="nodecontent" style="color:#0033ff;font-size:150%;">包</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_237382910FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">func init() { /* ... */ }</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_996281487FM"><div class="nodecontent" style="color:#990000;font-size:117%;">init初始化函數來簡化初始化工作。 每個文件都可以包含多個init初始化函數</div></li></ul></li>
+	<li class="basic" id="FMID_1948872068FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">每個包在解決依賴的前提下， 以導入聲明的順序初始化， 每個包隻會被初始化一次。 因此， 如果一個p包導入了q包， 那麽在p包初始化的時候可以認爲q包必然已經初始化過了。</div></li></ul></li>
+	<li class="col" id="FMID_665833637FM"><div class="nodecontent" style="color:#0033ff;font-size:150%;">方法</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_844169999FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">type Point struct{ X, Y float64 }<br/>func (p Point) Distance(q Point) float64 {<br/>	return math.Hypot(q.X-p.X, q.Y-p.Y)<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1059506096FM"><div class="nodecontent" style="color:#990000;font-size:117%;">等同于<br/>func Distance(p, q Point) float64 {<br/>	return math.Hypot(q.X-p.X, q.Y-p.Y)<br/>}</div></li>
+	<li class="basic" id="FMID_49834124FM"><div class="nodecontent" style="color:#990000;font-size:117%;">參數p， 叫做方法的接收器(receiver)</div></li></ul></li>
+	<li class="col" id="FMID_884753985FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">每種類型都有其方法的命名空間</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1120436182FM"><div class="nodecontent" style="color:#990000;font-size:117%;">对切片指定方法</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1542786720FM"><div class="nodecontent" style="color:#111111;font-size:100%;">type Path []Point<br/>// Distance returns the distance traveled along the path.<br/>func (path Path) Distance() float64 {</div></li></ul></li>
+	<li class="col" id="FMID_1391966020FM"><div class="nodecontent" style="color:#990000;font-size:117%;">对指针指定方法</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_10415895FM"><div class="nodecontent" style="color:#111111;"> (*Point).ScaleBy</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_9114049FM"><div class="nodecontent" style="color:#111111;">括号是必须的</div></li>
+	<li class="basic" id="FMID_224728653FM"><div class="nodecontent" style="color:#111111;">一般會約定如果Point這個類有一個指針作爲接收器的方法， 那麽所有Point 的方法都必鬚有一個指針接收器， 卽使是那些併不需要這個指針接收器的函數。</div></li></ul></li>
+	<li class="basic" id="FMID_1406917508FM"><div class="nodecontent" style="color:#111111;font-size:100%;">func (p *Point) ScaleBy(factor float64) {<br/>	p.X *= factor<br/>	p.Y *= factor<br/>}</div></li>
+	<li class="col" id="FMID_467793964FM"><div class="nodecontent" style="color:#111111;">用指针调用方法</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1497595566FM"><div class="nodecontent" style="color:#111111;">r := &amp;Point{1, 2}<br/>r.ScaleBy(2)<br/>fmt.Println(*r) // "{2, 4}"</div></li>
+	<li class="basic" id="FMID_1610827906FM"><div class="nodecontent" style="color:#111111;">p := Point{1, 2}<br/>pptr := &amp;p<br/>pptr.ScaleBy(2)<br/>fmt.Println(p) // "{2, 4}"</div></li>
+	<li class="basic" id="FMID_879032791FM"><div class="nodecontent" style="color:#111111;">p := Point{1, 2}<br/>(&amp;p).ScaleBy(2)<br/>fmt.Println(p) // "{2, 4}"</div></li></ul></li>
+	<li class="col" id="FMID_104862491FM"><div class="nodecontent" style="color:#111111;">直接用变量调用，让编译器处理成指针</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1312859371FM"><div class="nodecontent" style="color:#111111;">p.ScaleBy(2)</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1281757674FM"><div class="nodecontent" style="color:#111111;">編譯器會隱式地幫我們用&amp;p去調用ScaleBy這個方法</div></li></ul></li>
+	<li class="col" id="FMID_387381411FM"><div class="nodecontent" style="color:#111111;">不能通過一個無法取到地址的接收器來調用指針方法， 比如臨時變量的內存地址就無法獲取得到</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1304697004FM"><div class="nodecontent" style="color:#111111;">这个编译会出错</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1206145787FM"><div class="nodecontent" style="color:#111111;">Point{1, 2}.ScaleBy(2) // compile error: can't take address of Point literal</div></li></ul></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_1435458595FM"><div class="nodecontent" style="color:#990000;font-size:117%;">指针可以调用变量的方法,编辑器自动转化</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1175840745FM"><div class="nodecontent" style="color:#111111;">下面两种等价</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1589918442FM"><div class="nodecontent" style="color:#111111;">pptr.Distance(q)</div></li>
+	<li class="basic" id="FMID_1404938558FM"><div class="nodecontent" style="color:#111111;">(*pptr).Distance(q)</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_774505850FM"><div class="nodecontent" style="color:#990000;font-size:117%;">Nil也是一個合法的接收器類型</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1749091547FM"><div class="nodecontent" style="color:#111111;">但是使用前要先转化为相应类型</div></li></ul></li>
+	<li class="col" id="FMID_1410580064FM"><div class="nodecontent" style="color:#990000;font-size:117%;">调用匿名成员的方法</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_857560831FM"><div class="nodecontent" style="color:#111111;">type ColoredPoint struct {<br/>Point<br/>Color color.RGBA<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1941639101FM"><div class="nodecontent" style="color:#111111;">ColoredPoint類型當作接收器來調用 Point里的方法</div></li></ul></li>
+	<li class="basic" id="FMID_493637646FM"><div class="nodecontent" style="color:#111111;">实现方法：內嵌字段會指導編譯器去生成額外的 包裝方法來委託已經聲明好的方法</div></li>
+	<li class="col" id="FMID_1231132364FM"><div class="nodecontent" style="color:#111111;">一個struct類型也可能會有多個匿名字段</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1500099911FM"><div class="nodecontent" style="color:#111111;">type ColoredPoint struct {<br/>	Point<br/>	color.RGBA<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_503948078FM"><div class="nodecontent" style="color:#111111;">種類型的值便會擁有Point和RGBA類型的所有方法， 以及直接定義在ColoredPoint中的 方法。</div></li>
+	<li class="basic" id="FMID_1869042981FM"><div class="nodecontent" style="color:#111111;">當編譯器解析一個選擇器到方法時， 比如p.ScaleBy， 它會首先去找直接定義在這個類 型里的ScaleBy方法， 然後找被ColoredPoint的內嵌字段們引入的方法， 然後去找Point和 RGBA的內嵌字段引入的方法， 然後一直遞歸向下找。</div></li>
+	<li class="basic" id="FMID_1851826085FM"><div class="nodecontent" style="color:#111111;">如果選擇器有二義性的話編譯器會報 錯， 比如你在同一級里有兩個同名的方法。</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_684947653FM"><div class="nodecontent" style="color:#990000;font-size:117%;">方法的值</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1835750150FM"><div class="nodecontent" style="color:#111111;">某变量方法的值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1815622743FM"><div class="nodecontent" style="color:#111111;">distanceFromP := p.Distance<br/>fmt.Println(distanceFromP(q))</div></li>
+	<li class="col" id="FMID_1436290158FM"><div class="nodecontent" style="color:#111111;">type Rocket struct { /* ... */ }<br/>func (r *Rocket) Launch() { /* ... */ }<br/>r := new(Rocket)</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_995015332FM"><div class="nodecontent" style="color:#111111;">r.Launch 就可以使用方法</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_1257923474FM"><div class="nodecontent" style="color:#111111;">某类型的值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1381067526FM"><div class="nodecontent" style="color:#111111;">當T是一個類型時， 方法表達式可能會寫作T.f或者(*T).f， 會返迴一個函數"值"， 這種函數會將 其第一個參數用作接收器， 所以可以用通常(譯註：不寫選擇器)的方式來對其進行調用</div></li>
+	<li class="basic" id="FMID_600334769FM"><div class="nodecontent" style="color:#111111;">distance := Point.Distance // method expression<br/>fmt.Println(distance(p, q)) // "5"<br/>fmt.Printf("%T\n", distance) // "func(Point, Point) float64"</div></li>
+	<li class="col" id="FMID_1315912015FM"><div class="nodecontent" style="color:#111111;">根據選擇來調用接收器各不相同的方法。</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_198573819FM"><div class="nodecontent" style="color:#111111;">type Point struct{ X, Y float64 }<br/>func (p Point) Add(q Point) Point { return Point{p.X + q.X, p.Y + q.Y} }<br/>func (p Point) Sub(q Point) Point { return Point{p.X - q.X, p.Y - q.Y} }<br/>type Path []Point<br/>func (path Path) TranslateBy(offset Point, add bool) {<br/>	var op func(p, q Point) Point<br/>	if add {<br/>		op = Point.Add<br/>	} else {<br/>		op = Point.Sub<br/>	}<br/>	for i := range path {<br/>		// Call either path[i].Add(offset) or path[i].Sub(offset).<br/>		path[i] = op(path[i], offset)<br/>	}<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_647619892FM"><div class="nodecontent" style="color:#111111;">根据选项设置op为ADD或者SUB</div></li></ul></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_559803469FM"><div class="nodecontent" style="color:#990000;font-size:117%;">封裝</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1260834030FM"><div class="nodecontent" style="color:#111111;">大寫首字母的標識符會從定義它們的包中被導出， 小寫 字母的則不會。 這種限製包內成員的方式同樣適用於struct或者一個類型的方法</div></li>
+	<li class="basic" id="FMID_624736215FM"><div class="nodecontent" style="color:#111111;">一個struct類型的字段對同一個包的所有代碼都有可見性， 無論你的代碼是寫在一個函數 還是一個方法里。</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_720071765FM"><div class="nodecontent" style="color:#0033ff;font-size:150%;">接口</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_744980230FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">看到一個接口類型的值時， 你不知道它是什麽， 唯一知道的就是 可以通過它的方法來做什麽</div></li>
+	<li class="basic" id="FMID_468793688FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">每一個具體類型的組基於它們相同的行爲可以表示成一個接口類型</div></li>
+	<li class="col" id="FMID_808227035FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">io中定义了很多接口</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_84008589FM"><div class="nodecontent" style="color:#990000;font-size:117%;">io.Writer</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1423502124FM"><div class="nodecontent" style="color:#111111;">定义</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1288805648FM"><div class="nodecontent" style="color:#111111;">package io<br/>// Writer is the interface that wraps the basic Write method.<br/>type Writer interface {<br/>	// Write writes len(p) bytes from p to the underlying data stream.<br/>	// It returns the number of bytes written from p (0 &lt;= n &lt;= len(p))<br/>	// and any error encountered that caused the write to stop early.<br/>	// Write must return a non-nil error if it returns n &lt; len(p).<br/>	// Write must not modify the slice data, even temporarily.<br/>	//<br/>	// Implementations must not retain p.<br/>	Write(p []byte) (n int, err error)<br/>}</div></li></ul></li>
+	<li class="col" id="FMID_817820924FM"><div class="nodecontent" style="color:#111111;">使用</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1331110574FM"><div class="nodecontent" style="color:#111111;font-size:100%;">package fmt<br/>func Fprintf(w io.Writer, format string, args ...interface{}) (int, error)<br/><br/>func Printf(format string, args ...interface{}) (int, error) {<br/>	return Fprintf(os.Stdout, format, args...)<br/>}<br/>func Sprintf(format string, args ...interface{}) string {<br/>	var buf bytes.Buffer<br/>	Fprintf(&amp;buf, format, args...)<br/>	return buf.String()<br/>}</div></li></ul></li>
+	<li class="col" id="FMID_760902061FM"><div class="nodecontent" style="color:#111111;">io.Writer類型定義了函數Fprintf和這個函數調用者之間的約定</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_709153634FM"><div class="nodecontent" style="color:#111111;">調用者提 供具體類型的值就像*os.File和*bytes.Buffer， 這些類型都有一個特定籤名和行爲的Write的函 數</div></li>
+	<li class="basic" id="FMID_1565023046FM"><div class="nodecontent" style="color:#111111;">這個約定保證了Fprintf接受任何滿足io.Writer接口的值都可以工作</div></li></ul></li>
+	<li class="basic" id="FMID_555273160FM"><div class="nodecontent" style="color:#111111;">type ByteCounter int<br/>func (c *ByteCounter) Write(p []byte) (int, error) {<br/>	*c += ByteCounter(len(p)) // convert int to ByteCounter<br/>	return len(p), nil<br/>}</div></li></ul></li>
+	<li class="col" id="FMID_297818516FM"><div class="nodecontent" style="color:#990000;font-size:117%;">Reader可以代表任意可以讀取bytes的類型</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_547428934FM"><div class="nodecontent" style="color:#111111;">package io<br/>type Reader interface {<br/>	Read(p []byte) (n int, err error)<br/>}</div></li></ul></li>
+	<li class="col" id="FMID_1719760079FM"><div class="nodecontent" style="color:#990000;font-size:117%;">Closer可以是任意可以關閉 的值</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1820347051FM"><div class="nodecontent" style="color:#111111;">package io<br/>type Closer interface {<br/>	Close() error<br/>}</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_1708220012FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">通过组合来定义接口</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_408815706FM"><div class="nodecontent" style="color:#990000;font-size:117%;">type ReadWriter interface {<br/>	Reader<br/>	Writer<br/>}</div></li>
+	<li class="basic" id="FMID_1361765206FM"><div class="nodecontent" style="color:#990000;font-size:117%;">type ReadWriteCloser interface {<br/>	Reader<br/>	Writer<br/>	Closer<br/>}</div></li>
+	<li class="basic" id="FMID_1401158384FM"><div class="nodecontent" style="color:#990000;font-size:117%;">type ReadWriter interface {<br/>	Read(p []byte) (n int, err error)<br/>	Write(p []byte) (n int, err error)<br/>}</div></li>
+	<li class="basic" id="FMID_1482767090FM"><div class="nodecontent" style="color:#990000;font-size:117%;">type ReadWriter interface {<br/>	Read(p []byte) (n int, err error)<br/>	Writer<br/>}</div></li></ul></li>
+	<li class="col" id="FMID_1790067985FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">接口指定</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1506667101FM"><div class="nodecontent" style="color:#990000;font-size:117%;">var w io.Writer<br/>w = os.Stdout // OK: *os.File has Write method<br/>w = new(bytes.Buffer) // OK: *bytes.Buffer has Write method<br/>w = time.Second // compile error: time.Duration lacks Write method</div></li>
+	<li class="basic" id="FMID_646344332FM"><div class="nodecontent" style="color:#990000;font-size:117%;">var rwc io.ReadWriteCloser<br/>rwc = os.Stdout // OK: *os.File has Read, Write, Close methods<br/>rwc = new(bytes.Buffer) // compile error: *bytes.Buffer lacks Close method</div></li>
+	<li class="basic" id="FMID_1274631656FM"><div class="nodecontent" style="color:#990000;font-size:117%;">w = rwc // OK: io.ReadWriteCloser has Write method<br/>rwc = w // compile error: io.Writer lacks Close method</div></li></ul></li>
+	<li class="col" id="FMID_1687489651FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">接口使用</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1834160519FM"><div class="nodecontent" style="color:#990000;font-size:117%;">var w io.Writer<br/>w = os.Stdout<br/>w.Write([]byte("hello")) // OK: io.Writer has Write method<br/>w.Close() // compile error: io.Writer lacks Close metho</div></li></ul></li>
+	<li class="col" id="FMID_1886282372FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">interface{}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1598388398FM"><div class="nodecontent" style="color:#990000;font-size:117%;">空接口</div></li>
+	<li class="col" id="FMID_1634952845FM"><div class="nodecontent" style="color:#990000;font-size:117%;">可以將任意一個值賦給空接口類型</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1394979433FM"><div class="nodecontent" style="color:#111111;">var any interface{}<br/>any = true<br/>any = 12.34<br/>any = "hello"<br/>any = map[string]int{"one": 1}<br/>any = new(bytes.Buffer)</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_702493186FM"><div class="nodecontent" style="color:#0033ff;font-size:150%;">goroutine</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1044968366FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">go f() // create a new goroutine that calls f(); don't wait</div></li>
+	<li class="basic" id="FMID_544905498FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">當主函數返迴時， 所有的goroutine都會直接打斷， 程序退出</div></li>
+	<li class="basic" id="FMID_353832729FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">除了從主函 數退出或者直接退出程序之外， 沒有其它的編程方法能夠讓一個goroutine來打斷另一個的執 行</div></li>
+	<li class="col" id="FMID_456628159FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">goroutine的终止</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_851710029FM"><div class="nodecontent" style="color:#990000;font-size:117%;">Go語言併沒有提供在一個goroutine中終止另一個goroutine的方法</div></li>
+	<li class="col" id="FMID_1372586272FM"><div class="nodecontent" style="color:#990000;font-size:117%;">通过channel检测退出</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1336113752FM"><div class="nodecontent" style="color:#111111;">检测的管道</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_616650733FM"><div class="nodecontent" style="color:#111111;">var done = make(chan struct{})</div></li></ul></li>
+	<li class="col" id="FMID_91369599FM"><div class="nodecontent" style="color:#111111;">检测</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1078624529FM"><div class="nodecontent" style="color:#111111;">for {<br/>	select {<br/>	case &lt;-done:<br/>		// Drain fileSizes to allow existing goroutines to finish.<br/>		for range fileSizes {<br/>			// Do nothing.<br/>		}<br/>		return<br/>	case size, ok := &lt;-fileSizes:<br/>		// ...<br/>	}<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_525575124FM"><div class="nodecontent" style="color:#111111;">嚐試從done channel中接收內容。 如果這個case被滿足的話， 在select到 的時候卽會返迴</div></li>
+	<li class="basic" id="FMID_1883169004FM"><div class="nodecontent" style="color:#111111;">在結束之前我們需要把fileSizes channel中的內容“排”空， 在channel被關 閉之前， 舍棄掉所有值。 這樣可以保證對walkDir的調用不要被向fileSizes發送信息阻塞住， 可以正確地完成。</div></li></ul></li>
+	<li class="basic" id="FMID_1311278208FM"><div class="nodecontent" style="color:#111111;">func cancelled() bool {<br/>	select {<br/>	case &lt;-done:<br/>		return true<br/>	default:<br/>		return false<br/>	}<br/>}<br/><br/>if cancelled() {<br/>	return<br/>}</div></li></ul></li>
+	<li class="col" id="FMID_1327489683FM"><div class="nodecontent" style="color:#111111;">close(done)</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1517766380FM"><div class="nodecontent" style="color:#111111;">用来标记某goroutine退出的代码</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_638278114FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">channels</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_40759206FM"><div class="nodecontent" style="color:#990000;font-size:117%;">chan int</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_634800174FM"><div class="nodecontent" style="color:#111111;">channel都有一個特殊的類型</div></li>
+	<li class="basic" id="FMID_1268516021FM"><div class="nodecontent" style="color:#111111;">一個可以發送int類型數 據的channel</div></li></ul></li>
+	<li class="col" id="FMID_1763794320FM"><div class="nodecontent" style="color:#990000;font-size:117%;">是一个引用</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_73150864FM"><div class="nodecontent" style="color:#111111;">和map類似， channel也一個對應make創建的底層數據結構的引用</div></li>
+	<li class="basic" id="FMID_1880186218FM"><div class="nodecontent" style="color:#111111;">複製一個channel 或用於函數參數傳遞時， 我嗎隻是拷貝了一個channel引用， 因此調用者何被調用者將引用同 一個channel對象</div></li>
+	<li class="basic" id="FMID_1656766283FM"><div class="nodecontent" style="color:#111111;">和其它的引用類型一樣， channel的零值也是nil</div></li></ul></li>
+	<li class="col" id="FMID_170801727FM"><div class="nodecontent" style="color:#990000;font-size:117%;">比較</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1423885013FM"><div class="nodecontent" style="color:#111111;">兩個相同類型的channel可以使用==運算符比較</div></li>
+	<li class="basic" id="FMID_1900263850FM"><div class="nodecontent" style="color:#111111;">兩個channel引用的是相通的對象， 那 麽比較的結果爲眞</div></li>
+	<li class="basic" id="FMID_189065165FM"><div class="nodecontent" style="color:#111111;">一個channel也可以和nil進行比較</div></li></ul></li>
+	<li class="col" id="FMID_958581320FM"><div class="nodecontent" style="color:#990000;font-size:117%;">創建</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_692078765FM"><div class="nodecontent" style="color:#111111;">无缓存</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_928065353FM"><div class="nodecontent" style="color:#111111;">ch = make(chan int) // unbuffered channel</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1231951005FM"><div class="nodecontent" style="color:#111111;">ch = make(chan int, 0) // unbuffered channel</div></li></ul></li>
+	<li class="basic" id="FMID_1454712835FM"><div class="nodecontent" style="color:#111111;">读写都会导致阻塞，直到另一端的读写</div></li></ul></li>
+	<li class="col" id="FMID_713372978FM"><div class="nodecontent" style="color:#111111;">有缓存</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_600538427FM"><div class="nodecontent" style="color:#111111;">ch = make(chan int, 3) // buffered channel with capacity 3</div></li>
+	<li class="col" id="FMID_192011352FM"><div class="nodecontent" style="color:#111111;">容量可以用cap获取</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_275361487FM"><div class="nodecontent" style="color:#111111;">fmt.Println(cap(ch)) // "3"</div></li></ul></li>
+	<li class="basic" id="FMID_897538435FM"><div class="nodecontent" style="color:#111111;">帶緩存的channel不能当队列使用</div></li>
+	<li class="col" id="FMID_1087919283FM"><div class="nodecontent" style="color:#111111;">经常用来解决groutine泄露问题</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_416494279FM"><div class="nodecontent" style="color:#111111;">某goroutine向一个无缓存channel发送信息，因为没有接收而一直阻塞的问题</div></li>
+	<li class="basic" id="FMID_590081315FM"><div class="nodecontent" style="color:#111111;">解决办法是使用有缓存的channel</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_558001717FM"><div class="nodecontent" style="color:#990000;font-size:117%;">发送数据</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1838393880FM"><div class="nodecontent" style="color:#111111;">ch &lt;- x // a send statement</div></li>
+	<li class="basic" id="FMID_1150469218FM"><div class="nodecontent" style="color:#111111;">go func() { worklist &lt;- os.Args[1:] }() </div></li></ul></li>
+	<li class="col" id="FMID_1637802129FM"><div class="nodecontent" style="color:#990000;font-size:117%;">接收数据</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1565680239FM"><div class="nodecontent" style="color:#111111;">x = &lt;-ch // a receive expression in an assignment statement</div></li>
+	<li class="col" id="FMID_1812879526FM"><div class="nodecontent" style="color:#111111;">&lt;-ch // a receive statement; result is discarded</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1031503935FM"><div class="nodecontent" style="color:#111111;">接收的数据直接删除</div></li></ul></li>
+	<li class="col" id="FMID_1712915731FM"><div class="nodecontent" style="color:#111111;">range循環可直接在 channels上面迭代</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1174926453FM"><div class="nodecontent" style="color:#111111;">for x := range naturals {<br/>	//xxx<br/>}</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1770266319FM"><div class="nodecontent" style="color:#111111;">退出循环表明这个管道已经被关闭了</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_619816870FM"><div class="nodecontent" style="color:#111111;font-size:100%;">多路复用 select</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1742489702FM"><div class="nodecontent" style="color:#111111;">select {<br/>case &lt;-ch1:<br/>	// ...<br/>case x := &lt;-ch2:<br/>	// ...use x...<br/>case ch3 &lt;- y:<br/>	// ...<br/>default:<br/>	// ...<br/>}</div></li>
+	<li class="basic" id="FMID_600216415FM"><div class="nodecontent" style="color:#111111;">如果多個case同時就緒時， select會隨機地選擇一個執行， 這樣來保證每一個channel都有平 等的被select的機會。</div></li>
+	<li class="col" id="FMID_42018012FM"><div class="nodecontent" style="color:#111111;">default來設置當其它的操作都不能夠馬上被處理時程序需要執行哪些邏輯</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_388521222FM"><div class="nodecontent" style="color:#111111;">避免因爲發送或者接收導致的阻塞</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_779208797FM"><div class="nodecontent" style="color:#990000;font-size:117%;">关闭</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_194141134FM"><div class="nodecontent" style="color:#111111;">close(ch)</div></li>
+	<li class="col" id="FMID_371661070FM"><div class="nodecontent" style="color:#111111;">不管一個channel是否被關閉， 當它沒有被引用時將會被Go語言 的垃圾自動迴收器迴收</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_607393549FM"><div class="nodecontent" style="color:#111111;">和文件不同， 文件需要关闭</div></li></ul></li>
+	<li class="basic" id="FMID_791553294FM"><div class="nodecontent" style="color:#111111;">关闭后向其中发送数据会导致panic</div></li>
+	<li class="basic" id="FMID_1336381568FM"><div class="nodecontent" style="color:#111111;">視圖重複關閉一個channel將導致panic異常， 視圖關閉一個nil值的channel也將導致panic異 常。 </div></li>
+	<li class="col" id="FMID_520737846FM"><div class="nodecontent" style="color:#111111;">向关闭的管道接受数据是正常的</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1958663356FM"><div class="nodecontent" style="color:#111111;">如果没有数据会産生一個零值的數據</div></li></ul></li>
+	<li class="col" id="FMID_1156769814FM"><div class="nodecontent" style="color:#111111;">判断关闭的方法</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1828872547FM"><div class="nodecontent" style="color:#111111;">x, ok := &lt;-naturals<br/>if !ok {<br/>	break // channel was closed and drained<br/>}</div></li></ul></li></ul></li>
+	<li class="col" id="FMID_1861887060FM"><div class="nodecontent" style="color:#990000;font-size:117%;">串聯的Channels（ Pipeline）</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_804690969FM"><div class="nodecontent" style="color:#111111;">Channels也可以用於將多個goroutine鏈接在一起， 一個Channels的輸出作爲下一個Channels 的輸入。 這種串聯的Channels就是所謂的管道（ pipeline）</div></li></ul></li>
+	<li class="col" id="FMID_1566210934FM"><div class="nodecontent" style="color:#990000;font-size:117%;">單方向的Channel</div>
+		<ul class="subexp">
+	<li class="col" id="FMID_1755749043FM"><div class="nodecontent" style="color:#111111;">chan&lt;- int 表示一個隻發送int的channel</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_1107826789FM"><div class="nodecontent" style="color:#111111;">func counter(out chan&lt;- int) {</div></li></ul></li>
+	<li class="basic" id="FMID_90604718FM"><div class="nodecontent" style="color:#111111;">&lt;-chan int 表示一個隻接收int的channel</div></li>
+	<li class="basic" id="FMID_1944020744FM"><div class="nodecontent" style="color:#111111;">這種限製將在編譯期檢測</div></li></ul></li>
+	<li class="col" id="FMID_1365463452FM"><div class="nodecontent" style="color:#990000;font-size:117%;">channel的零值是nil</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_325302938FM"><div class="nodecontent" style="color:#111111;">對一個nil的channel發送和接收操作會永遠阻塞</div></li>
+	<li class="basic" id="FMID_1105936999FM"><div class="nodecontent" style="color:#111111;">在select語句中操作nil的channel永遠都不 會被select到。</div></li></ul></li></ul></li></ul></li>
+	<li class="col" id="FMID_960620035FM"><div class="nodecontent" style="color:#0033ff;font-size:150%;">Panic</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_498690303FM"><div class="nodecontent" style="color:#00b439;font-size:133%;"> panic(fmt.Sprintf("invalid suit %q", s))</div></li>
+	<li class="col" id="FMID_522142348FM"><div class="nodecontent" style="color:#00b439;font-size:133%;">Recover捕获异常</div>
+		<ul class="subexp">
+	<li class="basic" id="FMID_258656473FM"><div class="nodecontent" style="color:#990000;font-size:117%;">如果在deferred函数中调用了内置函数recover，并且定义该defer语句的函数发生了panic异常，recover会使程序从panic中恢复，并返回panic value。</div></li>
+	<li class="basic" id="FMID_1507041404FM"><div class="nodecontent" style="color:#990000;font-size:117%;">导致panic异常的函数不会继续运行，但能正常返回。</div></li>
+	<li class="basic" id="FMID_610877358FM"><div class="nodecontent" style="color:#990000;font-size:117%;">在未发生panic时调用recover，recover会返回nil。</div></li>
+	<li class="basic" id="FMID_710568836FM"><div class="nodecontent" style="color:#990000;font-size:117%;">func Parse(input string) (s *Syntax, err error) {<br/>    defer func() {<br/>        if p := recover(); p != nil {<br/>            err = fmt.Errorf("internal error: %v", p)<br/>        }<br/>    }()<br/>    // ...parser...<br/>}</div></li>
+	<li class="basic" id="FMID_591534966FM"><div class="nodecontent" style="color:#990000;font-size:117%;">只恢复应该被恢复的panic异常</div></li></ul></li></ul></li></ul></li></ul></div></body></html>
