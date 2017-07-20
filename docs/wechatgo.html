@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title></title>
+	<meta name="generator" content="LibreOffice 4.2.8.2 (Linux)">
+	<meta name="author" content="teawater">
+	<meta name="created" content="20170720;165017902174844">
+	<meta name="changedby" content="teawater">
+	<meta name="changed" content="20170720;165228730902691">
+	<style type="text/css">
+	<!--
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 120% }
+	-->
+	</style>
+</head>
+<body lang="zh-CN" dir="ltr">
+<p align="center" style="margin-top: 0.42cm; margin-bottom: 0.21cm; line-height: 100%; page-break-after: avoid">
+<font face="Droid Sans Fallback"><font size="6" style="font-size: 28pt"><b>微信小程序</b></font></font><font face="Liberation Sans, sans-serif"><font size="6" style="font-size: 28pt"><span lang="en-US"><b>GO</b></span></font></font><font face="Droid Sans Fallback"><font size="6" style="font-size: 28pt"><b>语言后端趟坑小笔记</b></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">开始大规模编码前最好能把要用的前后端通信手段先在手机上测试通过，不要相信开发工具里的模拟器，模拟器通了在手机上不一定通。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">如果之前没测通就开始大规模编码，之后发现死活连不上，再加好多测试代码就比较没劲了。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">搞服务器还需要一个经过<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ICP</span></font></font>备案的域名，端口只能用默认的，云服务器提供商提供已经经过<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ICP</span></font></font>的子域名，可申请。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">申请后到小程序的网页<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">-&gt;</span></font></font>服务器域名，对相应的服务把域名填写到其中。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">request</span></font></font>和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">web-socket</span></font></font>和服务器通信都需要用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">SSL</span></font></font>，不要浪费时间在通过<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">openssl</span></font></font>命令自己签名的证书，直接从网上申请。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">letsencrypt</span></font></font>的证书也不推荐，生成的证书能不能用不知道，生成位置乱，再找到对应的证书麻烦。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">腾讯云和阿里云的证书也是免费的，我才不会告诉你这两家我都申请了。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">这里比较重点的是域名验证，我用的验证方法是证书提供商访问域名取得证书提供商提供的一个文件的方法，这个从理论上需要一个<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">webserver</span></font></font>，没有的话“<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">python
+-m SimpleHTTPServer 80”</span></font></font>一键搞定。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">如果<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">python</span></font></font>环境都没有，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go</span></font></font>语言“<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">http.Handle(&quot;/&quot;,
+http.FileServer(http.Dir(&quot;webroot&quot;)))”</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">拿到证书压缩包直接找<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">nginx</span></font></font>，因为这里是和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go</span></font></font>一样的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">crt+key</span></font></font>的格式。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">证书到手下面要做的就是把比较简单的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">request</span></font></font>跑通，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GO</span></font></font>那边用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">log.Fatal(http.ListenAndServeTLS(&quot;:443&quot;,
+ssl_crt, ssl_key,
+nil))</span></font></font>就可以简历<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">SSL</span></font></font>服务器，<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ssl_crt</span></font></font>和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">ssl_key</span></font></font>分辨写上已经拿到的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">crt</span></font></font>和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">key</span></font></font>的文件位置即可。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">再次重申，务必在手机上用预览测试一次保证连接正常。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go</span></font></font>的<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">websocket</span></font></font>库强烈推荐用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">github.com/gorilla/websocket</span></font></font>，而不是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">golang.org/x/net/websocket</span></font></font>。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">我和<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">golang.org/x/net/websocket</span></font></font>的坑爹小故事：我没看文档里的例子（其实文档开头就让人去用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">github.com/gorilla/websocket</span></font></font>，所以我怀疑我压根没看文档，），而是自己搜了一个坑爹例子。代码里没设置<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CheckOrigin</span></font></font>，模拟器是可以正常进行<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">websocket</span></font></font>通信的，但是手机不通，而且是不会打有价值的出错信息的，就跟没事人一样啥也不打，或者输出一句完全没价值的报错。折腾了我很久。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">而<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">github.com/gorilla/websocket</span></font></font>第一次就打出了<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CheckOrigin</span></font></font>有问题，并且文档最开头就会说明<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CheckOrigin</span></font></font>的重要性和如何设置。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">最后前面这套都搞通后，你可以在开发工具里打开不检查<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">SSL</span></font></font>域名，在本地搭服务器开发，用模拟器看看效果（有人和我说效果和手机也不完全一样）。</p>
+<p style="margin-bottom: 0cm; line-height: 100%">但是我建议还是隔一段至少用预览在手机上访问下服务器看看是不是工作正常。</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">最后，别问我为啥用<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GO</span></font></font>语言最后端而不是<font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">nodejs</span></font></font>。任性的人生不需要理由！</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+</body>
+</html>
