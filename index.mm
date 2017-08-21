@@ -3,9 +3,16 @@
 <node COLOR="#000000" CREATED="1472708408515" ID="ID_662009073" MODIFIED="1472804205577" TEXT="teawater(&#x6731;&#x8f89;)&#x7684;&#x4e3b;&#x9875;">
 <font NAME="SansSerif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
-<node COLOR="#0033ff" CREATED="1472708596511" FOLDED="true" ID="ID_1638893491" MODIFIED="1484718550834" POSITION="left" TEXT="&#x6211;&#x7684;&#x9879;&#x76ee;">
+<node COLOR="#0033ff" CREATED="1472708596511" FOLDED="true" ID="ID_1638893491" MODIFIED="1503307407589" POSITION="left" TEXT="&#x6211;&#x7684;&#x9879;&#x76ee;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" CREATED="1503307262822" ID="ID_1842138172" LINK="https://github.com/teawater/gps2video" MODIFIED="1503307395427" TEXT="gps2video">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" CREATED="1503307289700" ID="ID_1583079423" MODIFIED="1503307323596" TEXT="gps2video&#x662f;&#x4e00;&#x4e2a;&#x7528;&#x6765;&#x5c06;GPS&#x8f68;&#x8ff9;&#x8f6c;&#x5316;&#x4e3a;&#x89c6;&#x9891;&#x7684;&#x8f6f;&#x4ef6;&#x3002;">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
 <node COLOR="#00b439" CREATED="1474351738446" ID="ID_487449301" LINK="https://lkml.org/lkml/2016/8/22/151" MODIFIED="1474351854418" TEXT="&#x8ba9;ZRAM&#x53ea;&#x50a8;&#x5b58;&#x9ad8;&#x538b;&#x7f29;&#x7387;&#x7684;&#x9875;&#x9762;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
