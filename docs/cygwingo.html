@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title></title>
+	<meta name="generator" content="LibreOffice 4.2.8.2 (Linux)">
+	<meta name="author" content="teawater">
+	<meta name="created" content="20170906;0">
+	<meta name="changedby" content="teawater">
+	<meta name="changed" content="20170906;132128131575792">
+	<meta name="changedby" content="teawater">
+	<style type="text/css">
+	<!--
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 120% }
+	-->
+	</style>
+</head>
+<body lang="zh-CN" dir="ltr" style="background: transparent">
+<p align="center" style="margin-top: 0.42cm; margin-bottom: 0.21cm; line-height: 100%; page-break-after: avoid">
+<font face="Droid Sans Fallback"><font size="6" style="font-size: 28pt"><b>在</b></font></font><font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Sans, sans-serif"><font size="6" style="font-size: 28pt"><span lang="en-US"><b>CYGWIN</b></span></font></font></span></font><font face="Droid Sans Fallback"><font size="6" style="font-size: 28pt"><b>下配置使用</b></font></font><font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Sans, sans-serif"><font size="6" style="font-size: 28pt"><span lang="en-US"><b>GO</b></span></font></font></span></font><font face="Droid Sans Fallback"><font size="6" style="font-size: 28pt"><b>不完全手册</b></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">因为条件限制有时候要短暂的在<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">WIN</span></font></font></span></font>下用<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GO</span></font></font></span></font>，因为个人习惯的原因我都是选择在<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GO</span></font></font></span></font>下跑
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">之前因为做<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">gps2video</span></font></font></span></font>所以有一阵子没搞<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GO</span></font></font></span></font>，昨天突然想用下<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go</span></font></font></span></font>，在<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go
+get</span></font></font></span></font>的时候失败了，之前模糊记得是可用的，所以折腾了一阵，今天终于搞好，决定写个东西记录介绍下。
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">首先要说的是<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go</span></font></font></span></font>官方是不希望在<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">cygwin</span></font></font></span></font>下用的，所以如果不是类似我这种非得用<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GO</span></font></font></span></font>当微信小程序后端的折腾人，最好是直接使用。
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">首先下载<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GO</span></font></font></span></font>安装包，安装在位置啥的都自选。
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">然后打开<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CYGWIN</span></font></font></span></font>，<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">echo
+$PATH</span></font></font></span></font>看一下是不是<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go/bin</span></font></font></span></font>是不是已经存在在那里了，如果不存在就手工在<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">.bashrc</span></font></font></span></font>设置一句，一般写成：
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">export
+PATH=$PATH:/cygdrive/d/Go/bin </span></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">这样<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">PATH</span></font></font></span></font>就配置结束了。
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">下一步是在<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">bashrc</span></font></font></span></font>设置<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GOPATH</span></font></font></span></font>，写成：
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">export
+GOPATH=&quot;D:\cygwin\root\home\xxx\go&quot; </span></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">注意这里没有使用<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CYGWIN</span></font></font></span></font>用的<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">cygdrive</span></font></font></span></font>目录而是使用的<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">WIN</span></font></font></span></font>系统的目录，如果设置为<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">cygdrive</span></font></font></span></font>开头那种运行<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GO</span></font></font></span></font>命令的时候会报错。
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">这两步搞完重新打开一下<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">cygwin</span></font></font></span></font>就可用了。
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go
+get</span></font></font></span></font>的步骤，这个我网上翻好像没人在<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">cygwin</span></font></font></span></font>下搞定，我有个黑客法可勉强搞定。
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">CYGWIN</span></font></font></span></font>下<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go
+get</span></font></font></span></font>出错原因是<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">GOPATH</span></font></font></span></font>设置是<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">WIN</span></font></font></span></font>型目录<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">(d:\</span></font></font></span></font>这种<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">)</span></font></font></span></font>，而<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go
+get</span></font></font></span></font>会调用<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">git</span></font></font></span></font>，这时又会出现<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">cygwin</span></font></font></span></font>下用的<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">Linux</span></font></font></span></font>型目录<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">(/home/xxx</span></font></font></span></font>这种<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">)</span></font></font></span></font>，所以失败报错。
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">解决方法就是自己做<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">git
+clone</span></font></font></span></font>，比如：安装<font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">github.com/strava/go.strava
+</span></font></font></span></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">先创建相应的目录，
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">mkdir
+-p go/src/github.com/strava </span></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">进入这个目录 
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">cd
+go/src/github.com/strava </span></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">下载代码 
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">git
+clone https://github.com/strava/go.strava.git </span></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><span lang="en-US"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go
+get</span></font></font></span></font>安装 
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%"><font face="Liberation Serif, serif"><font size="3" style="font-size: 12pt"><span lang="en-US">go
+get github.com/strava/go.strava </span></font></font>
+</p>
+<p style="margin-bottom: 0cm; line-height: 100%">这是就不会报错了，这个库也可以正常用。</p>
+</body>
+</html>
