@@ -62,7 +62,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1473754199442" FOLDED="true" ID="ID_452624323" MODIFIED="1484718926879" POSITION="right" TEXT="&#x6211;&#x7684;&#x6f14;&#x8bb2;">
+<node COLOR="#0033ff" CREATED="1473754199442" FOLDED="true" ID="ID_452624323" MODIFIED="1515414484988" POSITION="left" TEXT="&#x6211;&#x7684;&#x6f14;&#x8bb2;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1473754297417" ID="ID_823409592" MODIFIED="1473754298876" TEXT="Buddy&#x548c;CMA&#x7b80;&#x4ecb; &#x4ee5;&#x53ca;&#x5728;Android&#x4e2d;&#x5b9e;&#x9645;&#x4f7f;&#x7528; CMA&#x9047;&#x5230;&#x95ee;&#x9898;&#x7684;&#x6539;&#x8fdb;">
