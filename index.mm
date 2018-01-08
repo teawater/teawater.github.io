@@ -1,4 +1,4 @@
-<map version="0.9.0">
+<map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node COLOR="#000000" CREATED="1472708408515" ID="ID_662009073" MODIFIED="1472804205577" TEXT="teawater(&#x6731;&#x8f89;)&#x7684;&#x4e3b;&#x9875;">
 <font NAME="SansSerif" SIZE="20"/>
@@ -106,7 +106,7 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" CREATED="1472804212289" FOLDED="true" ID="ID_184369074" MODIFIED="1504675602331" POSITION="left" TEXT="&#x6211;&#x7684;&#x6587;&#x6863;">
+<node COLOR="#0033ff" CREATED="1472804212289" FOLDED="true" ID="ID_184369074" MODIFIED="1515413616091" POSITION="left" TEXT="&#x6211;&#x7684;&#x6587;&#x6863;">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="SansSerif" SIZE="18"/>
 <node COLOR="#00b439" CREATED="1474349523443" ID="ID_1281547563" MODIFIED="1474351336298" TEXT="Porting GDB">
@@ -134,6 +134,10 @@
 <font NAME="SansSerif" SIZE="16"/>
 </node>
 <node COLOR="#00b439" CREATED="1504675531507" ID="ID_1395958412" LINK="docs/cygwingo.html" MODIFIED="1504675587298" TEXT="&#x5728;CYGWIN&#x4e0b;&#x914d;&#x7f6e;&#x4f7f;&#x7528;GO&#x4e0d;&#x5b8c;&#x5168;&#x624b;&#x518c;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" CREATED="1515413551501" ID="ID_429361271" LINK="docs/iowait.html" MODIFIED="1515413613343" TEXT="Linux Kernel iowait &#x65f6;&#x95f4;&#x7684;&#x4ee3;&#x7801;&#x539f;&#x7406;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 </node>
@@ -193,7 +197,7 @@
     
   </head>
   <body>
-    <img src="qrcode.jpg" />
+    <img src="qrcode.jpg"/>
   </body>
 </html></richcontent>
 <edge STYLE="bezier" WIDTH="thin"/>
